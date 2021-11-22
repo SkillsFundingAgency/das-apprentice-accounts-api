@@ -3,7 +3,7 @@ using AutoFixture.Kernel;
 using System.Net.Mail;
 using System.Reflection;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.WorkflowTests
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
 {
     internal class EmailPropertyCustomisation : ISpecimenBuilder
     {

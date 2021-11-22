@@ -6,10 +6,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NServiceBus;
 using NServiceBus.Testing;
-using SFA.DAS.ApprenticeCommitments.Infrastructure;
+using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using SFA.DAS.UnitOfWork.Managers;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
     public class LocalWebApplicationFactory<TEntryPoint> : WebApplicationFactory<TEntryPoint> where TEntryPoint : class
     {

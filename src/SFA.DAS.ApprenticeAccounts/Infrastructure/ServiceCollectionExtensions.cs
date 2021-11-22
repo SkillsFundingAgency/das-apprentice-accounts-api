@@ -8,11 +8,11 @@ using Microsoft.Extensions.Options;
 using NServiceBus;
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
 using NServiceBus.Persistence;
-using SFA.DAS.ApprenticeCommitments.Configuration;
-using SFA.DAS.ApprenticeCommitments.Data;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
-using SFA.DAS.ApprenticeCommitments.Extensions;
-using SFA.DAS.ApprenticeCommitments.Infrastructure.Mediator;
+using SFA.DAS.ApprenticeAccounts.Configuration;
+using SFA.DAS.ApprenticeAccounts.Data;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Extensions;
+using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using SFA.DAS.NServiceBus.Configuration;
 using SFA.DAS.NServiceBus.Configuration.AzureServiceBus;
 using SFA.DAS.NServiceBus.Configuration.MicrosoftDependencyInjection;
@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeCommitments.Infrastructure
+namespace SFA.DAS.ApprenticeAccounts.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
@@ -40,10 +40,7 @@ namespace SFA.DAS.ApprenticeCommitments.Infrastructure
             services.AddTransient<ITimeProvider, UtcTimeProvider>();
             services.AddSingleton<IManagedIdentityTokenProvider, ManagedIdentityTokenProvider>();
             services.AddTransient<IConnectionFactory, SqlServerConnectionFactory>();
-            services.AddScoped<IRegistrationContext>(s => s.GetRequiredService<ApprenticeCommitmentsDbContext>());
             services.AddScoped<IApprenticeContext>(s => s.GetRequiredService<ApprenticeCommitmentsDbContext>());
-            services.AddScoped<IApprenticeshipContext>(s => s.GetRequiredService<ApprenticeCommitmentsDbContext>());
-            services.AddScoped<IRevisionContext>(s => s.GetRequiredService<ApprenticeCommitmentsDbContext>());
             services.AddScoped<EventDispatcher>();
 
             return services;
@@ -89,7 +86,7 @@ namespace SFA.DAS.ApprenticeCommitments.Infrastructure
         {
             var connectionFactory = serviceProvider.GetRequiredService<IConnectionFactory>();
 
-            var endpointConfiguration = new EndpointConfiguration("SFA.DAS.ApprenticeCommitments.Api")
+            var endpointConfiguration = new EndpointConfiguration("SFA.DAS.ApprenticeAccounts.Api")
                 .UseMessageConventions()
                 .UseNewtonsoftJsonSerializer()
                 .UseOutbox(true)

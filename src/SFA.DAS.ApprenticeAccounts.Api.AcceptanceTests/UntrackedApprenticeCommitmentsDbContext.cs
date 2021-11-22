@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
     public class UntrackedApprenticeCommitmentsDbContext : ApprenticeCommitmentsDbContext
     {

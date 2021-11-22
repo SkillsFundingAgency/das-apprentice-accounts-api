@@ -1,10 +1,10 @@
 ﻿using NServiceBus.Testing;
-using SFA.DAS.ApprenticeCommitments.Infrastructure;
+using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.Bindings
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
 {
     [Binding]
     [Scope(Tag = "api")]

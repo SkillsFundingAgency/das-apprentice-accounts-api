@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.ApprenticeCommitments.Api.Authentication
+﻿namespace SFA.DAS.ApprenticeAccounts.Api.Authentication
 {
     public static class PolicyNames
     {

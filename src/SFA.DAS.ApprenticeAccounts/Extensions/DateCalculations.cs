@@ -2,7 +2,7 @@
 
 using System;
 
-namespace SFA.DAS.ApprenticeCommitments.Extensions
+namespace SFA.DAS.ApprenticeAccounts.Extensions
 {
     public static class DateCalculations
     {

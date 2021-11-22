@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
     public class ApprenticeCommitmentsApi
     {

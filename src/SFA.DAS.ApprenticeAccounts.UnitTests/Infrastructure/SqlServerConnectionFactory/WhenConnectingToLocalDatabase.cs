@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
-using SFA.DAS.ApprenticeCommitments.Infrastructure;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Infrastructure;
 
-namespace SFA.DAS.ApprenticeCommitments.UnitTests.Infrastructure.SqlServerConnectionFactory
+namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.SqlServerConnectionFactory
 {
     public class WhenConnectingToLocalDatabase
     {
-        private ApprenticeCommitments.Infrastructure.SqlServerConnectionFactory _sut;
+        private ApprenticeAccounts.Infrastructure.SqlServerConnectionFactory _sut;
         private Mock<IConfiguration> _configurationMock;
         private Mock<IManagedIdentityTokenProvider> _managedIdentityTokenProviderMock;
         private DbContextOptionsBuilder<ApprenticeCommitmentsDbContext> _dbContextOptionsBuilder;
@@ -25,7 +25,7 @@ namespace SFA.DAS.ApprenticeCommitments.UnitTests.Infrastructure.SqlServerConnec
             _dbContextOptionsBuilder = new DbContextOptionsBuilder<ApprenticeCommitmentsDbContext>();
             _managedIdentityTokenProviderMock.Setup(x => x.GetSqlAccessTokenAsync()).ReturnsAsync("TOKEN");
 
-            _sut = new ApprenticeCommitments.Infrastructure.SqlServerConnectionFactory(_configurationMock.Object, _managedIdentityTokenProviderMock.Object);
+            _sut = new ApprenticeAccounts.Infrastructure.SqlServerConnectionFactory(_configurationMock.Object, _managedIdentityTokenProviderMock.Object);
             _connectionString = "Data Source=(localdb);Initial Catalog=DummyDatabase;Integrated Security=True";
         }
 

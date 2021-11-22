@@ -3,19 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30517.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeCommitments.Api", "SFA.DAS.ApprenticeCommitments.Api\SFA.DAS.ApprenticeCommitments.Api.csproj", "{495DCD2C-075C-4CD7-89C9-1B70C666B130}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeAccounts.Api", "SFA.DAS.ApprenticeAccounts.Api\SFA.DAS.ApprenticeAccounts.Api.csproj", "{495DCD2C-075C-4CD7-89C9-1B70C666B130}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeCommitments", "SFA.DAS.ApprenticeCommitments\SFA.DAS.ApprenticeCommitments.csproj", "{5487C73D-FE32-4B69-9C19-5EA4CBC94BED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeAccounts", "SFA.DAS.ApprenticeAccounts\SFA.DAS.ApprenticeAccounts.csproj", "{5487C73D-FE32-4B69-9C19-5EA4CBC94BED}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SFA.DAS.ApprenticeCommitments.Database", "SFA.DAS.ApprenticeCommitments.Database\SFA.DAS.ApprenticeCommitments.Database.sqlproj", "{B6B93323-3C9F-49A6-AC88-3E8349AC6CC9}"
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SFA.DAS.ApprenticeAccounts.Database", "SFA.DAS.ApprenticeAccounts.Database\SFA.DAS.ApprenticeAccounts.Database.sqlproj", "{B6B93323-3C9F-49A6-AC88-3E8349AC6CC9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeCommitments.UnitTests", "SFA.DAS.ApprenticeCommitments.UnitTests\SFA.DAS.ApprenticeCommitments.UnitTests.csproj", "{FE038EE1-0BD0-4656-B99F-A6521592E93A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeAccounts.UnitTests", "SFA.DAS.ApprenticeAccounts.UnitTests\SFA.DAS.ApprenticeAccounts.UnitTests.csproj", "{FE038EE1-0BD0-4656-B99F-A6521592E93A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests", "SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests\SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.csproj", "{BF3987A0-6CD3-488F-975D-C2A19EFC7566}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests", "SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests\SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.csproj", "{BF3987A0-6CD3-488F-975D-C2A19EFC7566}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A2B47042-B11E-4BF3-B35D-6615A7705174}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeCommitments.Messages", "SFA.DAS.ApprenticeCommitments.Messages\SFA.DAS.ApprenticeCommitments.Messages.csproj", "{C22AC089-5C35-4C6B-83C9-01EB80BC11C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SFA.DAS.ApprenticeAccounts.Messages", "SFA.DAS.ApprenticeAccounts.Messages\SFA.DAS.ApprenticeAccounts.Messages.csproj", "{C22AC089-5C35-4C6B-83C9-01EB80BC11C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

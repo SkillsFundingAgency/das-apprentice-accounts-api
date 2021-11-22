@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.Steps
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
 {
     [Binding]
     [Scope(Feature = "NegativeHealthCheck")]

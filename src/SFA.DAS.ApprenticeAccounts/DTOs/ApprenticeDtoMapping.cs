@@ -1,9 +1,9 @@
-﻿using SFA.DAS.ApprenticeCommitments.Data.Models;
+﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
-namespace SFA.DAS.ApprenticeCommitments.DTOs
+namespace SFA.DAS.ApprenticeAccounts.DTOs
 {
     public static class ApprenticeDtoMapping
     {

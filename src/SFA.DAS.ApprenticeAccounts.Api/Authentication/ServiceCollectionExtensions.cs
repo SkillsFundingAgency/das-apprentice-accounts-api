@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
-using SFA.DAS.ApprenticeCommitments.Configuration;
+using SFA.DAS.ApprenticeAccounts.Configuration;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.Authentication
+namespace SFA.DAS.ApprenticeAccounts.Api.Authentication
 {
     public static class ServiceCollectionExtensions
     {

@@ -2,13 +2,13 @@
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.ApprenticeCommitments.Infrastructure.Mediator;
+using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using SFA.DAS.UnitOfWork.Managers;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeCommitments.UnitTests.Infrastructure.MediatorTests
+namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
 {
     public class WhenInvokingUnitOfWorkInMediatorPipeline
     {

@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "SFA.DAS.ApprenticeCommitments.Api": {
+    "SFA.DAS.ApprenticeAccounts.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "",

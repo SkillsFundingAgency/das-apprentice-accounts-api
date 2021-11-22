@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.UnitOfWork.Managers;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
     public class FakeUnitOfWorkManager : IUnitOfWorkManager
     {

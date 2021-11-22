@@ -4,7 +4,7 @@ using NLog.Web;
 using SFA.DAS.NServiceBus.Configuration.MicrosoftDependencyInjection;
 using System;
 
-namespace SFA.DAS.ApprenticeCommitments.Api
+namespace SFA.DAS.ApprenticeAccounts.Api
 {
     public static class Program
     {

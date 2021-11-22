@@ -1,9 +1,9 @@
 ﻿using NServiceBus.Testing;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
-using SFA.DAS.ApprenticeCommitments.Infrastructure;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using System;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
     public class TestContext : IDisposable
     {

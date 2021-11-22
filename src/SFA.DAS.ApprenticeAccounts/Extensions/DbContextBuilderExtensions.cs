@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using SFA.DAS.ApprenticeCommitments.Infrastructure;
+using SFA.DAS.ApprenticeAccounts.Infrastructure;
 
-namespace SFA.DAS.ApprenticeCommitments.Extensions
+namespace SFA.DAS.ApprenticeAccounts.Extensions
 {
     public static class DbContextBuilderExtensions
     {

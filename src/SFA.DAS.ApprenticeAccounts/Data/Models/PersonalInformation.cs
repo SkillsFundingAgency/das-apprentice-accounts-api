@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Mail;
 
-namespace SFA.DAS.ApprenticeCommitments.Data.Models
+namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
     public struct PersonalInformation
     {

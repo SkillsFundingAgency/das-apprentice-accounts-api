@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SFA.DAS.ApprenticeCommitments.UnitTests
+namespace SFA.DAS.ApprenticeAccounts.UnitTests
 {
     public static class CloneExtensionMethods
     {

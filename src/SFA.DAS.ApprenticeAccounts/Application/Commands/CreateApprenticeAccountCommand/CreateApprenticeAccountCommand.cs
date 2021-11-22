@@ -1,7 +1,7 @@
-﻿using SFA.DAS.ApprenticeCommitments.Infrastructure.Mediator;
+﻿using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using System;
 
-namespace SFA.DAS.ApprenticeCommitments.Application.Commands.CreateApprenticeAccountCommand
+namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand
 {
     public class CreateApprenticeAccountCommand : IUnitOfWorkCommand
     {

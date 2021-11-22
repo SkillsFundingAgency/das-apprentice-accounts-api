@@ -2,11 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <AssemblyName>SFA.DAS.ApprenticeCommitments.Migrations</AssemblyName>
+    <AssemblyName>SFA.DAS.ApprenticeAccounts.Migrations</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SFA.DAS.ApprenticeCommitments\SFA.DAS.ApprenticeCommitments.csproj" />
+    <ProjectReference Include="..\SFA.DAS.ApprenticeAccounts\SFA.DAS.ApprenticeAccounts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

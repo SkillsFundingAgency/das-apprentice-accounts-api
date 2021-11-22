@@ -1,11 +1,10 @@
 ﻿using AutoFixture;
 using FluentAssertions;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
-using SFA.DAS.ApprenticeCommitments.DTOs;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.Steps
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
 {
     [Binding]
     [Scope(Feature = "GetApprentice")]
@@ -21,9 +20,6 @@ namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.Steps
             _apprentice = _fixture.Build<Apprentice>().Create();
 
             var startDate = new System.DateTime(2000, 01, 01);
-            _fixture.Register(() => new CourseDetails(
-                _fixture.Create("CourseName"), 1, null,
-                startDate, startDate.AddMonths(32), 33));
         }
 
         [Given("there is one apprentice")]

@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace SFA.DAS.ApprenticeCommitments.UnitTests
+namespace SFA.DAS.ApprenticeAccounts.UnitTests
 {
     public static class PropertyExtensions
     {

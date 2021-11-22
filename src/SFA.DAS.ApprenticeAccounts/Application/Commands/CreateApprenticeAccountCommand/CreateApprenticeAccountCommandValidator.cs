@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 
-namespace SFA.DAS.ApprenticeCommitments.Application.Commands.CreateApprenticeAccountCommand
+namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand
 {
     public class CreateApprenticeAccountCommandValidator : AbstractValidator<CreateApprenticeAccountCommand>
     {

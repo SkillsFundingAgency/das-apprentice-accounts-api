@@ -1,6 +1,6 @@
 ﻿#nullable disable
 
-namespace SFA.DAS.ApprenticeCommitments.Configuration
+namespace SFA.DAS.ApprenticeAccounts.Configuration
 {
     public class AzureActiveDirectoryConfiguration
     {

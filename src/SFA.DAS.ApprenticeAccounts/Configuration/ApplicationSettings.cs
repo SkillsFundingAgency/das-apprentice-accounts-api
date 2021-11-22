@@ -2,7 +2,7 @@
 
 using System;
 
-namespace SFA.DAS.ApprenticeCommitments.Configuration
+namespace SFA.DAS.ApprenticeAccounts.Configuration
 {
     public class ApplicationSettings
     {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeCommitments.Infrastructure
+namespace SFA.DAS.ApprenticeAccounts.Infrastructure
 {
     public interface IManagedIdentityTokenProvider
     {

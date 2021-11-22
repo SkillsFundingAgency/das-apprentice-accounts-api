@@ -1,7 +1,7 @@
 ﻿using System.Data.Common;
 using Microsoft.EntityFrameworkCore;
 
-namespace SFA.DAS.ApprenticeCommitments.Infrastructure
+namespace SFA.DAS.ApprenticeAccounts.Infrastructure
 {
     public interface IConnectionFactory
     {

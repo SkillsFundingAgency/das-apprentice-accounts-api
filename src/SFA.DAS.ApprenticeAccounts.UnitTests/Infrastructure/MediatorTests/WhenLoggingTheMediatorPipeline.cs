@@ -6,9 +6,9 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.ApprenticeCommitments.Infrastructure.Mediator;
+using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 
-namespace SFA.DAS.ApprenticeCommitments.UnitTests.Infrastructure.MediatorTests
+namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
 {
     public class WhenLoggingTheMediatorPipeline
     {

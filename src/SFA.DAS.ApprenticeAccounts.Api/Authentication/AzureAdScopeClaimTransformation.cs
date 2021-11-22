@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.Authentication
+namespace SFA.DAS.ApprenticeAccounts.Api.Authentication
 {
     public class AzureAdScopeClaimTransformation : IClaimsTransformation
     {

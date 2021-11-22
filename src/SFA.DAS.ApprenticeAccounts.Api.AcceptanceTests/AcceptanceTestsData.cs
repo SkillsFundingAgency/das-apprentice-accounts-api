@@ -1,4 +1,4 @@
-﻿namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
+﻿namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
     public static class AcceptanceTestsData
     {

@@ -1,9 +1,9 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using System;
-using static SFA.DAS.ApprenticeCommitments.Extensions.DateCalculations;
+using static SFA.DAS.ApprenticeAccounts.Extensions.DateCalculations;
 
-namespace SFA.DAS.ApprenticeCommitments.UnitTests
+namespace SFA.DAS.ApprenticeAccounts.UnitTests
 {
     public class MonthDifferenceTests
     {

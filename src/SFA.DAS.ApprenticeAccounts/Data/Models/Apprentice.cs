@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
-using SFA.DAS.ApprenticeCommitments.Exceptions;
+using SFA.DAS.ApprenticeAccounts.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 
-namespace SFA.DAS.ApprenticeCommitments.Data.Models
+namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
     public class Apprentice
     {
@@ -24,11 +24,6 @@ namespace SFA.DAS.ApprenticeCommitments.Data.Models
         }
 
         public Guid Id { get; private set; }
-
-        public void AddApprenticeship(Revision apprenticeship)
-        {
-            Apprenticeships.Add(new Apprenticeship(apprenticeship));
-        }
 
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
@@ -59,9 +54,6 @@ namespace SFA.DAS.ApprenticeCommitments.Data.Models
                 _termsOfUseAcceptedOn = DateTime.Now;
             }
         }
-
-        public ICollection<Apprenticeship> Apprenticeships { get; private set; }
-                    = new List<Apprenticeship>();
 
         public DateTime CreatedOn { get; private set; } = DateTime.UtcNow;
 

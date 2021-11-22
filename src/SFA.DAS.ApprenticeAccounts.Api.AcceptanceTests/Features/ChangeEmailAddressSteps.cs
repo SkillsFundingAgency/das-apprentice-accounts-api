@@ -1,14 +1,14 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using SFA.DAS.ApprenticeCommitments.Api.Controllers;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Api.Controllers;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.Steps
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
 {
     [Binding]
     [Scope(Feature = "ChangeEmailAddress")]

@@ -2,14 +2,14 @@
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
-using SFA.DAS.ApprenticeCommitments.Application.Commands.CreateApprenticeAccountCommand;
-using SFA.DAS.ApprenticeCommitments.Application.Commands.CreateRegistrationCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateRegistrationCommand;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.WorkflowTests
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
 {
     public class Step2CreateApprenticeAccount : ApiFixture
     {
@@ -35,25 +35,22 @@ namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.WorkflowTests
         [Test]
         public async Task Can_retrieve_apprentice()
         {
-            var approval = fixture.Create<CreateRegistrationCommand>();
-            var account = await CreateAccount(approval);
+            var account = await CreateAccount();
             var apprentice = await GetApprentice(account.ApprenticeId);
             apprentice.Should().BeEquivalentTo(new
             {
                 Id = account.ApprenticeId,
-                approval.DateOfBirth,
-                approval.Email,
-                approval.FirstName,
-                approval.LastName,
+                account.DateOfBirth,
+                account.Email,
+                account.FirstName,
+                account.LastName,
             });
         }
 
         [Test]
         public async Task Stores_email_address_history()
         {
-            var approval = fixture.Create<CreateRegistrationCommand>();
-
-            var account = await CreateAccount(approval);
+            var account = await CreateAccount();
 
             var apprentice = await Database.Apprentices
                 .Include(x => x.PreviousEmailAddresses)
@@ -67,8 +64,7 @@ namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.WorkflowTests
         [Test]
         public async Task Can_update_apprentice_before_matched()
         {
-            var approval = fixture.Create<CreateRegistrationCommand>();
-            var account = await CreateAccount(approval);
+            var account = await CreateAccount();
 
             account.FirstName = fixture.Create("updated first name");
             account.LastName = fixture.Create("updated last name");
@@ -88,8 +84,7 @@ namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.WorkflowTests
         [Test]
         public async Task Update_apprentice_must_use_valid_values()
         {
-            var approval = fixture.Create<CreateRegistrationCommand>();
-            var account = await CreateAccount(approval);
+            var account = await CreateAccount();
 
             var response = await SendUpdateAccountRequest(account.ApprenticeId, null, "", DateTime.MinValue);
             response.Should().Be400BadRequest().And.BeAs(new

@@ -1,11 +1,11 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
-using SFA.DAS.ApprenticeCommitments.Infrastructure;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using System;
 using System.Data.Common;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
     public interface ITestsDbConnectionFactory : IConnectionFactory
     {
@@ -95,7 +95,7 @@ namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
 
     internal class SqlServerTestsConnectionFactory : IConnectionFactory, ITestsDbConnectionFactory
     {
-        public string ConnectionString => "Data Source=.;Initial Catalog=SFA.DAS.ApprenticeCommitments.AcceptanceTests;Integrated Security=True;";
+        public string ConnectionString => "Data Source=.;Initial Catalog=SFA.DAS.ApprenticeAccounts.AcceptanceTests;Integrated Security=True;";
 
         public void EnsureCreated(ApprenticeCommitmentsDbContext dbContext)
         {
@@ -106,7 +106,7 @@ namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests
 
 To ensure that we are testing against the real database schema used in production, do not rely on EFCore to create the database.
 
-Instead, manually deploy the database using the `SFA.DAS.ApprenticeCommitments.Database` project, targetting `SFA.DAS.ApprenticeCommitments.AcceptanceTests`");
+Instead, manually deploy the database using the `SFA.DAS.ApprenticeAccounts.Database` project, targetting `SFA.DAS.ApprenticeAccounts.AcceptanceTests`");
             }
 
             dbContext.Database.ExecuteSqlRaw("truncate table Revision");

@@ -1,16 +1,18 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using SFA.DAS.ApprenticeCommitments.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using SFA.DAS.ApprenticeAccounts.Data;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeCommitments.Infrastructure
+namespace SFA.DAS.ApprenticeAccounts.Infrastructure
 {
     public class ApprenticeCommitmentsHealthCheck : IHealthCheck
     {
         private const string HealthCheckResultsDescription = "Apprentice Commitments API Health Check";
-        private readonly IRegistrationContext _registrationRepository;
+        private readonly IApprenticeContext _registrationRepository;
 
-        public ApprenticeCommitmentsHealthCheck(IRegistrationContext registrationRepository)
+        public ApprenticeCommitmentsHealthCheck(IApprenticeContext registrationRepository)
         {
             _registrationRepository = registrationRepository;
         }
@@ -20,7 +22,7 @@ namespace SFA.DAS.ApprenticeCommitments.Infrastructure
             var dbConnectionHealthy = true;
             try
             {
-                await _registrationRepository.RegistrationsExist();
+                await _registrationRepository.Entities.Take(1).ToListAsync();
             }
             catch
             {

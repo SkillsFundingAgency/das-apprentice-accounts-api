@@ -2,9 +2,9 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using SFA.DAS.ApprenticeCommitments.Extensions;
+using SFA.DAS.ApprenticeAccounts.Extensions;
 
-namespace SFA.DAS.ApprenticeCommitments.Infrastructure
+namespace SFA.DAS.ApprenticeAccounts.Infrastructure
 {
     public class SqlServerConnectionFactory : IConnectionFactory
     {

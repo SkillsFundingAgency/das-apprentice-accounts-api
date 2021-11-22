@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable enable
 
-namespace SFA.DAS.ApprenticeCommitments.Data.Models
+namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
     public abstract class Entity
     {

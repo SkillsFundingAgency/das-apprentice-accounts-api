@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace SFA.DAS.ApprenticeCommitments.Exceptions
+namespace SFA.DAS.ApprenticeAccounts.Exceptions
 {
     [Serializable]
     public sealed class EntityNotFoundException : Exception

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using TechTalk.SpecFlow;
 
-namespace SFA.DAS.ApprenticeCommitments.Api.AcceptanceTests.Bindings
+namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
 {
     [Binding]
     [Scope(Tag = "database")]

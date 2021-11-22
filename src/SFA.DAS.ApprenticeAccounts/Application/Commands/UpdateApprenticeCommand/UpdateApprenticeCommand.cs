@@ -2,15 +2,15 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SFA.DAS.ApprenticeCommitments.Application.Commands.CreateApprenticeAccountCommand;
-using SFA.DAS.ApprenticeCommitments.Data;
-using SFA.DAS.ApprenticeCommitments.Data.Models;
-using SFA.DAS.ApprenticeCommitments.Infrastructure.Mediator;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
+using SFA.DAS.ApprenticeAccounts.Data;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeCommitments.Application.Commands.UpdateApprenticeCommand
+namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand
 {
     public class UpdateApprenticeCommand : IUnitOfWorkCommand
     {

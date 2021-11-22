@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using SFA.DAS.ApprenticeCommitments.DTOs;
+using SFA.DAS.ApprenticeAccounts.DTOs;
 using System;
 
-namespace SFA.DAS.ApprenticeCommitments.Application.Queries.ApprenticesQuery
+namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
 {
     public class ApprenticesQuery : IRequest<ApprenticeDto?>
     {

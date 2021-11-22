@@ -4,7 +4,7 @@ using System;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
-namespace SFA.DAS.ApprenticeCommitments.Exceptions
+namespace SFA.DAS.ApprenticeAccounts.Exceptions
 {
 // By design this class restricts construction options.
 #pragma warning disable RCS1194 // Implement exception constructors.

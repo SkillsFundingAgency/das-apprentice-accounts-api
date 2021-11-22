@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 
-namespace SFA.DAS.ApprenticeCommitments.UnitTests
+namespace SFA.DAS.ApprenticeAccounts.UnitTests
 {
     public static class MockILoggerExtensions
     {

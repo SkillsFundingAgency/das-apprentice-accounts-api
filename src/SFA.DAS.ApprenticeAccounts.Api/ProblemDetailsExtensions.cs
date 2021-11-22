@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SFA.DAS.ApprenticeCommitments.Exceptions;
+using SFA.DAS.ApprenticeAccounts.Exceptions;
 using System.Linq;
 
-namespace SFA.DAS.ApprenticeCommitments.Api
+namespace SFA.DAS.ApprenticeAccounts.Api
 {
     public static class ProblemDetailsExtensions
     {

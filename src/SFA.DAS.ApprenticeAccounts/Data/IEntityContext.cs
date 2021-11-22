@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 #nullable enable
 
-namespace SFA.DAS.ApprenticeCommitments.Data
+namespace SFA.DAS.ApprenticeAccounts.Data
 {
     public interface IEntityContext<T> where T : class
     {

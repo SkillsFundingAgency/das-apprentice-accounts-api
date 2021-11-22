@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using SFA.DAS.ApprenticeCommitments.Data;
-using SFA.DAS.ApprenticeCommitments.DTOs;
+using SFA.DAS.ApprenticeAccounts.Data;
+using SFA.DAS.ApprenticeAccounts.DTOs;
 using System.Threading;
 using System.Threading.Tasks;
 
 #nullable enable
 
-namespace SFA.DAS.ApprenticeCommitments.Application.Queries.ApprenticesQuery
+namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
 {
     public class ApprenticesQueryHandler
         : IRequestHandler<ApprenticesQuery, ApprenticeDto?>

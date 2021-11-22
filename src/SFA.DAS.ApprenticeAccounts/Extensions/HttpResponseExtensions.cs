@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace SFA.DAS.ApprenticeCommitments.Extensions
+namespace SFA.DAS.ApprenticeAccounts.Extensions
 {
     public static class HttpResponseExtensions
     {
