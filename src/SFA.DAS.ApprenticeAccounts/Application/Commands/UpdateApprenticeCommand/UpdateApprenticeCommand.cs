@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
 using SFA.DAS.ApprenticeAccounts.Data;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.DTOs;
 using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using System;
 using System.Threading;
@@ -14,14 +14,14 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
 {
     public class UpdateApprenticeCommand : IUnitOfWorkCommand
     {
-        public UpdateApprenticeCommand(Guid apprenticeId, JsonPatchDocument<Apprentice> updates)
+        public UpdateApprenticeCommand(Guid apprenticeId, JsonPatchDocument<ApprenticePatchDto> updates)
         {
             ApprenticeId = apprenticeId;
             Updates = updates;
         }
 
         public Guid ApprenticeId { get; }
-        public JsonPatchDocument<Apprentice> Updates { get; }
+        public JsonPatchDocument<ApprenticePatchDto> Updates { get; }
     }
 
     public class UpdateApprenticeCommandHandler : IRequestHandler<UpdateApprenticeCommand>
@@ -39,7 +39,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
         {
             _logger.LogInformation($"Updating {request.ApprenticeId} - {JsonConvert.SerializeObject(request.Updates)}");
             var app = await _apprentices.GetById(request.ApprenticeId);
-            request.Updates.ApplyTo(app);
+            request.Updates.ApplyTo(new ApprenticePatchDto(app, _logger));
             var validation = new ApprenticeValidator().Validate(app);
             if (!validation.IsValid) throw new FluentValidation.ValidationException(validation.Errors);
             return Unit.Value;

@@ -2,20 +2,14 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateRegistrationCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.DTOs;
 using System;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
 {
-    public class ChangeEmailAddressRequest
-    {
-        public string Email { get; set; }
-    }
-
     [ApiController]
     public class ApprenticesController : ControllerBase
     {
@@ -39,15 +33,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             => await _mediator.Send(command);
 
         [HttpPatch("apprentices/{id}")]
-        public async Task UpdateApprentice(Guid id, JsonPatchDocument<Apprentice> changes)
+        public async Task UpdateApprentice(Guid id, JsonPatchDocument<ApprenticePatchDto> changes)
             => await _mediator.Send(new UpdateApprenticeCommand(id, changes));
-
-        [HttpPost("apprentices/{id}/email")]
-        [Obsolete("Use PATCH /apprentices/{id}")]
-        public async Task<IActionResult> CreateRegistration(Guid id, ChangeEmailAddressRequest request)
-        {
-            await _mediator.Send(new ChangeEmailAddressCommand(id, request.Email));
-            return Accepted();
-        }
     }
 }
