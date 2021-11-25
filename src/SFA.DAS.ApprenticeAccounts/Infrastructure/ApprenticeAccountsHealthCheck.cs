@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Infrastructure
 {
-    public class ApprenticeCommitmentsHealthCheck : IHealthCheck
+    public class ApprenticeAccountsHealthCheck : IHealthCheck
     {
         private const string HealthCheckResultsDescription = "Apprentice Commitments API Health Check";
         private readonly IApprenticeContext _registrationRepository;
 
-        public ApprenticeCommitmentsHealthCheck(IApprenticeContext registrationRepository)
+        public ApprenticeAccountsHealthCheck(IApprenticeContext registrationRepository)
         {
             _registrationRepository = registrationRepository;
         }

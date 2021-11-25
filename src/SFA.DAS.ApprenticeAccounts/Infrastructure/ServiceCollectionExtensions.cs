@@ -30,7 +30,7 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddServicesForApprenticeCommitments(this IServiceCollection services)
+        public static IServiceCollection AddServicesForApprenticeAccounts(this IServiceCollection services)
         {
             services.AddMediatR(typeof(UnitOfWorkPipelineBehavior<,>).Assembly);
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
@@ -40,13 +40,13 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
             services.AddTransient<ITimeProvider, UtcTimeProvider>();
             services.AddSingleton<IManagedIdentityTokenProvider, ManagedIdentityTokenProvider>();
             services.AddTransient<IConnectionFactory, SqlServerConnectionFactory>();
-            services.AddScoped<IApprenticeContext>(s => s.GetRequiredService<ApprenticeCommitmentsDbContext>());
+            services.AddScoped<IApprenticeContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
             services.AddScoped<EventDispatcher>();
 
             return services;
         }
 
-        public static IServiceCollection AddEntityFrameworkForApprenticeCommitments(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddEntityFrameworkForApprenticeAccounts(this IServiceCollection services, IConfiguration config)
         {
             return services.AddScoped(p =>
             {
@@ -54,28 +54,28 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
                 var connectionFactory = p.GetRequiredService<IConnectionFactory>();
                 var loggerFactory = p.GetRequiredService<ILoggerFactory>();
 
-                ApprenticeCommitmentsDbContext dbContext;
+                ApprenticeAccountsDbContext dbContext;
                 try
                 {
                     var synchronizedStorageSession = unitOfWorkContext.Get<SynchronizedStorageSession>();
                     var sqlStorageSession = synchronizedStorageSession.GetSqlStorageSession();
-                    var optionsBuilder = new DbContextOptionsBuilder<ApprenticeCommitmentsDbContext>()
+                    var optionsBuilder = new DbContextOptionsBuilder<ApprenticeAccountsDbContext>()
                         .UseDataStorage(connectionFactory, sqlStorageSession.Connection)
                         .UseLocalSqlLogger(loggerFactory, config);
                     if (config.IsLocalAcceptanceOrDev())
                     {
                         optionsBuilder.EnableSensitiveDataLogging().UseLoggerFactory(loggerFactory);
                     }
-                    dbContext = new ApprenticeCommitmentsDbContext(optionsBuilder.Options, p.GetRequiredService<EventDispatcher>());
+                    dbContext = new ApprenticeAccountsDbContext(optionsBuilder.Options, p.GetRequiredService<EventDispatcher>());
                     dbContext.Database.UseTransaction(sqlStorageSession.Transaction);
                 }
                 catch (KeyNotFoundException)
                 {
                     var settings = p.GetRequiredService<IOptions<ApplicationSettings>>().Value;
-                    var optionsBuilder = new DbContextOptionsBuilder<ApprenticeCommitmentsDbContext>()
+                    var optionsBuilder = new DbContextOptionsBuilder<ApprenticeAccountsDbContext>()
                         .UseDataStorage(connectionFactory, settings.DbConnectionString)
                         .UseLocalSqlLogger(loggerFactory, config);
-                    dbContext = new ApprenticeCommitmentsDbContext(optionsBuilder.Options, p.GetRequiredService<EventDispatcher>());
+                    dbContext = new ApprenticeAccountsDbContext(optionsBuilder.Options, p.GetRequiredService<EventDispatcher>());
                 }
 
                 return dbContext;

@@ -7,9 +7,9 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
     public class FakeUnitOfWorkManager : IUnitOfWorkManager
     {
-        private readonly Lazy<ApprenticeCommitmentsDbContext> _dbContext;
+        private readonly Lazy<ApprenticeAccountsDbContext> _dbContext;
 
-        public FakeUnitOfWorkManager(Lazy<ApprenticeCommitmentsDbContext> dbContext)
+        public FakeUnitOfWorkManager(Lazy<ApprenticeAccountsDbContext> dbContext)
         {
             _dbContext = dbContext;
         }

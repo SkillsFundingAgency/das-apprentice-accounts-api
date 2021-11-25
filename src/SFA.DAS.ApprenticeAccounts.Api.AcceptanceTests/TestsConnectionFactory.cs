@@ -11,9 +11,9 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
     {
         string ConnectionString { get; }
 
-        void EnsureCreated(ApprenticeCommitmentsDbContext dbContext);
+        void EnsureCreated(ApprenticeAccountsDbContext dbContext);
 
-        void EnsureDeleted(ApprenticeCommitmentsDbContext dbContext);
+        void EnsureDeleted(ApprenticeAccountsDbContext dbContext);
     }
 
     public class TestsDbConnectionFactory : IConnectionFactory
@@ -30,10 +30,10 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
             //*/
         }
 
-        internal void EnsureCreated(ApprenticeCommitmentsDbContext dbContext)
+        internal void EnsureCreated(ApprenticeAccountsDbContext dbContext)
             => factory.EnsureCreated(dbContext);
 
-        internal void EnsureDeleted(ApprenticeCommitmentsDbContext dbContext)
+        internal void EnsureDeleted(ApprenticeAccountsDbContext dbContext)
             => factory.EnsureDeleted(dbContext);
 
         public DbContextOptionsBuilder<TContext> AddConnection<TContext>(
@@ -64,13 +64,13 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
     {
         public string ConnectionString => $"Data Source={AcceptanceTestsData.AcceptanceTestsDatabaseName}";
 
-        public void EnsureCreated(ApprenticeCommitmentsDbContext dbContext)
+        public void EnsureCreated(ApprenticeAccountsDbContext dbContext)
         {
             dbContext.Database.EnsureDeleted();
             dbContext.Database.EnsureCreated();
         }
 
-        public void EnsureDeleted(ApprenticeCommitmentsDbContext dbContext)
+        public void EnsureDeleted(ApprenticeAccountsDbContext dbContext)
         {
             dbContext.Database.EnsureDeleted();
         }
@@ -97,7 +97,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
     {
         public string ConnectionString => "Data Source=.;Initial Catalog=SFA.DAS.ApprenticeAccounts.AcceptanceTests;Integrated Security=True;";
 
-        public void EnsureCreated(ApprenticeCommitmentsDbContext dbContext)
+        public void EnsureCreated(ApprenticeAccountsDbContext dbContext)
         {
             if (!dbContext.Database.CanConnect())
             {
@@ -116,7 +116,7 @@ Instead, manually deploy the database using the `SFA.DAS.ApprenticeAccounts.Data
             dbContext.Database.ExecuteSqlRaw("delete from Apprentice");
         }
 
-        public void EnsureDeleted(ApprenticeCommitmentsDbContext dbContext)
+        public void EnsureDeleted(ApprenticeAccountsDbContext dbContext)
         {
         }
 

@@ -13,7 +13,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.SqlServerConnectio
         private ApprenticeAccounts.Infrastructure.SqlServerConnectionFactory _sut;
         private Mock<IConfiguration> _configurationMock;
         private Mock<IManagedIdentityTokenProvider> _managedIdentityTokenProviderMock;
-        private DbContextOptionsBuilder<ApprenticeCommitmentsDbContext> _dbContextOptionsBuilder;
+        private DbContextOptionsBuilder<ApprenticeAccountsDbContext> _dbContextOptionsBuilder;
         private string _connectionString;
 
         [SetUp]
@@ -22,7 +22,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.SqlServerConnectio
             _configurationMock = new Mock<IConfiguration>();
             _managedIdentityTokenProviderMock = new Mock<IManagedIdentityTokenProvider>();
             _managedIdentityTokenProviderMock.Setup(x => x.GetSqlAccessTokenAsync()).ReturnsAsync("TOKEN");
-            _dbContextOptionsBuilder = new DbContextOptionsBuilder<ApprenticeCommitmentsDbContext>();
+            _dbContextOptionsBuilder = new DbContextOptionsBuilder<ApprenticeAccountsDbContext>();
 
             _sut = new ApprenticeAccounts.Infrastructure.SqlServerConnectionFactory(_configurationMock.Object, _managedIdentityTokenProviderMock.Object);
             _connectionString = "Data Source=someserver;Initial Catalog=DummyDatabase;Integrated Security=False";

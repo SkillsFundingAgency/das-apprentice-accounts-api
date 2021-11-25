@@ -1,19 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
 
-    <Description>Apprentice Commitments integration messages</Description>
+    <Description>Apprentice Accounts integration messages</Description>
     <Authors>ESFA</Authors>
     <Company>ESFA</Company>
-    <PackageLicense>https://github.com/SkillsFundingAgency/das-apprentice-commitments-api/master/LICENSE</PackageLicense>
-    <PackageProjectUrl>https://github.com/SkillsFundingAgency/das-apprentice-commitments-api</PackageProjectUrl>
+    <PackageLicense>https://github.com/SkillsFundingAgency/das-apprentice-accounts-api/master/LICENSE</PackageLicense>
+    <PackageProjectUrl>https://github.com/SkillsFundingAgency/das-apprentice-accounts-api</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageOutputPath>..\NugetPackages</PackageOutputPath>
+	  <PackageOutputPath>$(SolutionDir)..\..\NugetPackages</PackageOutputPath>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Events\" />
+    <Compile Remove="Events\**" />
+    <EmbeddedResource Remove="Events\**" />
+    <None Remove="Events\**" />
   </ItemGroup>
 
 </Project>

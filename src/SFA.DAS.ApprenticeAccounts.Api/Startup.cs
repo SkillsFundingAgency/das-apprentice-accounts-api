@@ -82,14 +82,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddSingleton(s => s.GetRequiredService<IOptions<ApplicationSettings>>().Value);
 
-            services.AddEntityFrameworkForApprenticeCommitments(Configuration)
-                .AddEntityFrameworkUnitOfWork<ApprenticeCommitmentsDbContext>()
+            services.AddEntityFrameworkForApprenticeAccounts(Configuration)
+                .AddEntityFrameworkUnitOfWork<ApprenticeAccountsDbContext>()
                 .AddNServiceBusClientUnitOfWork();
 
-            services.AddServicesForApprenticeCommitments();
+            services.AddServicesForApprenticeAccounts();
 
             services.AddHealthChecks()
-                .AddCheck<ApprenticeCommitmentsHealthCheck>(nameof(ApprenticeCommitmentsHealthCheck));
+                .AddCheck<ApprenticeAccountsHealthCheck>(nameof(ApprenticeAccountsHealthCheck));
 
             services
                 .AddMvc(o =>
@@ -130,7 +130,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("swagger/v1/swagger.json", "Apprentice Commitments API");
+                c.SwaggerEndpoint("swagger/v1/swagger.json", "Apprentice Accounts API");
                 c.RoutePrefix = string.Empty;
             });
 

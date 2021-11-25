@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
-    public class ApprenticeCommitmentsDbContext
+    public class ApprenticeAccountsDbContext
         : DbContext, IApprenticeContext
     {
         protected IEventDispatcher _dispatcher;
 
-        public ApprenticeCommitmentsDbContext(DbContextOptions<ApprenticeCommitmentsDbContext> options)
+        public ApprenticeAccountsDbContext(DbContextOptions<ApprenticeAccountsDbContext> options)
             : this(options, new NullEventDispatcher())
         {
         }
 
-        public ApprenticeCommitmentsDbContext(
-            DbContextOptions<ApprenticeCommitmentsDbContext> options,
+        public ApprenticeAccountsDbContext(
+            DbContextOptions<ApprenticeAccountsDbContext> options,
             IEventDispatcher dispatcher) : base(options)
         {
             _dispatcher = dispatcher;

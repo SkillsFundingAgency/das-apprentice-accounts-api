@@ -22,9 +22,9 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
             _context.DbContext = CreateDbContext();
         }
 
-        public static ApprenticeCommitmentsDbContext CreateDbContext()
+        public static ApprenticeAccountsDbContext CreateDbContext()
         {
-            var optionsBuilder = new DbContextOptionsBuilder<ApprenticeCommitmentsDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<ApprenticeAccountsDbContext>();
             var options = dbFactory
                 .AddConnection(optionsBuilder)
                 .EnableSensitiveDataLogging()

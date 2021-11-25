@@ -20,7 +20,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
         protected Fixture fixture = null!;
         protected TestContext context = null!;
         protected HttpClient client = null!;
-        protected ApprenticeCommitmentsDbContext Database { get; private set; } = null!;
+        protected ApprenticeAccountsDbContext Database { get; private set; } = null!;
         protected TestableMessageSession Messages => context.Messages;
 
         protected TimeSpan TimeBetweenActions = TimeSpan.FromDays(2);
