@@ -13,6 +13,15 @@ jobs:
     runOnce:
       deploy:
         steps:
+        - template: azure-pipelines-templates/deploy/step/set-backendaccessrestrictions-variable.yml@das-platform-building-blocks
+          parameters:
+            ServiceConnection: ${{ parameters.ServiceConnection }}
+            SharedEnvResourceGroup: $(SharedEnvResourceGroup)
+            SharedEnvVirtualNetworkName : $(SharedEnvVirtualNetworkName)
+            BackEndAccessRestrictionsExcludedSubnets: $(BackEndAccessRestrictionsExcludedSubnets)
+            ResourceEnvironmentName: $(ResourceEnvironmentName)
+            UnrestrictedEnvironments: $(UnrestrictedEnvironments)
+            UptimeMonitoringAccessRestrictions: $(UptimeMonitoringAccessRestrictions)
         - template: azure-pipelines-templates/deploy/step/arm-deploy.yml@das-platform-building-blocks
           parameters:
             ServiceConnection: ${{ parameters.ServiceConnection }}
