@@ -14,7 +14,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
             isDisposed = false;
         }
 
-        public ApprenticeCommitmentsApi Api { get; set; }
+        public ApprenticeAccountsApi Api { get; set; }
         public ApprenticeAccountsDbContext DbContext { get; set; }
 
         public SpecifiedTimeProvider Time { get; set; }

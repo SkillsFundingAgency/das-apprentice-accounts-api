@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
-    public class ApprenticeCommitmentsApi
+    public class ApprenticeAccountsApi
     {
         public HttpClient Client { get; private set; }
         public HttpResponseMessage Response { get; set; }
@@ -12,7 +12,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
         public Uri BaseAddress { get; private set; }
         private bool isDisposed;
 
-        public ApprenticeCommitmentsApi(HttpClient client)
+        public ApprenticeAccountsApi(HttpClient client)
         {
             Client = client;
             BaseAddress = client.BaseAddress;

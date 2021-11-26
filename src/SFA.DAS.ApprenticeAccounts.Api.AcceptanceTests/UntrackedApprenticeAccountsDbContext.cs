@@ -4,9 +4,9 @@ using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
-    public class UntrackedApprenticeCommitmentsDbContext : ApprenticeAccountsDbContext
+    public class UntrackedApprenticeAccountsDbContext : ApprenticeAccountsDbContext
     {
-        public UntrackedApprenticeCommitmentsDbContext(DbContextOptions<ApprenticeAccountsDbContext> options) : base(options)
+        public UntrackedApprenticeAccountsDbContext(DbContextOptions<ApprenticeAccountsDbContext> options) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
         }

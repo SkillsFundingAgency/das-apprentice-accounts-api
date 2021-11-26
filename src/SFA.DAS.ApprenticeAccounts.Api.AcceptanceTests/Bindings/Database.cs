@@ -29,7 +29,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
                 .AddConnection(optionsBuilder)
                 .EnableSensitiveDataLogging()
                 .Options;
-            var context = new UntrackedApprenticeCommitmentsDbContext(options);
+            var context = new UntrackedApprenticeAccountsDbContext(options);
 
             dbFactory.EnsureCreated(context);
 

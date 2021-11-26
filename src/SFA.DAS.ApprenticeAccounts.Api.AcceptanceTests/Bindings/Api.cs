@@ -10,7 +10,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
     [Scope(Tag = "api")]
     public class Api
     {
-        public static ApprenticeCommitmentsApi Client { get; set; }
+        public static ApprenticeAccountsApi Client { get; set; }
         public static LocalWebApplicationFactory<Startup> Factory { get; set; }
         private static readonly Func<SpecifiedTimeProvider> _time = () => _timeProvider;
         private static readonly Func<TestableMessageSession> _messages = () => _messageProvider;
@@ -32,7 +32,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
             if (Client == null)
             {
                 Factory = CreateApiFactory();
-                Client = new ApprenticeCommitmentsApi(Factory.CreateClient());
+                Client = new ApprenticeAccountsApi(Factory.CreateClient());
             }
             _context.Api = Client;
         }
