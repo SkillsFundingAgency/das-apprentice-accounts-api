@@ -49,13 +49,36 @@
         },
         "backEndAccessRestrictions": {
             "type": "array"
+        },
+        "sharedSQLServerName": {
+            "type": "string"
+        },
+        "elasticPoolName": {
+            "defaultValue": "",
+            "type": "string"
+        },
+        "databaseSkuName": {
+            "type": "string",
+            "defaultValue": "S0"
+        },
+        "databaseTier": {
+            "type": "string",
+            "defaultValue": "Standard"
+        },
+        "logAnalyticsSubscriptionId": {
+            "type": "string",
+            "defaultValue": "[subscription().subscriptionId]"
+        },
+        "logAnalyticsWorkspaceName": {
+            "type": "string"
         }
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/",
         "resourceNamePrefix": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
-        "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-rg')]",
-        "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
+        "resourceGroupName": "[concat(variables('resourceNamePrefix'), 'api-rg')]",
+        "appServiceName": "[concat(variables('resourceNamePrefix'), 'api-as')]",
+        "databaseName": "[concat(variables('resourceNamePrefix'), 'api-as')]",
         "configNames": "SFA.DAS.ApprenticeAccounts.Api"
     },
     "resources": [
@@ -187,6 +210,45 @@
             "dependsOn": [
                 "[variables('resourceGroupName')]"
             ]
+        },
+        {
+            "apiVersion": "2020-06-01",
+            "name": "sql-database",
+            "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'),'sql-database.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "databaseName": {
+                        "value": "[variables('databaseName')]"
+                    },
+                    "sqlServerName": {
+                        "value": "[parameters('sharedSQLServerName')]"
+                    },
+                    "elasticPoolName": {
+                        "value": "[parameters('elasticPoolName')]"
+                    },
+                    "databaseSkuName": {
+                        "value": "[parameters('databaseSkuName')]"
+                    },
+                    "databaseTier": {
+                        "value": "[parameters('databaseTier')]"
+                    },
+                    "logAnalyticsSubscriptionId": {
+                        "value": "[parameters('logAnalyticsSubscriptionId')]"
+                    },
+                    "logAnalyticsResourceGroup": {
+                        "value": "[parameters('sharedManagementResourceGroup')]"
+                    },
+                    "logAnalyticsWorkspaceName": {
+                        "value": "[parameters('logAnalyticsWorkspaceName')]"
+                    }
+                }
+            }
         }
     ],
     "outputs": {
@@ -197,6 +259,10 @@
         "AppServiceName": {
             "type": "string",
             "value": "[variables('appServiceName')]"
+        },
+        "DatabaseName": {
+            "type": "string",
+            "value": "[variables('databaseName')]"
         }
     }
 }
