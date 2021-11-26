@@ -21,7 +21,7 @@ jobs:
             Environment: ${{ parameters.Environment }}
             TemplatePath: $(Pipeline.Workspace)/drop/azure/template.json
             ParametersPath: $(Pipeline.Workspace)/drop/azure/template.parameters.json
-            IsMultiRepoCheckout: true
+            IsMultiRepoCheckout: false
             TemplateSecrets:
               LoggingRedisConnectionString: $(LoggingRedisConnectionString)
               ConfigurationStorageConnectionString: $(ConfigurationStorageConnectionString)
