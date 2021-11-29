@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NServiceBus;
-using NServiceBus.Testing;
 using SFA.DAS.ApprenticeAccounts.Infrastructure;
+using SFA.DAS.NServiceBus.Services;
+using SFA.DAS.NServiceBus.Testing.Services;
 using SFA.DAS.UnitOfWork.Managers;
+using System;
+using System.Collections.Generic;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 {
@@ -15,13 +15,13 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
     {
         private readonly Dictionary<string, string> _config;
         private readonly Func<ITimeProvider> _timeProvider;
-        private readonly Func<TestableMessageSession> _messages;
+        private readonly Func<TestableEventPublisher> _events;
 
-        public LocalWebApplicationFactory(Dictionary<string, string> config, Func<ITimeProvider> timeProvider, Func<TestableMessageSession> messages)
+        public LocalWebApplicationFactory(Dictionary<string, string> config, Func<ITimeProvider> timeProvider, Func<TestableEventPublisher> events)
         {
             _config = config;
             _timeProvider = timeProvider;
-            _messages = messages;
+            _events = events;
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -31,7 +31,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
                 s.AddTransient<IUnitOfWorkManager, FakeUnitOfWorkManager>();
                 s.AddTransient<IConnectionFactory, TestsDbConnectionFactory>();
                 s.AddTransient((_) => _timeProvider());
-                s.AddTransient<IMessageSession>((_) => _messages());
+                s.AddTransient<IEventPublisher>((_) => _events());
             });
 
             builder.ConfigureAppConfiguration(a =>

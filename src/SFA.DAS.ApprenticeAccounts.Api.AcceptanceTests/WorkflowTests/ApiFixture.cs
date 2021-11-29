@@ -1,11 +1,11 @@
 using AutoFixture;
 using FluentAssertions;
 using Microsoft.AspNetCore.JsonPatch;
-using NServiceBus.Testing;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs;
+using SFA.DAS.NServiceBus.Testing.Services;
 using System;
 using System.Net.Http;
 using System.Net.Mail;
@@ -21,7 +21,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
         protected TestContext context = null!;
         protected HttpClient client = null!;
         protected ApprenticeAccountsDbContext Database { get; private set; } = null!;
-        protected TestableMessageSession Messages => context.Messages;
+        protected TestableEventPublisher Events => context.Events;
 
         protected TimeSpan TimeBetweenActions = TimeSpan.FromDays(2);
 

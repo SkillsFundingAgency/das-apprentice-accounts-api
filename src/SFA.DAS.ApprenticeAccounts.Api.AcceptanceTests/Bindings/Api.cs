@@ -1,5 +1,5 @@
-﻿using NServiceBus.Testing;
-using SFA.DAS.ApprenticeAccounts.Infrastructure;
+﻿using SFA.DAS.ApprenticeAccounts.Infrastructure;
+using SFA.DAS.NServiceBus.Testing.Services;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;
@@ -13,9 +13,9 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
         public static ApprenticeAccountsApi Client { get; set; }
         public static LocalWebApplicationFactory<Startup> Factory { get; set; }
         private static readonly Func<SpecifiedTimeProvider> _time = () => _timeProvider;
-        private static readonly Func<TestableMessageSession> _messages = () => _messageProvider;
+        private static readonly Func<TestableEventPublisher> _messages = () => _eventProvider;
         private static SpecifiedTimeProvider _timeProvider;
-        private static TestableMessageSession _messageProvider;
+        private static TestableEventPublisher _eventProvider;
 
         private readonly TestContext _context;
 
@@ -23,7 +23,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
         {
             _context = context;
             _timeProvider = context.Time;
-            _messageProvider = context.Messages;
+            _eventProvider = context.Events;
         }
 
         [BeforeScenario()]
@@ -55,7 +55,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
             Client = null;
             Factory?.Dispose();
             _timeProvider = null;
-            _messageProvider = null;
+            _eventProvider = null;
         }
     }
 }

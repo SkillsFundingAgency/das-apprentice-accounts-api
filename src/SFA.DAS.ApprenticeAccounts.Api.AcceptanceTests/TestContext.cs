@@ -1,6 +1,6 @@
-﻿using NServiceBus.Testing;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
+﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.Infrastructure;
+using SFA.DAS.NServiceBus.Testing.Services;
 using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
@@ -20,8 +20,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
         public SpecifiedTimeProvider Time { get; set; }
             = new SpecifiedTimeProvider(DateTime.UtcNow);
 
-        public TestableMessageSession Messages { get; set; }
-            = new TestableMessageSession();
+        public TestableEventPublisher Events { get; set; }
+            = new TestableEventPublisher();
 
         public void Dispose()
         {
