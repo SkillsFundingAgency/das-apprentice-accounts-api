@@ -39,7 +39,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
             var apprentice = await GetApprentice(account.ApprenticeId);
             apprentice.Should().BeEquivalentTo(new
             {
-                Id = account.ApprenticeId,
+                account.ApprenticeId,
                 account.DateOfBirth,
                 account.Email,
                 account.FirstName,

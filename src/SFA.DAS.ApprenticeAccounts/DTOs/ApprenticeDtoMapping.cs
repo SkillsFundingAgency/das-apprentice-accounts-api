@@ -14,7 +14,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs
 
             return new ApprenticeDto
             {
-                Id = apprentice.Id,
+                ApprenticeId = apprentice.Id,
                 FirstName = apprentice.FirstName,
                 LastName = apprentice.LastName,
                 Email = apprentice.Email.ToString(),

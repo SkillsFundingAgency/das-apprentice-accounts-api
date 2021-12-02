@@ -52,7 +52,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
             _context.Api.Response
                 .Should().BeAs(new
                 {
-                    _apprentice.Id,
+                    ApprenticeId = _apprentice.Id,
                     _apprentice.FirstName,
                     _apprentice.LastName,
                 });

@@ -6,7 +6,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs
 {
     public class ApprenticeDto
     {
-        public Guid Id { get; set; }
+        public Guid ApprenticeId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Guid UserIdentityId { get; set; }
