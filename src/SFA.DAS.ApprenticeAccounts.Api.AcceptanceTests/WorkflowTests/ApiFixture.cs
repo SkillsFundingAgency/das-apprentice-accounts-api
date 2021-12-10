@@ -73,6 +73,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
 
             return await client.PatchValueAsync($"apprentices/{apprenticeId}", patch);
         }
+        
+        protected async Task<HttpResponseMessage> SendUpdateAccountRequest(Guid apprenticeId, MailAddress emailAddress)
+        {
+            var patch = new JsonPatchDocument<ApprenticeDto>()
+                .Replace(x => x.Email, emailAddress.ToString());
+
+            return await client.PatchValueAsync($"apprentices/{apprenticeId}", patch);
+        }
 
         protected async Task<HttpResponseMessage> SendAcceptTermsOfUseRequest(Guid apprenticeId, bool accept = true)
         {
