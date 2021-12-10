@@ -21,7 +21,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
         protected TestContext context = null!;
         protected HttpClient client = null!;
         protected ApprenticeAccountsDbContext Database { get; private set; } = null!;
-        protected TestableEventPublisher Events => context.Events;
+        protected TestableEventPublisher Published => context.Events;
 
         protected TimeSpan TimeBetweenActions = TimeSpan.FromDays(2);
 

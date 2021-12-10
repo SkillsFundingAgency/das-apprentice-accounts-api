@@ -1,6 +1,7 @@
 ﻿using AutoFixture.NUnit3;
 using FluentAssertions;
 using NUnit.Framework;
+using SFA.DAS.ApprenticeAccounts.Messages.Events;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -21,6 +22,18 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
                 account.ApprenticeId,
                 Email = newAddress.ToString(),
             });
+        }
+
+        [Test, AutoData]
+        public async Task Publishes_event(MailAddress newAddress)
+        {
+            var account = await CreateAccount();
+            await SendUpdateAccountRequest(account.ApprenticeId, newAddress);
+
+            Published.Events.Should().ContainEquivalentOf(new
+            {
+                account.ApprenticeId,
+            }).Which.Should().BeOfType<ApprenticeEmailAddressChanged>();
         }
     }
 }
