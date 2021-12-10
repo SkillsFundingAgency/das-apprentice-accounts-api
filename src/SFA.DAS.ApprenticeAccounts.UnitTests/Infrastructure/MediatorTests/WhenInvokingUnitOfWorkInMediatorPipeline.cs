@@ -44,7 +44,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
         {
             Func<Task> action = () => _sut.Handle(request, CancellationToken.None, () => throw new Exception("failed"));
 
-            action.Should().Throw<Exception>().WithMessage("failed");
+            action.Should().ThrowAsync<Exception>().WithMessage("failed");
             _unitOfWorkManager.Verify(x => x.BeginAsync(), Times.Once);
             _unitOfWorkManager.Verify(x => x.EndAsync(It.Is<Exception>(e => e.Message == "failed")), Times.Once);
         }
