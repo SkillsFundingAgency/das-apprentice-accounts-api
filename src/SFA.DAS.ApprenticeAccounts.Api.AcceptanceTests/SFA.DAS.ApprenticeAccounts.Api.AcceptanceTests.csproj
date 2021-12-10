@@ -11,7 +11,7 @@
     <PackageReference Include="FluentAssertions.Web" Version="1.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.1" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NServiceBus.Testing" Version="7.3.0" />
     <PackageReference Include="SFA.DAS.NServiceBus.Testing" Version="16.0.21" />
