@@ -102,7 +102,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<ApprenticeValidator>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateApprenticeAccountCommandValidator>());
 
             services.AddProblemDetails(ConfigureProblemDetails);
         }
