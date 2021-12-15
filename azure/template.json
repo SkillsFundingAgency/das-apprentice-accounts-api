@@ -74,6 +74,10 @@
         },
         "sharedServiceBusName": {
             "type": "string"
+        },
+        "utcValue": {
+            "type": "string",
+            "defaultValue": "[utcNow()]"
         }
     },
     "variables": {
@@ -95,7 +99,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "das-apprentice-accounts-api-app-service-certificate",
+            "name": "[concat(variables('appServiceName'), '-app-service-certificate-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "properties": {
@@ -119,7 +123,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "application-insights",
+            "name": "[concat(variables('appServiceName'), '-application-insights-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
@@ -143,7 +147,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "app-service",
+            "name": "[concat(variables('appServiceName'), '-', parameters('utcValue'))]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[variables('resourceGroupName')]",
             "properties": {
@@ -186,7 +190,7 @@
                                 },
                                 {
                                     "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
-                                    "value": "[reference('application-insights').outputs.InstrumentationKey.value]"
+                                    "value": "[reference(concat(variables('appServiceName'), '-application-insights-', parameters('utcValue'))'').outputs.InstrumentationKey.value]"
                                 },
                                 {
                                     "name": "LoggingRedisConnectionString",
@@ -203,7 +207,7 @@
                         "value": "[parameters('customHostname')]"
                     },
                     "certificateThumbprint": {
-                        "value": "[reference('das-apprentice-accounts-api-app-service-certificate').outputs.certificateThumbprint.value]"
+                        "value": "[reference(concat(variables('appServiceName'), '-app-service-certificate-', parameters('utcValue'))).outputs.certificateThumbprint.value]"
                     },
                     "ipSecurityRestrictions": {
                         "value": "[parameters('backEndAccessRestrictions')]"
@@ -216,7 +220,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "das-apprentice-accounts-api-sql-database",
+            "name": "[concat(variables('appServiceName'), '-sql-database-', parameters('utcValue'))]",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -255,7 +259,7 @@
         },
         {
             "apiVersion": "2021-04-01",
-            "name": "[concat('das-apprentice-accounts-api-role-assignments-', copyIndex())]",
+            "name": "[concat(variables('appServiceName'), '-role-assignments-', parameters('utcValue'), '-', copyIndex())]",
             "type": "Microsoft.Resources/deployments",
             "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
             "properties": {
@@ -266,7 +270,7 @@
                 },
                 "parameters": {
                     "principalId": {
-                        "value": "[createArray(reference('app-service').outputs.managedServiceIdentityId.value, reference('app-service').outputs.stagingManagedServiceIdentityId.value)[copyIndex()]]"
+                        "value": "[createArray(reference('app-service').outputs.managedServiceIdentityId.value, reference(concat(variables('appServiceName'), '-', parameters('utcValue'))).outputs.stagingManagedServiceIdentityId.value)[copyIndex()]]"
                     },
                     "assignmentType": {
                         "value": "ServiceBusSender"
