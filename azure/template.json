@@ -270,7 +270,7 @@
                 },
                 "parameters": {
                     "principalId": {
-                        "value": "[createArray(reference('app-service').outputs.managedServiceIdentityId.value, reference(concat(variables('appServiceName'), '-', parameters('utcValue'))).outputs.stagingManagedServiceIdentityId.value)[copyIndex()]]"
+                        "value": "[createArray(reference(concat(variables('appServiceName'), '-', parameters('utcValue')))).outputs.managedServiceIdentityId.value, reference(concat(variables('appServiceName'), '-', parameters('utcValue'))).outputs.stagingManagedServiceIdentityId.value)[copyIndex()]]"
                     },
                     "assignmentType": {
                         "value": "ServiceBusSender"
