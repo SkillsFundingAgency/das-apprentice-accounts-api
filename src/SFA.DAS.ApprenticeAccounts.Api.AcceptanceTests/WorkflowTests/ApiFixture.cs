@@ -21,7 +21,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
         protected TestContext context = null!;
         protected HttpClient client = null!;
         protected ApprenticeAccountsDbContext Database { get; private set; } = null!;
-        protected TestableEventPublisher Events => context.Events;
+        protected TestableEventPublisher Published => context.Events;
 
         protected TimeSpan TimeBetweenActions = TimeSpan.FromDays(2);
 
@@ -70,6 +70,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
                 .Replace(x => x.FirstName, firstName)
                 .Replace(x => x.LastName, lastName)
                 .Replace(x => x.DateOfBirth, dateOfBirth);
+
+            return await client.PatchValueAsync($"apprentices/{apprenticeId}", patch);
+        }
+        
+        protected async Task<HttpResponseMessage> SendUpdateAccountRequest(Guid apprenticeId, MailAddress emailAddress)
+        {
+            var patch = new JsonPatchDocument<ApprenticeDto>()
+                .Replace(x => x.Email, emailAddress.ToString());
 
             return await client.PatchValueAsync($"apprentices/{apprenticeId}", patch);
         }
