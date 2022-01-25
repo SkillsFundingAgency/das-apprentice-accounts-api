@@ -67,6 +67,8 @@
     <Build Include="Tables\ApprenticeEmailAddressHistory.sql" />
     <Build Include="Views\ApprenticeDashboardView.sql" />
     <Build Include="Schemas\DashboardReporting.sql" />
+    <Build Include="Tables\ClientOutboxData.sql" />
+    <Build Include="Tables\OutboxData.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeployment\PostDeployment.sql" />

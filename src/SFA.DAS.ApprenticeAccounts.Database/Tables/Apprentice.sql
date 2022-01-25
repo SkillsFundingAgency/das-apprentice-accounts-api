@@ -11,3 +11,11 @@
 )
 
 GO
+
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Apprentice_Email]
+    ON [dbo].[Apprentice]
+	(
+		[Email] ASC
+	);
+
+GO

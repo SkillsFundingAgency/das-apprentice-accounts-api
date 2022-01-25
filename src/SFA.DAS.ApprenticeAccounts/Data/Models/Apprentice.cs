@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using SFA.DAS.ApprenticeAccounts.DomainEvents;
 using SFA.DAS.ApprenticeAccounts.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Net.Mail;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
-    public class Apprentice
+    public class Apprentice : Entity
     {
         private Apprentice()
         {
@@ -62,6 +63,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             if (newEmail.Address == Email.Address) return;
             Email = newEmail;
             PreviousEmailAddresses.Add(new ApprenticeEmailAddressHistory(Email));
+            DomainEvents.Add(new ApprenticeEmailAddressChanged(this));
         }
     }
 
