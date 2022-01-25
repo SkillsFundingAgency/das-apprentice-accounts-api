@@ -60,11 +60,15 @@
     <Folder Include="Tables" />
     <Folder Include="Views" />
     <Folder Include="Schemas" />
+    <Folder Include="PostDeployment" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Apprentice.sql" />
     <Build Include="Tables\ApprenticeEmailAddressHistory.sql" />
     <Build Include="Views\ApprenticeDashboardView.sql" />
     <Build Include="Schemas\DashboardReporting.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="PostDeployment\PostDeployment.sql" />
   </ItemGroup>
 </Project>
