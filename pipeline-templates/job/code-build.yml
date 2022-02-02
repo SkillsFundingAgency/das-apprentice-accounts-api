@@ -10,7 +10,6 @@ jobs:
       clean: all
   variables:
   - group: BUILD Management Resources
-  - group: ESFA - SonarCloud
   steps:
   - template: azure-pipelines-templates/build/step/gitversion.yml@das-platform-building-blocks
 
