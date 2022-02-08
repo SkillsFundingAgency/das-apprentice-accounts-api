@@ -60,6 +60,7 @@
     <Folder Include="Tables" />
     <Folder Include="Views" />
     <Folder Include="Schemas" />
+    <Folder Include="PostDeployment" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Apprentice.sql" />
@@ -68,5 +69,8 @@
     <Build Include="Schemas\DashboardReporting.sql" />
     <Build Include="Tables\ClientOutboxData.sql" />
     <Build Include="Tables\OutboxData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="PostDeployment\PostDeployment.sql" />
   </ItemGroup>
 </Project>
