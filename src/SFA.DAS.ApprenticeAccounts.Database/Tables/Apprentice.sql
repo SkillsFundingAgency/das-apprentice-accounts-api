@@ -7,6 +7,7 @@
     [DateOfBirth] DATETIME2 NOT NULL,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT current_timestamp, 
     [TermsOfUseAcceptedOn] DATETIME2 NULL, 
+    [IsPrivateBetaUser] BIT NOT NULL DEFAULT 0, 
     CONSTRAINT PK_Apprentice_Id PRIMARY KEY ([Id])
 )
 

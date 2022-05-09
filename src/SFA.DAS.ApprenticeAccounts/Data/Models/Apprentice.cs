@@ -46,6 +46,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
 
         private DateTime? _termsOfUseAcceptedOn;
 
+        public DateTime? TermsOfUseAcceptedOn => _termsOfUseAcceptedOn;
+
         public bool TermsOfUseAccepted
         {
             get => _termsOfUseAcceptedOn != null;
@@ -65,6 +67,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             PreviousEmailAddresses.Add(new ApprenticeEmailAddressHistory(Email));
             DomainEvents.Add(new ApprenticeEmailAddressChanged(this));
         }
+
+        public bool IsPrivateBetaUser { get; set; }
     }
 
     public class ApprenticeEmailAddressHistory
