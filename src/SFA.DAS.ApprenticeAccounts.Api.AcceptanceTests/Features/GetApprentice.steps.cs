@@ -1,6 +1,12 @@
 ﻿using AutoFixture;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Logging;
+using Moq;
+using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.DTOs;
+using System;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
@@ -12,12 +18,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
     {
         private readonly TestContext _context;
         private readonly Fixture _fixture = new Fixture();
-        private readonly Apprentice _apprentice;
+        private Apprentice _apprentice;
 
         public GetApprenticeSteps(TestContext context)
         {
             _context = context;
             _apprentice = _fixture.Build<Apprentice>().Create();
+
+            _context.ApplicationSettings = _fixture.Build<ApplicationSettings>().Create();
 
             var startDate = new System.DateTime(2000, 01, 01);
         }
@@ -32,6 +40,30 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
         [Given("there is no apprentice")]
         public void GivenThereIsNoApprentice()
         {
+        }
+
+        [Given("there is one beta user apprentice")]
+        public async Task GiveThereIsOneBetaUserApprentice()
+        {
+            _apprentice.IsPrivateBetaUser = true;
+
+            _context.DbContext.Apprentices.Add(_apprentice);
+            await _context.DbContext.SaveChangesAsync();
+        }
+
+        [Given("that apprentice has accepted the terms of service")]
+        public async Task GivenThatApprenticeHasAcceptedTheTermsOfService()
+        {
+            var logger = new Mock<ILogger>();
+            var patchDto = new ApprenticePatchDto(_apprentice, logger.Object)
+                { TermsOfUseAccepted = true };
+            await _context.Api.Patch("apprentices/{id}", patchDto);
+        }
+
+        [Given("there is a new version of terms of service released")]
+        public void GivenThereIsANewVersionOfTermsOfServiceReleased()
+        {
+            _context.ApplicationSettings.TermsOfServiceUpdatedOn = DateTime.UtcNow.AddDays(10);
         }
 
         [When("we try to retrieve the apprentice")]
@@ -62,6 +94,18 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
         public void ThenTheResultShouldReturnNotFound()
         {
             _context.Api.Response.Should().Be404NotFound();
+        }
+
+        [Then("the response terms of service should be set correctly")]
+        public void ThenTheResponseTermsOfServiceShouldBeSetCorrectly()
+        {
+            _context.Api.Response
+                .Should().BeAs(new
+                {
+                    TermsOfUseAccepted = false,
+                    TermsOfUsePreviouslyAccepted = true,
+                    TermsOfUseAcceptedOn = DateTime.MinValue
+                });
         }
     }
 }

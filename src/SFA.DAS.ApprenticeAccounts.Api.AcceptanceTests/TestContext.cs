@@ -1,4 +1,5 @@
-﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
+﻿using SFA.DAS.ApprenticeAccounts.Configuration;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using SFA.DAS.NServiceBus.Testing.Services;
 using System;
@@ -22,6 +23,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
 
         public TestableEventPublisher Events { get; set; }
             = new TestableEventPublisher();
+
+        public ApplicationSettings ApplicationSettings { get; set; }
 
         public void Dispose()
         {
