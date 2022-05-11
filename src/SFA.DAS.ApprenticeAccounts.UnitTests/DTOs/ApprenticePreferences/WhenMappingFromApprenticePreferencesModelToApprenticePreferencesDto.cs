@@ -10,15 +10,17 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
     public class WhenMappingFromApprenticePreferencesModelToApprenticePreferencesDto
     {
         [Test, RecursiveMoqAutoData]
-        public async Task ThenTheFieldsAreCorrectlyMapped(
-            List<Data.Models.ApprenticePreferences> apprenticePreferences)
+        public async Task ThenTheFieldsAreCorrectlyMapped(List<Data.Models.ApprenticePreferences> apprenticePreferences)
         {
-            var response = new List<ApprenticeAccounts.DTOs.ApprenticePreferences.ApprenticePreferenceDto>();
+            var response = new List<ApprenticePreferenceDto>();
 
             foreach (Data.Models.ApprenticePreferences a in apprenticePreferences)
             {
-                var apprenticePreferenceDtoOption = new ApprenticeAccounts.DTOs.ApprenticePreferences.ApprenticePreferenceDto() 
-                { PreferenceId = a.PreferenceId, PreferenceMeaning = a.preference.preferenceMeaning, Enabled = a.Enabled, UpdatedOn = a.UpdatedOn};
+                var apprenticePreferenceDtoOption = new ApprenticePreferenceDto() 
+                { PreferenceId = a.PreferenceId,
+                  PreferenceMeaning = a.Preference.PreferenceMeaning,
+                  Enabled = a.Enabled,
+                  UpdatedOn = a.UpdatedOn};
                 response.Add(apprenticePreferenceDtoOption);
             }
 

@@ -11,7 +11,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data
 
         public List<ApprenticePreferences> GetApprenticePreferencesByIdAsync(Guid apprenticeId)
         {
-            return Entities.Where(a => a.ApprenticeId == apprenticeId).Include(s => s.preference).ToList();
+            return Entities.Where(a => a.ApprenticeId == apprenticeId).Include(s => s.Preference).ToList();
         }
     }
 }

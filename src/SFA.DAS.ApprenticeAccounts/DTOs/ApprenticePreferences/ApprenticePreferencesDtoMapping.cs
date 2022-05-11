@@ -15,7 +15,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences
             {
                 dto.ApprenticePreferences.Add(new ApprenticePreferenceDto() 
                 { PreferenceId = apprenticePreference.PreferenceId, 
-                  PreferenceMeaning = apprenticePreference.preference.preferenceMeaning, 
+                  PreferenceMeaning = apprenticePreference.Preference.PreferenceMeaning, 
                   Enabled = apprenticePreference.Enabled, 
                   UpdatedOn = apprenticePreference.UpdatedOn });
             }
