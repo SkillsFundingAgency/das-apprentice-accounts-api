@@ -18,7 +18,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
             {
                 var apprenticePreferenceDtoOption = new ApprenticePreferenceDto() 
                 { PreferenceId = a.PreferenceId,
-                  PreferenceMeaning = a.preference.preferenceMeaning,
+                  PreferenceMeaning = a.Preference.PreferenceMeaning,
                   Enabled = a.Enabled,
                   UpdatedOn = a.UpdatedOn};
                 response.Add(apprenticePreferenceDtoOption);

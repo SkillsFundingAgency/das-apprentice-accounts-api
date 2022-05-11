@@ -28,7 +28,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.Preferences
             result.preferencesDto.Count.Should().Be(response.Count);
             result.preferencesDto.Should().BeEquivalentTo(response.Select(s => s),
                 l => l.Excluding(e => e.DomainEvents)
-                .Excluding(e => e.apprenticePreferences)); 
+                .Excluding(e => e.ApprenticePreferences)); 
         }
     }
 }

@@ -18,8 +18,8 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.Preferences
             foreach (Preference p in preferences)
             {
                 var preferenceDtoOption = new PreferenceDto() 
-                { preferenceId = p.preferenceId,
-                  preferenceMeaning = p.preferenceMeaning};
+                { preferenceId = p.PreferenceId,
+                  preferenceMeaning = p.PreferenceMeaning};
                 response.Add(preferenceDtoOption);
             }
 

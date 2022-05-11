@@ -24,6 +24,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public int Enabled { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
-        public Preference preference { get; set; }
+        public Preference Preference { get; set; }
+
     }
 }

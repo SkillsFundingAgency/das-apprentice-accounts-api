@@ -64,8 +64,9 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
 
             modelBuilder.Entity<Preference>(p =>
             {
-                p.ToTable("Preference")
-                 .HasKey(p => p.preferenceId);                
+                p.ToTable("Preference");
+                p.HasKey(p => p.PreferenceId);
+                p.Property(p => p.PreferenceMeaning);
             });
 
             modelBuilder.Entity<ApprenticePreferences>( ap =>

@@ -14,7 +14,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Preferences
 
             foreach(Preference p in preferences)
             {
-                dto.preferencesDto.Add(new PreferenceDto() { preferenceId = p.preferenceId, preferenceMeaning = p.preferenceMeaning});
+                dto.preferencesDto.Add(new PreferenceDto() { preferenceId = p.PreferenceId, preferenceMeaning = p.PreferenceMeaning});
             }
 
             return dto;
