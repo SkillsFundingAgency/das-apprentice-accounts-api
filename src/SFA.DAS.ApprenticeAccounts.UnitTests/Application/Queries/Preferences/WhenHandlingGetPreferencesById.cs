@@ -30,7 +30,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.Preferences
                 l => l.Excluding(e => e.DomainEvents)
                 .Excluding(e => e.ApprenticeId)
                 .Excluding(e => e.CreatedOn)
-                .Excluding(e => e.preference));
+                .Excluding(e => e.Preference));
 
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
@@ -12,12 +11,12 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
 
         public Preference(int preferenceId, string preferenceMeaning)
         {
-            this.preferenceId = preferenceId;
-            this.preferenceMeaning = preferenceMeaning;
+            this.PreferenceId = preferenceId;
+            this.PreferenceMeaning = preferenceMeaning;
         }
 
-        public int preferenceId { get; set; }
-        public string preferenceMeaning { get; set; }
-        public ICollection<ApprenticePreferences> apprenticePreferences { get; set; }
+        public int PreferenceId { get; set; }
+        public string PreferenceMeaning { get; set; }
+        public ICollection<ApprenticePreferences> ApprenticePreferences { get; set; }
     }
 }
