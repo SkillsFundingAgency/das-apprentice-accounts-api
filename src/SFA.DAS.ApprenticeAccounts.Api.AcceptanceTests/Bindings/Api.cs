@@ -42,7 +42,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
             var config = new Dictionary<string, string>
                 {
                     { "EnvironmentName", "ACCEPTANCE_TESTS" },
-                    { "ApplicationSettings:DbConnectionString", TestsDbConnectionFactory.ConnectionString }
+                    { "ApplicationSettings:DbConnectionString", TestsDbConnectionFactory.ConnectionString },
+                    { "ApplicationSettings:TermsOfServiceUpdatedOn", DateTime.UtcNow.AddDays(10).ToString()}
                 };
 
             return new LocalWebApplicationFactory<Startup>(config, _time, _messages);

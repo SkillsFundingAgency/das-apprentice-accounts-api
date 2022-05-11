@@ -44,6 +44,18 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             }
         }
 
+
+        /// <summary>
+        /// IsPrivateBetaUser can be removed at end of Beta
+        /// 
+        /// If the ToS are already accepted, and the accepted date is earlier than the latest update
+        /// Then the ToS need Re-Accepting.
+        /// </summary>
+        /// <param name="termsOfUseLastUpdated"></param>
+        /// <returns></returns>
+        public bool TermsOfUseNeedsReaccepting(DateTime termsOfUseLastUpdated) =>
+            IsPrivateBetaUser && TermsOfUseAccepted && _termsOfUseAcceptedOn < termsOfUseLastUpdated;
+
         private DateTime? _termsOfUseAcceptedOn;
 
         public bool TermsOfUseAccepted
@@ -65,6 +77,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             PreviousEmailAddresses.Add(new ApprenticeEmailAddressHistory(Email));
             DomainEvents.Add(new ApprenticeEmailAddressChanged(this));
         }
+
+        public bool IsPrivateBetaUser { get; set; }
     }
 
     public class ApprenticeEmailAddressHistory
