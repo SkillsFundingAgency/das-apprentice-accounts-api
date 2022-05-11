@@ -64,22 +64,23 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
 
             modelBuilder.Entity<Preference>(p =>
             {
-                p.ToTable("Preference");
-                p.HasKey(p => p.PreferenceId);
-                p.Property(p => p.PreferenceMeaning);
+                p.ToTable("Preference")
+                 .HasKey(p => p.preferenceId);                
             });
 
-            modelBuilder.Entity<ApprenticePreferences>( x =>
+            modelBuilder.Entity<ApprenticePreferences>( ap =>
             {
-                x.ToTable("ApprenticePreferences");
-                x.HasKey(x => new { x.PreferenceId, x.ApprenticeId });
-                x.Property(x => x.CreatedOn);
-                x.Property(x => x.Enabled);
-                x.Property(x => x.UpdatedOn);
+                ap.ToTable("ApprenticePreferences")
+                 .HasKey(a => new { a.PreferenceId, a.ApprenticeId });
 
-                x.HasOne("Apprentice")
-                .WithMany("Preference")
-                .HasForeignKey("");
+                ap.HasOne(a => a.Apprentice)
+                .WithMany(b => b.Preferences)
+                .HasForeignKey(c => c.ApprenticeId);
+
+                ap.HasOne(p => p.preference)
+                .WithMany(q => q.apprenticePreferences)
+                .HasForeignKey(r => r.PreferenceId);
+
             });
             base.OnModelCreating(modelBuilder);
         }
