@@ -26,7 +26,9 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.Preferences
             var result = await handler.Handle(query, CancellationToken.None);
 
             result.preferencesDto.Count.Should().Be(response.Count);
-            result.preferencesDto.Should().BeEquivalentTo(response.Select(s => s), l => l.Excluding(e => e.DomainEvents));
+            result.preferencesDto.Should().BeEquivalentTo(response.Select(s => s),
+                l => l.Excluding(e => e.DomainEvents)
+                .Excluding(e => e.apprenticePreferences)); 
         }
     }
 }
