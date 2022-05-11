@@ -59,6 +59,7 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
                 var loggerFactory = p.GetRequiredService<ILoggerFactory>();
 
                 ApprenticeAccountsDbContext dbContext;
+
                 try
                 {
                     var synchronizedStorageSession = unitOfWorkContext.Get<SynchronizedStorageSession>();
