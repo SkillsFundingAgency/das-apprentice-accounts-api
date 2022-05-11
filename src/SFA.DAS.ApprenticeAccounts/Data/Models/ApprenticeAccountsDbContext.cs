@@ -65,7 +65,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             modelBuilder.Entity<Preference>(p =>
             {
                 p.ToTable("Preference")
-                 .HasKey(p => p.preferenceId);                
+                 .HasKey(p => p.PreferenceId);                
             });
 
             modelBuilder.Entity<ApprenticePreferences>( ap =>
@@ -77,8 +77,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 .WithMany(b => b.Preferences)
                 .HasForeignKey(c => c.ApprenticeId);
 
-                ap.HasOne(p => p.preference)
-                .WithMany(q => q.apprenticePreferences)
+                ap.HasOne(p => p.Preference)
+                .WithMany(q => q.ApprenticePreferences)
                 .HasForeignKey(r => r.PreferenceId);
 
             });
