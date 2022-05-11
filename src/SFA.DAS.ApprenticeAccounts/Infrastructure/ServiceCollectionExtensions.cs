@@ -8,9 +8,11 @@ using Microsoft.Extensions.Options;
 using NServiceBus;
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
 using NServiceBus.Persistence;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.PreferencesQuery;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.DTOs.Preferences;
 using SFA.DAS.ApprenticeAccounts.Extensions;
 using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using SFA.DAS.NServiceBus.Configuration;
@@ -41,6 +43,8 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
             services.AddSingleton<IManagedIdentityTokenProvider, ManagedIdentityTokenProvider>();
             services.AddTransient<IConnectionFactory, SqlServerConnectionFactory>();
             services.AddScoped<IApprenticeContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
+            services.AddScoped<IPreferencesContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
+            services.AddScoped<IApprenticePreferencesContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
             services.AddScoped<EventDispatcher>();
 
             return services;

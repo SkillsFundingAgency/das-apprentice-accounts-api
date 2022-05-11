@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
     public class ApprenticeAccountsDbContext
-        : DbContext, IApprenticeContext
+        : DbContext, IApprenticeContext, IPreferencesContext, IApprenticePreferencesContext
     {
         protected IEventDispatcher _dispatcher;
 
@@ -26,8 +26,13 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         }
 
         public virtual DbSet<Apprentice> Apprentices { get; set; } = null!;
+        public virtual DbSet<Preference> Preference { get; set; }
+        public virtual DbSet<ApprenticePreferences> ApprenticePreferences { get; set; }
 
         DbSet<Apprentice> IEntityContext<Apprentice>.Entities => Apprentices;
+
+        DbSet<Preference> IEntityContext<Preference>.Entities => Preference;
+        DbSet<ApprenticePreferences> IEntityContext<ApprenticePreferences>.Entities => ApprenticePreferences;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +60,26 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 a.Ignore(e => e.TermsOfUseAccepted)
                     .Property("_termsOfUseAcceptedOn")
                     .HasColumnName("TermsOfUseAcceptedOn");
+            });
+
+            modelBuilder.Entity<Preference>(p =>
+            {
+                p.ToTable("Preference");
+                p.HasKey(p => p.preferenceId);
+                p.Property(p => p.preferenceMeaning);
+            });
+
+            modelBuilder.Entity<ApprenticePreferences>( x =>
+            {
+                x.ToTable("ApprenticePreferences");
+                x.HasKey(x => new { x.PreferenceId, x.ApprenticeId });
+                x.Property(x => x.CreatedOn);
+                x.Property(x => x.Enabled);
+                x.Property(x => x.UpdatedOn);
+
+                x.HasOne("Apprentice")
+                .WithMany("Preference")
+                .HasForeignKey("");
             });
             base.OnModelCreating(modelBuilder);
         }
