@@ -1,10 +1,7 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Configuration;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,7 +27,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
         {
             var apprentice = await _apprentices.Find(request.ApprenticeId);
             
-            return new ApprenticeDto().Create(apprentice, _settings.TermsOfServiceUpdatedOn);
+            return ApprenticeDto.Create(apprentice, _settings.TermsOfServiceUpdatedOn);
         }
     }
 }

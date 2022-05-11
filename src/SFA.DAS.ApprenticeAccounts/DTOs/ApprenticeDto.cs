@@ -14,11 +14,10 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs
         public string Email { get; set; }
         public DateTime DateOfBirth { get; set; }
         public bool TermsOfUseAccepted { get; set; }
-        public DateTime TermsOfUseAcceptedOn { get; set; }
-        public bool TermsOfUsePreviouslyAccepted { get; set; } = false;
+        public bool ReacceptTermsOfUseRequired { get; set; }
         public bool IsPrivateBetaUser { get; set; }
 
-        public ApprenticeDto Create(Apprentice source, DateTime termsOfServiceUpdatedOn)
+        public static ApprenticeDto Create(Apprentice source, DateTime termsOfServiceUpdatedOn)
         {
             if (source == null)
                 return null;
@@ -30,22 +29,10 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs
                 LastName = source.LastName,
                 Email = source.Email.ToString(),
                 DateOfBirth = source.DateOfBirth,
-                IsPrivateBetaUser = source.IsPrivateBetaUser
+                IsPrivateBetaUser = source.IsPrivateBetaUser,
+                TermsOfUseAccepted = source.TermsOfUseAccepted,
+                ReacceptTermsOfUseRequired = source.TermsOfUseNeedsReaccepting(termsOfServiceUpdatedOn)
             };
-
-            if (source.IsPrivateBetaUser &&
-                source.TermsOfUseAccepted &&
-                source.TermsOfUseAcceptedOn <= termsOfServiceUpdatedOn)
-            {
-                apprenticeDto.TermsOfUseAccepted = false;
-                apprenticeDto.TermsOfUseAcceptedOn = DateTime.MinValue;
-                apprenticeDto.TermsOfUsePreviouslyAccepted = true;
-            }
-            else
-            {
-                apprenticeDto.TermsOfUseAccepted = source.TermsOfUseAccepted;
-                apprenticeDto.TermsOfUseAcceptedOn = source.TermsOfUseAcceptedOn ?? DateTime.MinValue;
-            }
 
             return apprenticeDto;
         }

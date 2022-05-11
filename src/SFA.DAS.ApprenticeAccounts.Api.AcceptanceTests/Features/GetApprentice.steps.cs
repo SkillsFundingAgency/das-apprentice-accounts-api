@@ -102,9 +102,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
             _context.Api.Response
                 .Should().BeAs(new
                 {
-                    TermsOfUseAccepted = false,
-                    TermsOfUsePreviouslyAccepted = true,
-                    TermsOfUseAcceptedOn = DateTime.MinValue
+                    TermsOfUseAccepted = true,
+                    ReacceptTermsOfUseRequired = true,
                 });
         }
     }
