@@ -17,9 +17,9 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.Preferences
         [Test, RecursiveMoqAutoData]
         public async Task ThenPreferencesAreReturned(
             GetAllPreferencesQuery query,
-            Mock<IPreferencesContext> mockContext,
-            List<Preference> response)
+            Mock<IPreferencesContext> mockContext)
         {
+            var response = new List<Preference>(2) { new Preference(1, "Test Meaning"), new Preference(2, "Test Meaning Two") }; 
             mockContext.Setup(c => c.GetAllPreferencesAsync()).Returns(response);
 
             var handler = new GetAllPreferencesQueryHandler(mockContext.Object);

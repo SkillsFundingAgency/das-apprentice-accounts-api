@@ -11,15 +11,17 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.Preferences
     public class WhenMappingFromPreferenceModelToPreferencesDto
     {
         [Test, RecursiveMoqAutoData]
-        public async Task ThenTheFieldsAreCorrectlyMapped(List<Preference> preferences) 
+        public async Task ThenTheFieldsAreCorrectlyMapped() 
         {
             var response = new List<PreferenceDto>();
+
+            var preferences = new List<Preference>(2) { new Preference(1, "Test Meaning"), new Preference(2, "Test Meaning Two")}; //add some more prefs
 
             foreach (Preference p in preferences)
             {
                 var preferenceDtoOption = new PreferenceDto() 
-                { preferenceId = p.PreferenceId,
-                  preferenceMeaning = p.PreferenceMeaning};
+                { PreferenceId = p.PreferenceId,
+                  PreferenceMeaning = p.PreferenceMeaning};
                 response.Add(preferenceDtoOption);
             }
 
