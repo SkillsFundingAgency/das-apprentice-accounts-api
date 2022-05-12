@@ -2,7 +2,7 @@
 {
     public class PreferenceDto
     {
-        public int preferenceId { get; set; }
-        public string preferenceMeaning { get; set; }
+        public int PreferenceId { get; set; }
+        public string PreferenceMeaning { get; set; }
     }
 }

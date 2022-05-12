@@ -2,7 +2,7 @@
 (
 	[ApprenticeId] UNIQUEIDENTIFIER NOT NULL , 
     [PreferenceId] INT NOT NULL, 
-    [Status] INT NOT NULL, 
+    [Status] BIT NOT NULL, 
     [CreatedOn] DATETIME NOT NULL, 
     [UpdatedOn] DATETIME NULL, 
     CONSTRAINT [FK_ApprenticePreferences_Apprentice_ApprenticeId] FOREIGN KEY ([ApprenticeId]) REFERENCES [dbo].[Apprentice] ([Id]) ON DELETE CASCADE,
