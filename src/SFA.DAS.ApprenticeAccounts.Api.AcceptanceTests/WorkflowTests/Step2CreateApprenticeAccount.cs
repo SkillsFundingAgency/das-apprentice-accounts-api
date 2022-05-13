@@ -17,7 +17,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
         public async Task Validates_command()
         {
             var create = fixture.Build<CreateApprenticeAccountCommand>()
-                .Without(p => p.Email).
+                //.Without(p => p.Email).
+                .Do(x => x.Email = " ").
                 Create();
             var response = await PostCreateAccountCommand(create);
             response
