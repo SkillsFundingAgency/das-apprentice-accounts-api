@@ -43,7 +43,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Bindings
                 {
                     { "EnvironmentName", "ACCEPTANCE_TESTS" },
                     { "ApplicationSettings:DbConnectionString", TestsDbConnectionFactory.ConnectionString },
-                    { "ApplicationSettings:TermsOfServiceUpdatedOn", DateTime.UtcNow.AddDays(10).ToString()}
+                    { "ApplicationSettings:TermsOfServiceUpdatedOn", DateTime.UtcNow.AddDays(10).ToString("O")}
                 };
 
             return new LocalWebApplicationFactory<Startup>(config, _time, _messages);

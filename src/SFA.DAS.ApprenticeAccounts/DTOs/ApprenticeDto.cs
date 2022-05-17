@@ -22,6 +22,8 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs
             if (source == null)
                 return null;
 
+            var termsOfUseNeedsReaccepting = source.TermsOfUseNeedsReaccepting(termsOfServiceUpdatedOn);
+
             var apprenticeDto = new ApprenticeDto
             {
                 ApprenticeId = source.Id,
@@ -30,8 +32,8 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs
                 Email = source.Email.ToString(),
                 DateOfBirth = source.DateOfBirth,
                 IsPrivateBetaUser = source.IsPrivateBetaUser,
-                TermsOfUseAccepted = source.TermsOfUseAccepted,
-                ReacceptTermsOfUseRequired = source.TermsOfUseNeedsReaccepting(termsOfServiceUpdatedOn)
+                TermsOfUseAccepted = source.TermsOfUseAccepted && !termsOfUseNeedsReaccepting,
+                ReacceptTermsOfUseRequired = termsOfUseNeedsReaccepting
             };
 
             return apprenticeDto;

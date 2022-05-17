@@ -102,7 +102,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
             _context.Api.Response
                 .Should().BeAs(new
                 {
-                    TermsOfUseAccepted = true,
+                    TermsOfUseAccepted = false,
                     ReacceptTermsOfUseRequired = true,
                 });
         }
