@@ -1,26 +1,27 @@
 ﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
-#nullable disable
+#nullable enable
 
 namespace SFA.DAS.ApprenticeAccounts.DTOs
 {
     public class ApprenticeDto
     {
         public Guid ApprenticeId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string LastName { get; set; } = null!;
         public Guid UserIdentityId { get; set; }
-        public string Email { get; set; }
+        public string Email { get; set; } = null!;
         public DateTime DateOfBirth { get; set; }
         public bool TermsOfUseAccepted { get; set; }
         public bool ReacceptTermsOfUseRequired { get; set; }
         public bool IsPrivateBetaUser { get; set; }
 
-        public static ApprenticeDto Create(Apprentice source, DateTime termsOfServiceUpdatedOn)
+        [return: NotNullIfNotNull("source")]
+        public static ApprenticeDto? Create(Apprentice source, DateTime termsOfServiceUpdatedOn)
         {
-            if (source == null)
-                return null;
+            if (source == null) return null;
 
             var termsOfUseNeedsReaccepting = source.TermsOfUseNeedsReaccepting(termsOfServiceUpdatedOn);
 
