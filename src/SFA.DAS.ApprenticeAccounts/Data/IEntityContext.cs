@@ -13,6 +13,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data
 
         EntityEntry<T> Add(T entity) => Entities.Add(entity);
 
+        EntityEntry<T> Update(T entity) => Entities.Update(entity);
+
         ValueTask<EntityEntry<T>> AddAsync(T entity, CancellationToken cancellationToken = default)
             => Entities.AddAsync(entity, cancellationToken);
     }

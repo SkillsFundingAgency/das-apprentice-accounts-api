@@ -20,7 +20,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.Preferences
             Mock<IPreferencesContext> mockContext)
         {
             var response = new List<Preference>(2) { new Preference(1, "Test Meaning"), new Preference(2, "Test Meaning Two") }; 
-            mockContext.Setup(c => c.GetAllPreferencesAsync()).Returns(response);
+            mockContext.Setup(c => c.GetAllPreferencesAsync()).ReturnsAsync(response);
 
             var handler = new GetAllPreferencesQueryHandler(mockContext.Object);
             var result = await handler.Handle(query, CancellationToken.None);

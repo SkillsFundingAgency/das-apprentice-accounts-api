@@ -17,7 +17,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.PreferencesQuery
         public async Task<PreferencesDto> Handle(GetAllPreferencesQuery request, CancellationToken cancellationToken)
         {
             var response = _preferencesContext.GetAllPreferencesAsync();
-            return response.MapToPreferenceDto();
+            return response.Result.MapToPreferenceDto();
         }
     }
 }

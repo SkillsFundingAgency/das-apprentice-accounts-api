@@ -24,7 +24,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticePreferencesQu
                 return Task.FromResult(new GetSingleApprenticePreferenceDto());
             }
 
-            return preference.ApprenticePreferenceToSinglePreferenceValueDtoMapping();
+            return preference.Result.ApprenticePreferenceToSinglePreferenceValueDtoMapping();
         }
     }
 }
