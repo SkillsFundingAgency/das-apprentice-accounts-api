@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences
+namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetApprenticePreferencesByApprenticeId
 {
     public class ApprenticePreferenceDto
     {

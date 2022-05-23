@@ -1,9 +1,9 @@
 ﻿using Moq;
 using NUnit.Framework;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticePreferencesQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.GetSingleApprenticePreferenceValueByIdsQuery;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences;
+using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetSingleApprenticePreferenceByIds;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Net.Mail;

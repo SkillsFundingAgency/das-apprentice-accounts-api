@@ -1,5 +1,4 @@
-﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 

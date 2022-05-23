@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences
+namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetSingleApprenticePreferenceByIds
 {
     public static class GetSinglePreferenceValueMapping
     {

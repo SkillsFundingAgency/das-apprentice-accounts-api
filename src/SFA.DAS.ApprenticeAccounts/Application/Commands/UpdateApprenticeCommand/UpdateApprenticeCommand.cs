@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
-using SFA.DAS.ApprenticeAccounts.DTOs;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using System;
 

@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
-namespace SFA.DAS.ApprenticeAccounts.DTOs
+namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
 {
     public class ApprenticeDto
     {

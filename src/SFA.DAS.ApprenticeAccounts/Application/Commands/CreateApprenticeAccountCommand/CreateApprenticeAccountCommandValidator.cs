@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand
 {
