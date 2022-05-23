@@ -42,15 +42,6 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
         {
         }
 
-        [Given("there is one beta user apprentice")]
-        public async Task GiveThereIsOneBetaUserApprentice()
-        {
-            _apprentice.IsPrivateBetaUser = true;
-
-            _context.DbContext.Apprentices.Add(_apprentice);
-            await _context.DbContext.SaveChangesAsync();
-        }
-
         [Given("that apprentice has accepted the terms of service")]
         public async Task GivenThatApprenticeHasAcceptedTheTermsOfService()
         {
