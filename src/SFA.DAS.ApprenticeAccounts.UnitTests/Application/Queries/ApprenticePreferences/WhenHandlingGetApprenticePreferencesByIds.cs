@@ -26,11 +26,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
         {
             var apprentice = new Apprentice(Guid.NewGuid(), "test", "test", mockAddress, dateTimeTwo);
             var preference = new Preference(query.PreferenceId, mockMeaning);
-            var response = new Data.Models.ApprenticePreferences(query.ApprenticeId, query.PreferenceId, status, dateTimeOne, dateTimeTwo);
-            response.Preference = preference;
-            response.Apprentice= apprentice;
+            var response = new Data.Models.ApprenticePreferences(query.ApprenticeId, query.PreferenceId, status, dateTimeOne, dateTimeTwo)
+            {
+                Preference = preference,
+                Apprentice = apprentice
+            };
 
-            mockContext.Setup(m => m.GetSinglePreferenceValueAsync(query.ApprenticeId, query.PreferenceId)).Returns(response);
+            mockContext.Setup(m => m.GetSinglePreferenceValueAsync(query.ApprenticeId, query.PreferenceId)).ReturnsAsync(response);
 
             var handler = new GetSingleApprenticePreferenceValueQueryHandler(mockContext.Object);
             var result = await handler.Handle(query, CancellationToken.None);
@@ -49,7 +51,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
             Mock<IApprenticePreferencesContext> mockContext)
         {
             var response = Task.FromResult(new GetSingleApprenticePreferenceDto());
-            mockContext.Setup(m => m.GetSinglePreferenceValueAsync(query.ApprenticeId, query.PreferenceId)).Returns((Data.Models.ApprenticePreferences)null);
+            mockContext.Setup(m => m.GetSinglePreferenceValueAsync(query.ApprenticeId, query.PreferenceId)).ReturnsAsync((Data.Models.ApprenticePreferences)null);
 
             var handler = new GetSingleApprenticePreferenceValueQueryHandler(mockContext.Object);
             var result = await handler.Handle(query, CancellationToken.None);
