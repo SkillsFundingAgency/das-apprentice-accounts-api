@@ -18,7 +18,6 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         Mock<IApprenticePreferencesContext> _mockApprenticePreferencesContext; 
         Mock<IApprenticeContext> _mockApprenticeContext; 
         Mock<IPreferencesContext> _mockPreferencesContext;
-        Mock<IMediator> _mockMediator;
         UpdateApprenticePreferencesCommand _mockCommand;
 
         [SetUp]
@@ -27,11 +26,10 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             _mockApprenticePreferencesContext = new Mock<IApprenticePreferencesContext>();
             _mockApprenticeContext = new Mock<IApprenticeContext>();
             _mockPreferencesContext = new Mock<IPreferencesContext>();
-            _mockMediator = new Mock<IMediator>();
             _mockCommand = new UpdateApprenticePreferencesCommand();
         }
 
-        [Test, MoqAutoData] //apprentice error
+        [Test, MoqAutoData]
         public async Task And_ApprenticeIsNull_ReturnInvalidOperationException(
             int preferenceId,
             string preferenceMeaning)

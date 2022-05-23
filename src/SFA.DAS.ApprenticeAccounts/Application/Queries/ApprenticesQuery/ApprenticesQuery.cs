@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using SFA.DAS.ApprenticeAccounts.DTOs;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery

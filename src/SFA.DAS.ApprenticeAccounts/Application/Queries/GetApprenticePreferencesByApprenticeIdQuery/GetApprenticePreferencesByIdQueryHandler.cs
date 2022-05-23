@@ -1,10 +1,10 @@
 ﻿using MediatR;
 using SFA.DAS.ApprenticeAccounts.Data;
-using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences;
+using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetApprenticePreferencesByApprenticeId;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticePreferencesQuery
+namespace SFA.DAS.ApprenticeAccounts.Application.Queries.GetApprenticePreferencesByApprenticeIdQuery
 {
     public class GetApprenticePreferencesByIdQueryHandler : IRequestHandler<GetApprenticePreferencesByIdQuery, ApprenticePreferencesDto>
     {

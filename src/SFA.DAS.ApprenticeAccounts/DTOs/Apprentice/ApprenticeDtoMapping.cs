@@ -1,14 +1,13 @@
-﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
 
-namespace SFA.DAS.ApprenticeAccounts.DTOs
+namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
 {
     public static class ApprenticeDtoMapping
     {
         [return: NotNullIfNotNull("apprenticeship")]
-        public static ApprenticeDto? MapToApprenticeDto(this Apprentice? apprentice)
+        public static ApprenticeDto? MapToApprenticeDto(this Data.Models.Apprentice? apprentice)
         {
             if (apprentice == null) return null;
 

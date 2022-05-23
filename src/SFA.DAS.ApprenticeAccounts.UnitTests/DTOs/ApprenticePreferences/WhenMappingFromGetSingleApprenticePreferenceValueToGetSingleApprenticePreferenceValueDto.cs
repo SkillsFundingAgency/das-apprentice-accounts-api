@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
-using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences;
+using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetApprenticePreferencesByApprenticeId;
+using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetSingleApprenticePreferenceByIds;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Threading.Tasks;

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace SFA.DAS.ApprenticeAccounts.DTOs
+namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
 {
     public class ApprenticeDto
     {
