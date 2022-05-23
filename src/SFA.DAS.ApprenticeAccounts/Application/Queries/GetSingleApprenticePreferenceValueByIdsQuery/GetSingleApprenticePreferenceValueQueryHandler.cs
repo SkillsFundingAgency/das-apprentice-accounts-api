@@ -19,7 +19,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticePreferencesQu
         {
             var preference =  _apprenticePreferencesContext.GetSinglePreferenceValueAsync(request.ApprenticeId, request.PreferenceId);
            
-            if (preference == null)
+            if (preference.Result == null)
             {
                 return Task.FromResult(new GetSingleApprenticePreferenceDto());
             }
