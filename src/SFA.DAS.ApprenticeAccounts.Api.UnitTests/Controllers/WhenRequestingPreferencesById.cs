@@ -31,7 +31,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
 
             var model = result.Value;
 
-            model.Should().BeEquivalentTo(response.ApprenticePreferences);
+            model.Should().BeEquivalentTo(response);
         }
     }
 }

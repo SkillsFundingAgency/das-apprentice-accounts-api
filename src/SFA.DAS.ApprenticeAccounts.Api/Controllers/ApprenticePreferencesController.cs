@@ -19,7 +19,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         public async Task<IActionResult> GetApprenticePreferencesById(Guid apprenticeId)
         {
             var result = await _mediator.Send(new GetApprenticePreferencesByIdQuery() { ApprenticeId = apprenticeId });
-            return Ok(result.ApprenticePreferences);
+            return Ok(result);
         }
 
         [HttpGet("apprenticepreferences/{apprenticeId}/{preferenceId}")]
