@@ -16,8 +16,8 @@ Scenario: Get a missing record
 	When we try to retrieve the apprentice
 	Then the result should return Not Found
 
-Scenario: The apprentice record terms of service is set correctly for beta users
-	Given there is one beta user apprentice
+Scenario: The apprentice record terms of service is set correctly when needing updating
+	Given there is one apprentice
 	And that apprentice has accepted the terms of service
 	And there is a new version of terms of service released
 	When we try to retrieve the apprentice
