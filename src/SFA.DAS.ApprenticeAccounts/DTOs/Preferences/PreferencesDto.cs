@@ -4,6 +4,6 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Preferences
 {
     public class PreferencesDto
     {
-        public List<PreferenceDto> preferencesDto { get; set; }
+        public List<PreferenceDto> Preferences { get; set; }
     }
 }

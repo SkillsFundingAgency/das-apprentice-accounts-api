@@ -31,7 +31,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.Preferences
 
             var result = preferences.MapToPreferenceDto();
 
-            result.preferencesDto.Should().BeEquivalentTo(response);
+            result.Preferences.Should().BeEquivalentTo(response);
         }
     }
 }

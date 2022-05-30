@@ -23,31 +23,32 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePrefer
 
         public Task<Unit> Handle(UpdateApprenticePreferencesCommand request, CancellationToken cancellationToken)
         {
-            var apprentice = _apprenticeContext.Entities.Find(request.ApprenticeId);
-
-            var preference = _preferencesContext.Entities.Find(request.PreferenceId);
-
-            if (apprentice == null || preference == null)
+            foreach (var apprenticePreferences in request.ApprenticePreferences)
             {
-                throw new InvalidOperationException();
+                var apprentice = _apprenticeContext.Entities.Find(apprenticePreferences.ApprenticeId);
+                var preference = _preferencesContext.Entities.Find(apprenticePreferences.PreferenceId);
+
+                if (apprentice == null || preference == null)
+                {
+                    throw new InvalidOperationException();
+                }
+
+                var record =
+                    _apprenticePreferencesContext.GetSinglePreferenceValueAsync(apprenticePreferences.ApprenticeId, apprenticePreferences.PreferenceId);
+
+                if (record.Result == null)
+                {
+                    _apprenticePreferencesContext.Add(new ApprenticePreferences(apprenticePreferences.ApprenticeId, apprenticePreferences.PreferenceId,
+                        apprenticePreferences.Status, DateTime.Now, DateTime.Now));
+                }
+                else
+                {
+                    record.Result.Status = apprenticePreferences.Status;
+                    record.Result.UpdatedOn = DateTime.Now;
+
+                    _apprenticePreferencesContext.Update(record.Result);
+                }
             }
-
-            var record =
-                _apprenticePreferencesContext.GetSinglePreferenceValueAsync(request.ApprenticeId, request.PreferenceId);
-
-            if (record.Result == null)
-            {
-                _apprenticePreferencesContext.Add(new ApprenticePreferences(request.ApprenticeId, request.PreferenceId,
-                    request.Status, DateTime.Now, DateTime.Now));
-            }
-            else
-            {
-                record.Result.Status = request.Status;
-                record.Result.UpdatedOn = DateTime.Now;
-
-                _apprenticePreferencesContext.Update(record.Result);
-            }
-
             return Unit.Task;
         }
     }

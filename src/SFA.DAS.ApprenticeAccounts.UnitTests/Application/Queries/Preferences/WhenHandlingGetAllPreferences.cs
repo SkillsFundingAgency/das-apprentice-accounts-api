@@ -25,8 +25,8 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.Preferences
             var handler = new GetAllPreferencesQueryHandler(mockContext.Object);
             var result = await handler.Handle(query, CancellationToken.None);
 
-            result.preferencesDto.Count.Should().Be(response.Count);
-            result.preferencesDto.Should().BeEquivalentTo(response.Select(s => s),
+            result.Preferences.Count.Should().Be(response.Count);
+            result.Preferences.Should().BeEquivalentTo(response.Select(s => s),
                 l => l.Excluding(e => e.DomainEvents)
                 .Excluding(e => e.ApprenticePreferences)); 
         }

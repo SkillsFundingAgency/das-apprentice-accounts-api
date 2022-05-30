@@ -9,12 +9,12 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Preferences
         {
             var dto = new PreferencesDto()
             {
-                preferencesDto = new List<PreferenceDto>()
+                Preferences = new List<PreferenceDto>()
             };
 
             foreach(Preference p in preferences)
             {
-                dto.preferencesDto.Add(new PreferenceDto() { PreferenceId = p.PreferenceId, PreferenceMeaning = p.PreferenceMeaning});
+                dto.Preferences.Add(new PreferenceDto() { PreferenceId = p.PreferenceId, PreferenceMeaning = p.PreferenceMeaning});
             }
 
             return dto;

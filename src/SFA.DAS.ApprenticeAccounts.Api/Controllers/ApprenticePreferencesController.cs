@@ -1,9 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Amqp.Serialization;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferencesCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.GetApprenticePreferencesByApprenticeIdQuery;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.GetSingleApprenticePreferenceValueByIdsQuery;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
@@ -40,16 +42,37 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
 
 
         [HttpPost("apprenticepreferences/{apprenticeId}/{preferenceId}/{status}")]
-        public async Task<IActionResult> UpdateApprenticePreferences(Guid apprenticeId, int preferenceId, bool status)
+        public async Task<IActionResult> UpdateApprenticePreference(Guid apprenticeId, int preferenceId, bool status)
         {
             try
             {
-                var result = await _mediator.Send(new UpdateApprenticePreferencesCommand
+                var result = await _mediator.Send(new UpdateApprenticePreferenceCommand
                 {
                     ApprenticeId = apprenticeId, PreferenceId = preferenceId, Status = status
                 });
 
 
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                if (e is InvalidOperationException)
+                {
+                    return NotFound();
+                }
+                return BadRequest();
+            }
+        }
+
+        [HttpPost("apprenticepreferences/{apprenticePreferences}")]
+        public async Task<IActionResult> UpdateApprenticePreferences(UpdateApprenticePreferencesCommand apprenticePreferences)
+        {
+            try
+            {
+                var result = await _mediator.Send(new UpdateApprenticePreferencesCommand
+                {
+                    ApprenticePreferences = apprenticePreferences.ApprenticePreferences
+                });
                 return Ok();
             }
             catch (Exception e)
