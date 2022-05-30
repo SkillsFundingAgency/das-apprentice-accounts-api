@@ -20,7 +20,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         {
             var result = await _mediator.Send(new GetAllPreferencesQuery());
 
-            return Ok(result.preferencesDto);
+            return Ok(result.Preferences);
 
         }
     }
