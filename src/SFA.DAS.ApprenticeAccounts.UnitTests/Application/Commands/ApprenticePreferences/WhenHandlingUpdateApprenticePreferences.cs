@@ -7,6 +7,7 @@ using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.Testing.AutoFixture;
 using System;
+using System.Collections.Generic;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,11 +15,11 @@ using System.Threading.Tasks;
 namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePreferences
 {
     public class WhenHandlingUpdateApprenticePreferences
-    { 
-        Mock<IApprenticePreferencesContext> _mockApprenticePreferencesContext; 
-        Mock<IApprenticeContext> _mockApprenticeContext; 
+    {
+        Mock<IApprenticePreferencesContext> _mockApprenticePreferencesContext;
+        Mock<IApprenticeContext> _mockApprenticeContext;
         Mock<IPreferencesContext> _mockPreferencesContext;
-        UpdateApprenticePreferenceCommand _mockCommand;
+        UpdateApprenticePreferencesCommand _mockCommand;
 
         [SetUp]
         public void SetUp()
@@ -26,7 +27,8 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             _mockApprenticePreferencesContext = new Mock<IApprenticePreferencesContext>();
             _mockApprenticeContext = new Mock<IApprenticeContext>();
             _mockPreferencesContext = new Mock<IPreferencesContext>();
-            _mockCommand = new UpdateApprenticePreferenceCommand();
+            _mockCommand = new UpdateApprenticePreferencesCommand();
+            _mockCommand.ApprenticePreferences = new List<UpdateApprenticePreferenceCommand>();
         }
 
         [Test, MoqAutoData]
@@ -34,38 +36,47 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             int preferenceId,
             string preferenceMeaning)
         {
-            _mockApprenticeContext.Setup(a => a.Entities.Find(_mockCommand.ApprenticeId)).Returns((Apprentice)null);
-            _mockPreferencesContext.Setup(a => a.Entities.Find(_mockCommand.PreferenceId)).Returns(new Preference(preferenceId, preferenceMeaning));
+            foreach (var item in _mockCommand.ApprenticePreferences)
+            {
+                _mockApprenticeContext.Setup(a => a.Entities.Find(item.ApprenticeId)).Returns((Apprentice)null);
+                _mockPreferencesContext.Setup(a => a.Entities.Find(item.PreferenceId)).Returns(new Preference(preferenceId, preferenceMeaning));
 
-            var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object, _mockApprenticeContext.Object, _mockPreferencesContext.Object);
-            Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
+                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object, _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
-            await result.Should().ThrowAsync<InvalidOperationException>();
+                await result.Should().ThrowAsync<InvalidOperationException>();
+            }
         }
 
         [Test, MoqAutoData]
         public async Task AndPreferencesIsNull_ReturnInvalidOperationException(
             Apprentice apprentice)
         {
-            _mockApprenticeContext.Setup(a => a.Entities.Find(_mockCommand.ApprenticeId)).Returns(apprentice);
-            _mockPreferencesContext.Setup(a => a.Entities.Find(_mockCommand.PreferenceId)).Returns((Preference)null);
+            foreach (var item in _mockCommand.ApprenticePreferences)
+            {
+                _mockApprenticeContext.Setup(a => a.Entities.Find(item.ApprenticeId)).Returns(apprentice);
+                _mockPreferencesContext.Setup(a => a.Entities.Find(item.PreferenceId)).Returns((Preference)null);
 
-            var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object, _mockApprenticeContext.Object, _mockPreferencesContext.Object);
-            Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
+                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object, _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
-            await result.Should().ThrowAsync<InvalidOperationException>();
+                await result.Should().ThrowAsync<InvalidOperationException>();
+            }
         }
 
         [Test]
         public async Task And_BothApprenticeAndPreferencesAreNull_ReturnInvalidOperationException()
         {
-            _mockApprenticeContext.Setup(a => a.Entities.Find(_mockCommand.ApprenticeId)).Returns((Apprentice)null);
-            _mockPreferencesContext.Setup(a => a.Entities.Find(_mockCommand.PreferenceId)).Returns((Preference)null);
+            foreach (var item in _mockCommand.ApprenticePreferences)
+            {
+                _mockApprenticeContext.Setup(a => a.Entities.Find(item.ApprenticeId)).Returns((Apprentice)null);
+                _mockPreferencesContext.Setup(a => a.Entities.Find(item.PreferenceId)).Returns((Preference)null);
 
-            var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object, _mockApprenticeContext.Object, _mockPreferencesContext.Object);
-            Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
+                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object, _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
-            await result.Should().ThrowAsync<InvalidOperationException>();
+                await result.Should().ThrowAsync<InvalidOperationException>();
+            }
         }
 
         [Test, RecursiveMoqAutoData]
@@ -76,21 +87,24 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             string firstName,
             string lastName)
         {
-            var apprentice = new Apprentice(_mockCommand.ApprenticeId, firstName, lastName, apprenticeAddress, mockDateTime);
-            var preference = new Preference(_mockCommand.PreferenceId, preferenceMeaning);
+            foreach (var item in _mockCommand.ApprenticePreferences)
+            {
+                var apprentice = new Apprentice(item.ApprenticeId, firstName, lastName, apprenticeAddress, mockDateTime);
+                var preference = new Preference(item.PreferenceId, preferenceMeaning);
 
-            _mockApprenticeContext.Setup(a => a.Entities.Find(_mockCommand.ApprenticeId)).Returns(apprentice);
-            _mockPreferencesContext.Setup(a => a.Entities.Find(_mockCommand.PreferenceId)).Returns(preference);
-            _mockApprenticePreferencesContext
-                .Setup(a => a.GetSinglePreferenceValueAsync(_mockCommand.ApprenticeId, _mockCommand.PreferenceId))
-                .ReturnsAsync((Data.Models.ApprenticePreferences)null);
+                _mockApprenticeContext.Setup(a => a.Entities.Find(item.ApprenticeId)).Returns(apprentice);
+                _mockPreferencesContext.Setup(a => a.Entities.Find(item.PreferenceId)).Returns(preference);
+                _mockApprenticePreferencesContext
+                    .Setup(a => a.GetSinglePreferenceValueAsync(item.ApprenticeId, item.PreferenceId))
+                    .ReturnsAsync((Data.Models.ApprenticePreferences)null);
 
-            var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object,
-                _mockApprenticeContext.Object, _mockPreferencesContext.Object);
-            var result = await handler.Handle(_mockCommand, CancellationToken.None);
+                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
+                    _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                var result = await handler.Handle(_mockCommand, CancellationToken.None);
 
-            _mockApprenticePreferencesContext.Verify(a => a.Add(It.IsAny<Data.Models.ApprenticePreferences>()));
-            result.GetType().Should().Be(typeof(Unit));
+                _mockApprenticePreferencesContext.Verify(a => a.Add(It.IsAny<Data.Models.ApprenticePreferences>()));
+                result.GetType().Should().Be(typeof(Unit));
+            }
         }
 
         [Test, RecursiveMoqAutoData]
@@ -102,23 +116,27 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             string firstName,
             string lastName)
         {
-            var apprentice = new Apprentice(_mockCommand.ApprenticeId, firstName, lastName, apprenticeAddress, mockDateTime);
-            var preference = new Preference(_mockCommand.PreferenceId, preferenceMeaning);
-            var response = new Data.Models.ApprenticePreferences(_mockCommand.ApprenticeId, _mockCommand.PreferenceId,
-                _mockCommand.Status, mockDateTime, mockDateTime2);
+            foreach (var item in _mockCommand.ApprenticePreferences)
+            {
+                var apprentice = new Apprentice(item.ApprenticeId, firstName, lastName, apprenticeAddress, mockDateTime);
+                var preference = new Preference(item.PreferenceId, preferenceMeaning);
+                var response = new Data.Models.ApprenticePreferences(item.ApprenticeId, item.PreferenceId,
+                    item.Status, mockDateTime, mockDateTime2);
 
-            _mockApprenticeContext.Setup(a => a.Entities.Find(_mockCommand.ApprenticeId)).Returns(apprentice);
-            _mockPreferencesContext.Setup(a => a.Entities.Find(_mockCommand.PreferenceId)).Returns(preference);
-            _mockApprenticePreferencesContext
-                .Setup(a => a.GetSinglePreferenceValueAsync(_mockCommand.ApprenticeId, _mockCommand.PreferenceId))
-                .ReturnsAsync(response);
+                _mockApprenticeContext.Setup(a => a.Entities.Find(item.ApprenticeId)).Returns(apprentice);
+                _mockPreferencesContext.Setup(a => a.Entities.Find(item.PreferenceId)).Returns(preference);
+                _mockApprenticePreferencesContext
+                    .Setup(a => a.GetSinglePreferenceValueAsync(item.ApprenticeId, item.PreferenceId))
+                    .ReturnsAsync(response);
 
-            var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object,
-                _mockApprenticeContext.Object, _mockPreferencesContext.Object);
-            var result = await handler.Handle(_mockCommand, CancellationToken.None);
+                _mockApprenticePreferencesContext.Verify(a => a.Update(response));
 
-            _mockApprenticePreferencesContext.Verify(a => a.Update(response));
-            result.GetType().Should().Be(typeof(Unit));
+                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
+                    _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                var result = await handler.Handle(_mockCommand, CancellationToken.None);
+
+                result.GetType().Should().Be(typeof(Unit));
+            }
         }
     }
 }
