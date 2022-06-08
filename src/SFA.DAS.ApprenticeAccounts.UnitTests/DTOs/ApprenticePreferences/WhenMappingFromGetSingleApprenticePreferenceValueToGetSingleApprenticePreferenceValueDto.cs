@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
-using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetApprenticePreferencesByApprenticeId;
-using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetSingleApprenticePreferenceByIds;
+using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetAllApprenticePreferencesForApprentice;
+using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetApprenticePreferenceForApprenticeAndPreference;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Threading.Tasks;
@@ -24,7 +24,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
                 UpdatedOn = apprenticePreferences.UpdatedOn
             };
 
-            var response = await apprenticePreferences.ApprenticePreferenceToSinglePreferenceValueDtoMapping();
+            var response =  apprenticePreferences.MapToApprenticePreferenceDto();
 
             Assert.AreEqual(result.PreferenceId, response.PreferenceId);
             Assert.AreEqual(result.PreferenceMeaning, response.PreferenceMeaning);

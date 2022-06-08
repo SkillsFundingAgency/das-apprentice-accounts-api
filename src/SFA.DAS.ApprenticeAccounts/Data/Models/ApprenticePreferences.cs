@@ -9,22 +9,21 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             //for entity framework
         }
 
-        public ApprenticePreferences(Guid ApprenticeId, int PreferenceId, bool Status, DateTime CreatedOn, DateTime UpdatedOn)
+        public ApprenticePreferences(Guid apprenticeId, int preferenceId, bool status, DateTime createdOn, DateTime updatedOn)
         {
-            this.ApprenticeId = ApprenticeId;
-            this.PreferenceId = PreferenceId;
-            this.Status = Status;
-            this.CreatedOn = CreatedOn;
-            this.UpdatedOn = UpdatedOn;
+            this.ApprenticeId = apprenticeId;
+            this.PreferenceId = preferenceId;
+            this.Status = status;
+            this.CreatedOn = createdOn;
+            this.UpdatedOn = updatedOn;
         }
 
         public Guid ApprenticeId { get; set; }
-        public Apprentice Apprentice { get; set; }
+        public Apprentice Apprentice { get; set; } = null!;
         public int PreferenceId { get; set; }
         public bool Status { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
-        public Preference Preference { get; set; }
-
+        public Preference Preference { get; set; } = null!;
     }
 }

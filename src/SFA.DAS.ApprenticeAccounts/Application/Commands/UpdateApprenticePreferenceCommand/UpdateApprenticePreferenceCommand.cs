@@ -1,7 +1,7 @@
 ﻿using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using System;
 
-namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferencesCommand
+namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand
 {
     public class UpdateApprenticePreferenceCommand : IUnitOfWorkCommand
     {

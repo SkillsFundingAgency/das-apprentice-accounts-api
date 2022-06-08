@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Api.Controllers;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferencesCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Threading;
@@ -15,13 +15,15 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
 {
     public class WhenPostingApprenticePreference
     {
-        [Test, MoqAutoData]
+        [Test]
+        [MoqAutoData]
         public async Task AndInvalidOperationExceptionIsReturned_ThenReturnNotFound(
             [Frozen] Mock<IMediator> mediator,
             UpdateApprenticePreferenceCommand command)
         {
             mediator.Setup(m =>
-                m.Send(It.IsAny<UpdateApprenticePreferenceCommand>(), It.IsAny<CancellationToken>())).Throws(new InvalidOperationException());
+                    m.Send(It.IsAny<UpdateApprenticePreferenceCommand>(), It.IsAny<CancellationToken>()))
+                .Throws(new InvalidOperationException());
 
             var controller = new ApprenticePreferencesController(mediator.Object);
 
@@ -32,7 +34,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
             result.Should().BeOfType<NotFoundResult>();
         }
 
-        [Test, MoqAutoData]
+        [Test]
+        [MoqAutoData]
         public async Task AndAnyOtherExceptionIsReturned_ThenReturnBadRequest(
             [Frozen] Mock<IMediator> mediator,
             UpdateApprenticePreferenceCommand command)
@@ -43,12 +46,13 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
 
             var controller = new ApprenticePreferencesController(mediator.Object);
             var result = await controller.UpdateApprenticePreference(command.ApprenticeId, command.PreferenceId,
-                    command.Status) as ActionResult;
+                command.Status) as ActionResult;
 
             result.Should().BeOfType<BadRequestResult>();
         }
 
-        [Test, MoqAutoData]
+        [Test]
+        [MoqAutoData]
         public async Task AndMediatorCommandIsSuccessful_ThenReturnOk(
             [Greedy] ApprenticePreferencesController controller,
             [Frozen] Mock<IMediator> mediator,
@@ -58,8 +62,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
                     m.Send(It.IsAny<UpdateApprenticePreferenceCommand>(), It.IsAny<CancellationToken>()))
                 .Returns(Unit.Task);
 
-           var result = await controller.UpdateApprenticePreference(command.ApprenticeId, command.PreferenceId,
-                    command.Status);
+            var result = await controller.UpdateApprenticePreference(command.ApprenticeId, command.PreferenceId,
+                command.Status);
 
             result.Should().BeOfType(typeof(OkResult));
         }

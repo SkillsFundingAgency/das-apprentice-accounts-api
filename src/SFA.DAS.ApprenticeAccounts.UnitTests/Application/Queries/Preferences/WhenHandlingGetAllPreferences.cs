@@ -14,21 +14,30 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.Preferences
 {
     public class WhenHandlingGetAllPreferences
     {
-        [Test, RecursiveMoqAutoData]
+        [Test]
+        [RecursiveMoqAutoData]
         public async Task ThenPreferencesAreReturned(
             GetAllPreferencesQuery query,
-            Mock<IPreferencesContext> mockContext)
+            Mock<IPreferencesContext> mockContext,
+            int mockPreferenceId,
+            int mockPreferenceId2,
+            string mockPreferenceMeaning,
+            string mockPreferenceMeaning2)
         {
-            var response = new List<Preference>(2) { new Preference(1, "Test Meaning"), new Preference(2, "Test Meaning Two") }; 
-            mockContext.Setup(c => c.GetAllPreferencesAsync()).ReturnsAsync(response);
+            var response = new List<Preference>(2)
+            {
+                new Preference(mockPreferenceId, mockPreferenceMeaning),
+                new Preference(mockPreferenceId2, mockPreferenceMeaning2)
+            };
+            mockContext.Setup(c => c.GetAllPreferences()).ReturnsAsync(response);
 
             var handler = new GetAllPreferencesQueryHandler(mockContext.Object);
             var result = await handler.Handle(query, CancellationToken.None);
 
             result.Preferences.Count.Should().Be(response.Count);
-            result.Preferences.Should().BeEquivalentTo(response.Select(s => s),
+            result.Preferences.Should().BeEquivalentTo(response.Select(p => p),
                 l => l.Excluding(e => e.DomainEvents)
-                .Excluding(e => e.ApprenticePreferences)); 
+                    .Excluding(e => e.ApprenticePreferences));
         }
     }
 }

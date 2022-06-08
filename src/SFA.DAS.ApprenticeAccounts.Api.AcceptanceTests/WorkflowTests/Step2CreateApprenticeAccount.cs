@@ -3,7 +3,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateRegistrationCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.ChangeEmailAddressCommand;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
