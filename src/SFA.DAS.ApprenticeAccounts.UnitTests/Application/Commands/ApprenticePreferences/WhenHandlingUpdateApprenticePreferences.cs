@@ -47,7 +47,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                 _mockPreferencesContext.Setup(p => p.Entities.FindAsync(apprenticePreference.PreferenceId))
                     .ReturnsAsync(new Preference(mockPreferenceId, mockPreferenceMeaning));
 
-                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
+                var handler = new UpdateAllApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
                     _mockApprenticeContext.Object, _mockPreferencesContext.Object);
                 Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
@@ -67,7 +67,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                 _mockPreferencesContext.Setup(p => p.Entities.FindAsync(apprenticePreference.PreferenceId))
                     .ReturnsAsync((Preference)null);
 
-                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
+                var handler = new UpdateAllApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
                     _mockApprenticeContext.Object, _mockPreferencesContext.Object);
                 Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
@@ -85,7 +85,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                 _mockPreferencesContext.Setup(p => p.Entities.FindAsync(apprenticePreference.PreferenceId))
                     .ReturnsAsync((Preference)null);
 
-                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
+                var handler = new UpdateAllApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
                     _mockApprenticeContext.Object, _mockPreferencesContext.Object);
                 Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
@@ -117,7 +117,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                         apprenticePreference.PreferenceId))
                     .ReturnsAsync((Data.Models.ApprenticePreferences)null);
 
-                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
+                var handler = new UpdateAllApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
                     _mockApprenticeContext.Object, _mockPreferencesContext.Object);
                 var result = await handler.Handle(_mockCommand, CancellationToken.None);
 
@@ -157,7 +157,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
 
                 _mockApprenticePreferencesContext.Verify(a => a.Update(response));
 
-                var handler = new UpdateApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
+                var handler = new UpdateAllApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
                     _mockApprenticeContext.Object, _mockPreferencesContext.Object);
                 var result = await handler.Handle(_mockCommand, CancellationToken.None);
 

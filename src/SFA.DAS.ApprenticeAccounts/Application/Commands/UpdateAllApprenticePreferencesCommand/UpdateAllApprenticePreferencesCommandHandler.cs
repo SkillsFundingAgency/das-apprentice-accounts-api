@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System;
@@ -7,32 +8,39 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand
 {
-    public class UpdateApprenticePreferencesCommandHandler : IRequestHandler<UpdateAllApprenticePreferencesCommand>
+    public class UpdateAllApprenticePreferencesCommandHandler : IRequestHandler<UpdateAllApprenticePreferencesCommand>
     {
         private readonly IApprenticePreferencesContext _apprenticePreferencesContext;
         private readonly IApprenticeContext _apprenticeContext;
         private readonly IPreferencesContext _preferencesContext;
+        private readonly ILogger<UpdateAllApprenticePreferencesCommandHandler> _logger;
 
-        public UpdateApprenticePreferencesCommandHandler(IApprenticePreferencesContext apprenticePreferencesContext,
-            IApprenticeContext apprenticeContext, IPreferencesContext preferencesContext)
+        public UpdateAllApprenticePreferencesCommandHandler(IApprenticePreferencesContext apprenticePreferencesContext,
+            IApprenticeContext apprenticeContext, IPreferencesContext preferencesContext, ILogger<UpdateAllApprenticePreferencesCommandHandler> logger)
         {
             _apprenticePreferencesContext = apprenticePreferencesContext;
             _apprenticeContext = apprenticeContext;
             _preferencesContext = preferencesContext;
+            _logger = logger;
         }
 
         public async Task<Unit> Handle(UpdateAllApprenticePreferencesCommand request, CancellationToken cancellationToken)
         {
             foreach (var apprenticePreference in request.ApprenticePreferences)
             {
+                _logger.LogInformation($"Fetch Apprentice by Id. Id used: {apprenticePreference.ApprenticeId}");
                 var apprentice = await _apprenticeContext.Entities.FindAsync(apprenticePreference.ApprenticeId);
+
+                _logger.LogInformation($"Fetch Preference by Id. Id used: {apprenticePreference.PreferenceId}");
                 var preference = await _preferencesContext.Entities.FindAsync(apprenticePreference.PreferenceId);
 
                 if (apprentice == null || preference == null)
                 {
+                    _logger.LogError($"No Apprentice record found, or no Preference record found, or neither record found. Apprentice Id used; {apprenticePreference.ApprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
                     throw new InvalidOperationException();
                 }
 
+                _logger.LogInformation($"Fetch ApprenticePreferences record by Apprentice Id and Preference Id. Apprentice Id used: {apprenticePreference.ApprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
                 var record =
                     await _apprenticePreferencesContext.GetApprenticePreferenceForApprenticeAndPreference(
                         apprenticePreference.ApprenticeId, apprenticePreference.PreferenceId);
@@ -42,6 +50,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
                     await _apprenticePreferencesContext.AddAsync(new ApprenticePreferences(
                         apprenticePreference.ApprenticeId, apprenticePreference.PreferenceId,
                         apprenticePreference.Status, DateTime.Now, DateTime.Now));
+                    _logger.LogDebug($"Successfully created a new ApprenticePreferences record with Apprentice Id: {apprenticePreference.ApprenticeId} and Preference Id: {apprenticePreference.PreferenceId}");
                 }
                 else
                 {
@@ -49,6 +58,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
                     record.UpdatedOn = DateTime.Now;
                     
                     _apprenticePreferencesContext.Update(record);
+                    _logger.LogDebug($"Successfully updated an ApprenticePreferences record with Apprentice Id: {apprenticePreference.ApprenticeId} and Preference Id: {apprenticePreference.PreferenceId}");
                 }
             }
 
