@@ -26,8 +26,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         }
 
         public virtual DbSet<Apprentice> Apprentices { get; set; } = null!;
-        public virtual DbSet<Preference> Preference { get; set; }
-        public virtual DbSet<ApprenticePreferences> ApprenticePreferences { get; set; }
+        public virtual DbSet<Preference> Preference { get; set; } = null!;
+        public virtual DbSet<ApprenticePreferences> ApprenticePreferences { get; set; } = null!;
 
         DbSet<Apprentice> IEntityContext<Apprentice>.Entities => Apprentices;
 

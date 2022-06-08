@@ -10,18 +10,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
     {
         private readonly IMediator _mediator;
 
-        public PreferencesController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        public PreferencesController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet("/preferences")]
-        public async Task<IActionResult> GetPreferences()
+        public async Task<IActionResult> GetAllPreferences()
         {
             var result = await _mediator.Send(new GetAllPreferencesQuery());
 
             return Ok(result.Preferences);
-
         }
     }
 }

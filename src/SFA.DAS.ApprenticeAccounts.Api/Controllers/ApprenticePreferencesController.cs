@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.Amqp.Serialization;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferencesCommand;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.GetApprenticePreferencesByApprenticeIdQuery;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.GetSingleApprenticePreferenceValueByIdsQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.GetAllApprenticePreferencesForApprenticeQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.GetApprenticePreferenceForApprenticeAndPreferenceQuery;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
@@ -18,16 +17,20 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         public ApprenticePreferencesController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet("apprenticepreferences/{apprenticeId}")]
-        public async Task<IActionResult> GetApprenticePreferencesById(Guid apprenticeId)
+        public async Task<IActionResult> GetAllApprenticePreferencesForApprentice(Guid apprenticeId)
         {
-            var result = await _mediator.Send(new GetApprenticePreferencesByIdQuery() { ApprenticeId = apprenticeId });
+            var result = await _mediator.Send(new GetAllApprenticePreferencesForApprenticeQuery
+            {
+                ApprenticeId = apprenticeId
+            });
             return Ok(result);
         }
 
         [HttpGet("apprenticepreferences/{apprenticeId}/{preferenceId}")]
-        public async Task<IActionResult> GetSingleApprenticePreferenceValue(Guid apprenticeId, int preferenceId)
+        public async Task<IActionResult> GetApprenticePreferenceForApprenticeAndPreference(Guid apprenticeId,
+            int preferenceId)
         {
-            var result = await _mediator.Send(new GetSingleApprenticePreferenceValueQuery()
+            var result = await _mediator.Send(new GetApprenticePreferenceForApprenticeAndPreferenceQuery
             {
                 ApprenticeId = apprenticeId, PreferenceId = preferenceId
             });
@@ -60,16 +63,18 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
                 {
                     return NotFound();
                 }
+
                 return BadRequest();
             }
         }
 
         [HttpPost("apprenticepreferences/{apprenticePreferences}")]
-        public async Task<IActionResult> UpdateApprenticePreferences(UpdateApprenticePreferencesCommand apprenticePreferences)
+        public async Task<IActionResult> UpdateAllApprenticePreferences(
+            UpdateAllApprenticePreferencesCommand apprenticePreferences)
         {
             try
             {
-                var result = await _mediator.Send(new UpdateApprenticePreferencesCommand
+                var result = await _mediator.Send(new UpdateAllApprenticePreferencesCommand
                 {
                     ApprenticePreferences = apprenticePreferences.ApprenticePreferences
                 });
@@ -81,6 +86,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
                 {
                     return NotFound();
                 }
+
                 return BadRequest();
             }
         }

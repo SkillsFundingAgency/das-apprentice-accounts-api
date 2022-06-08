@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetApprenticePreferencesByApprenticeId;
+using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetAllApprenticePreferencesForApprentice;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
                 response.Add(apprenticePreferenceDtoOption);
             }
 
-            var result = apprenticePreferences.MapToApprenticePreferenceDto();
+            var result = apprenticePreferences.MapToApprenticePreferencesDto();
 
             result.ApprenticePreferences.Should().BeEquivalentTo(response);
         }

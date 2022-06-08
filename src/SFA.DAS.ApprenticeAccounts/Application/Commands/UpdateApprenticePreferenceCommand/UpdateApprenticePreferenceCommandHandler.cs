@@ -5,7 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferencesCommand
+namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand
 {
     public class UpdateApprenticePreferenceCommandHandler : IRequestHandler<UpdateApprenticePreferenceCommand>
     {
@@ -21,11 +21,11 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePrefer
             _preferencesContext = preferencesContext;
         }
 
-        public Task<Unit> Handle(UpdateApprenticePreferenceCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateApprenticePreferenceCommand request, CancellationToken cancellationToken)
         {
-            var apprentice = _apprenticeContext.Entities.Find(request.ApprenticeId);
+            var apprentice = await _apprenticeContext.Entities.FindAsync(request.ApprenticeId);
 
-            var preference = _preferencesContext.Entities.Find(request.PreferenceId);
+            var preference = await _preferencesContext.Entities.FindAsync(request.PreferenceId);
 
             if (apprentice == null || preference == null)
             {
@@ -33,22 +33,24 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePrefer
             }
 
             var record =
-                _apprenticePreferencesContext.GetSinglePreferenceValueAsync(request.ApprenticeId, request.PreferenceId);
+                await _apprenticePreferencesContext.GetApprenticePreferenceForApprenticeAndPreference(
+                    request.ApprenticeId, request.PreferenceId);
 
-            if (record.Result == null)
+            if (record == null)
             {
-                _apprenticePreferencesContext.Add(new ApprenticePreferences(request.ApprenticeId, request.PreferenceId,
+                await _apprenticePreferencesContext.AddAsync(new ApprenticePreferences(request.ApprenticeId,
+                    request.PreferenceId,
                     request.Status, DateTime.Now, DateTime.Now));
             }
             else
             {
-                record.Result.Status = request.Status;
-                record.Result.UpdatedOn = DateTime.Now;
+                record.Status = request.Status;
+                record.UpdatedOn = DateTime.Now;
 
-                _apprenticePreferencesContext.Update(record.Result);
+                _apprenticePreferencesContext.Update(record);
             }
 
-            return Unit.Task;
+            return await Unit.Task;
         }
     }
 }
