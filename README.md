@@ -18,6 +18,10 @@ The Apprentice Accounts API provides basic account information for an apprentice
 
 The Apprentice Accounts API is a standard ASP.Net Core Web API project using a SQL Server database.
 
+This repo has the api endpoints to perform crud operaions on account entity (the actual apprentice – its its own microservice). 
+
+runs on: https://localhost:5801/index.html
+
 
 ## 🚀 Installation
 
@@ -41,19 +45,23 @@ This API uses the standard Apprenticeship Service configuration. All configurati
 AppSettings.Development.json file
 ```json
 {
-    "Logging": {
-      "LogLevel": {
-        "Default": "Information",
-        "Microsoft": "Warning",
-        "Microsoft.Hosting.Lifetime": "Information"
-      }
-    },
-    "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
-    "ConfigNames": "SFA.DAS.Tools.Servicebus.Support,SFA.DAS.AuditApiClient",
-    "EnvironmentName": "LOCAL",
-    "Version": "1.0",
-    "APPINSIGHTS_INSTRUMENTATIONKEY": ""
-  }  
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information",
+      "Microsoft.EntityFrameworkCore.Database.Command": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true",
+  "ConfigNames": "SFA.DAS.ApprenticeAccounts.Api",
+  "EnvironmentName": "LOCAL",
+  "Version": "1.0",
+  "ApplicationSettings": {
+    "DbConnectionString": "Data Source=.;Initial Catalog=SFA.DAS.ApprenticeAccounts.Database;Integrated Security=True;Pooling=False;Connect Timeout=30"
+  }
+}
 ```
 
 ## 🔗 External Dependencies
