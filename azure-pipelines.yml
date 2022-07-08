@@ -79,6 +79,7 @@ stages:
   variables:
   - group: DevTest Management Resources
   - group: TEST DevTest Shared Resources
+  - group: TEST das-apprentice-accounts-api
   jobs:
   - template: pipeline-templates/job/deploy.yml
     parameters:
