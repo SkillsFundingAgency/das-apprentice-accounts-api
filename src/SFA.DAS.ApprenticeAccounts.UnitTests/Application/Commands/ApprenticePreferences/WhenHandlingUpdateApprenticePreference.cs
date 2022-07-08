@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
@@ -18,6 +19,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         private Mock<IApprenticePreferencesContext> _mockApprenticePreferencesContext;
         private Mock<IApprenticeContext> _mockApprenticeContext;
         private Mock<IPreferencesContext> _mockPreferencesContext;
+        private Mock<ILogger<UpdateApprenticePreferenceCommandHandler>> _logger;
         private UpdateApprenticePreferenceCommand _mockCommand;
 
         [SetUp]
@@ -26,6 +28,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             _mockApprenticePreferencesContext = new Mock<IApprenticePreferencesContext>();
             _mockApprenticeContext = new Mock<IApprenticeContext>();
             _mockPreferencesContext = new Mock<IPreferencesContext>();
+            _logger = new Mock<ILogger<UpdateApprenticePreferenceCommandHandler>>();
             _mockCommand = new UpdateApprenticePreferenceCommand();
         }
 
@@ -40,7 +43,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                 .ReturnsAsync(new Preference(mockPreferenceId, mockPreferenceMeaning));
 
             var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object,
-                _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
             Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
             await result.Should().ThrowAsync<InvalidOperationException>();
@@ -55,7 +58,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             _mockPreferencesContext.Setup(p => p.Entities.FindAsync(_mockCommand.PreferenceId)).ReturnsAsync((Preference)null);
 
             var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object,
-                _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
             Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
             await result.Should().ThrowAsync<InvalidOperationException>();
@@ -68,7 +71,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             _mockPreferencesContext.Setup(p => p.Entities.FindAsync(_mockCommand.PreferenceId)).ReturnsAsync((Preference)null);
 
             var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object,
-                _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
             Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
             await result.Should().ThrowAsync<InvalidOperationException>();
@@ -95,7 +98,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                 .ReturnsAsync((Data.Models.ApprenticePreferences)null);
 
             var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object,
-                _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
             var result = await handler.Handle(_mockCommand, CancellationToken.None);
 
             _mockApprenticePreferencesContext.Verify(a => a.AddAsync(It.IsAny<Data.Models.ApprenticePreferences>(), CancellationToken.None));
@@ -127,7 +130,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                 .ReturnsAsync(response);
 
             var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object,
-                _mockApprenticeContext.Object, _mockPreferencesContext.Object);
+                _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
             var result = await handler.Handle(_mockCommand, CancellationToken.None);
 
             _mockApprenticePreferencesContext.Verify(a => a.Update(response));
