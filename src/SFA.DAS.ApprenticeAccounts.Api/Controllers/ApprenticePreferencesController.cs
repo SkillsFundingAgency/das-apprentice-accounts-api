@@ -4,6 +4,7 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePrefere
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.GetAllApprenticePreferencesForApprenticeQuery;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.GetApprenticePreferenceForApprenticeAndPreferenceQuery;
+using SFA.DAS.ApprenticeAccounts.Exceptions;
 using System;
 using System.Threading.Tasks;
 
@@ -59,7 +60,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             }
             catch (Exception e)
             {
-                if (e is InvalidOperationException)
+                if (e is InvalidInputException)
                 {
                     return NotFound();
                 }
@@ -82,7 +83,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             }
             catch (Exception e)
             {
-                if (e is InvalidOperationException)
+                if (e is InvalidInputException)
                 {
                     return NotFound();
                 }

@@ -76,7 +76,4 @@
   <ItemGroup>
     <PostDeploy Include="PostDeployment\PostDeployment.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <RefactorLog Include="SFA.DAS.ApprenticeAccounts.Database.refactorlog" />
-  </ItemGroup>
 </Project>

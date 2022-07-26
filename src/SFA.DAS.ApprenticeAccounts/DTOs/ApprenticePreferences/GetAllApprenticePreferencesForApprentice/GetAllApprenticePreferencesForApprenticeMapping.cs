@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetAllApprenticePreferencesForApprentice
 {
@@ -9,19 +10,14 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetAllApprentice
         {
             var apprenticePreferencesDto = new GetAllApprenticePreferencesForApprenticeDto
             {
-                ApprenticePreferences = new List<ApprenticePreferenceDto>()
+                ApprenticePreferences = new List<ApprenticePreferenceDto>(apprenticePreferences.Select(ap =>
+                    new ApprenticePreferenceDto()
+                    {
+                        PreferenceId = ap.PreferenceId,
+                        PreferenceMeaning = ap.Preference.PreferenceMeaning,
+                        Status = ap.Status
+                    }))
             };
-
-            foreach (var apprenticePreference in apprenticePreferences)
-            {
-                apprenticePreferencesDto.ApprenticePreferences.Add(new ApprenticePreferenceDto
-                {
-                    PreferenceId = apprenticePreference.PreferenceId,
-                    PreferenceMeaning = apprenticePreference.Preference.PreferenceMeaning,
-                    Status = apprenticePreference.Status,
-                    UpdatedOn = apprenticePreference.UpdatedOn
-                });
-            }
 
             return apprenticePreferencesDto;
         }
