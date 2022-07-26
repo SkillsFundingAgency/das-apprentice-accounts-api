@@ -1,5 +1,6 @@
 ﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SFA.DAS.ApprenticeAccounts.DTOs.Preferences.GetAllPreferences
 {
@@ -7,17 +8,16 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Preferences.GetAllPreferences
     {
         public static GetAllPreferencesDto MapToPreferenceDto(this IEnumerable<Preference> preferences)
         {
-            var preferencesDto = new GetAllPreferencesDto { Preferences = new List<PreferenceDto>() };
-
-            foreach (var preference in preferences)
+            var preferencesReturned = preferences.ToList();
+            var preferencesDto = new GetAllPreferencesDto
             {
-                preferencesDto.Preferences.Add(new PreferenceDto
-                {
-                    PreferenceId = preference.PreferenceId, PreferenceMeaning = preference.PreferenceMeaning
-                });
-            }
-
-            return preferencesDto;
+                Preferences = new List<PreferenceDto>(
+                    preferencesReturned.Select(p => new PreferenceDto
+                    {
+                        PreferenceId = p.PreferenceId, PreferenceMeaning = p.PreferenceMeaning
+                    }))
+            };
+                return preferencesDto;
         }
     }
 }
