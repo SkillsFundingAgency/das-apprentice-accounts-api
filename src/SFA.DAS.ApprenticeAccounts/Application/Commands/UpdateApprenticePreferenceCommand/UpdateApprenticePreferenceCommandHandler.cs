@@ -14,17 +14,15 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePrefer
         private readonly IApprenticePreferencesContext _apprenticePreferencesContext;
         private readonly IApprenticeContext _apprenticeContext;
         private readonly IPreferencesContext _preferencesContext;
-        private readonly ApprenticeAccountsDbContext _dbContext;
         private readonly ILogger<UpdateApprenticePreferenceCommandHandler> _logger;
 
         public UpdateApprenticePreferenceCommandHandler(IApprenticePreferencesContext apprenticePreferencesContext,
             IApprenticeContext apprenticeContext, IPreferencesContext preferencesContext,
-            ApprenticeAccountsDbContext dbContext, ILogger<UpdateApprenticePreferenceCommandHandler> logger)
+            ILogger<UpdateApprenticePreferenceCommandHandler> logger)
         {
             _apprenticePreferencesContext = apprenticePreferencesContext;
             _apprenticeContext = apprenticeContext;
             _preferencesContext = preferencesContext;
-            _dbContext = dbContext;
             _logger = logger;
         }
 
@@ -66,7 +64,6 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePrefer
                     $"Successfully updated an ApprenticePreferences record with Apprentice Id: {request.ApprenticeId}, and Preference Id: {request.PreferenceId}");
             }
 
-            await _dbContext.SaveChangesAsync(CancellationToken.None);
             return await Unit.Task;
         }
     }
