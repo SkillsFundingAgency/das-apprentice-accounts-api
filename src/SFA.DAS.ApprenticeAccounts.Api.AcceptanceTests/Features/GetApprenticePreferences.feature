@@ -3,7 +3,7 @@
 
 Feature: GetApprenticePreferences
 	As a application user
-	I want to create a valid apprenticeship in the database
+	I want to retrieve valid apprentice preferences from the database
 
 Scenario: Get the apprentice preferences
 	Given there is one apprentice
