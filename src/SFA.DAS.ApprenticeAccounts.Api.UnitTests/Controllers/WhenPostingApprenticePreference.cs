@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Api.Controllers;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
+using SFA.DAS.ApprenticeAccounts.Exceptions;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Threading;
@@ -17,13 +18,13 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
     {
         [Test]
         [MoqAutoData]
-        public async Task AndInvalidOperationExceptionIsReturned_ThenReturnNotFound(
+        public async Task AndInvalidInputExceptionIsReturned_ThenReturnNotFound(
             [Frozen] Mock<IMediator> mediator,
             UpdateApprenticePreferenceCommand command)
         {
             mediator.Setup(m =>
                     m.Send(It.IsAny<UpdateApprenticePreferenceCommand>(), It.IsAny<CancellationToken>()))
-                .Throws(new InvalidOperationException());
+                .Throws(new InvalidInputException());
 
             var controller = new ApprenticePreferencesController(mediator.Object);
 

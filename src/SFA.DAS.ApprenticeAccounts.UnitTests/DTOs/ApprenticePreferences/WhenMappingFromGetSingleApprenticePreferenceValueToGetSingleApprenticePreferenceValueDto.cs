@@ -20,8 +20,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
             {
                 PreferenceId = apprenticePreferences.PreferenceId,
                 PreferenceMeaning = apprenticePreferences.Preference.PreferenceMeaning,
-                Status = apprenticePreferences.Status,
-                UpdatedOn = apprenticePreferences.UpdatedOn
+                Status = apprenticePreferences.Status
             };
 
             var response =  apprenticePreferences.MapToApprenticePreferenceDto();
@@ -29,7 +28,6 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
             Assert.AreEqual(result.PreferenceId, response.PreferenceId);
             Assert.AreEqual(result.PreferenceMeaning, response.PreferenceMeaning);
             Assert.AreEqual(result.Status, response.Status);
-            Assert.AreEqual(result.UpdatedOn, response.UpdatedOn);
         }
     }
 }

@@ -55,7 +55,8 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
                     .Excluding(e => e.ApprenticeId)
                     .Excluding(e => e.CreatedOn)
                     .Excluding(e => e.Preference)
-                    .Excluding(e => e.Apprentice));
+                    .Excluding(e => e.Apprentice)
+                    .Excluding(e => e.UpdatedOn));
         }
     }
 }
