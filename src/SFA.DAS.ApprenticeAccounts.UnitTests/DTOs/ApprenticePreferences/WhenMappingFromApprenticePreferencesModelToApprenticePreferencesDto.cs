@@ -5,6 +5,7 @@ using SFA.DAS.ApprenticeAccounts.DTOs.ApprenticePreferences.GetAllApprenticePref
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
@@ -21,21 +22,11 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
                 new Data.Models.ApprenticePreferences(mockGuid, 2, false, mockDateTimeTwo, mockDateTimeOne) 
             };
             foreach (var item in apprenticePreferences)
-            {
+            { 
                 item.Preference = preference;
             }
 
-            var response = new List<ApprenticePreferenceDto>();
-
-            foreach (Data.Models.ApprenticePreferences a in apprenticePreferences)
-            {
-                var apprenticePreferenceDtoOption = new ApprenticePreferenceDto() 
-                { PreferenceId = a.PreferenceId,
-                  PreferenceMeaning = a.Preference.PreferenceMeaning,
-                  Status = a.Status,
-                  UpdatedOn = a.UpdatedOn};
-                response.Add(apprenticePreferenceDtoOption);
-            }
+            var response =  apprenticePreferences.Select(a => new ApprenticePreferenceDto() { PreferenceId = a.PreferenceId, PreferenceMeaning = a.Preference.PreferenceMeaning, Status = a.Status }).ToList();
 
             var result = apprenticePreferences.MapToApprenticePreferencesDto();
 
