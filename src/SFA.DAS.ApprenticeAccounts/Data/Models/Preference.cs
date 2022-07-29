@@ -17,6 +17,6 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
 
         public int PreferenceId { get; set; }
         public string PreferenceMeaning { get; set; } = null!;
-        public ICollection<ApprenticePreferences> ApprenticePreferences { get; set; } = new List<ApprenticePreferences>();
+        public ICollection<ApprenticePreferences> ApprenticePreferences { get; private set; } = new List<ApprenticePreferences>();
     }
 }

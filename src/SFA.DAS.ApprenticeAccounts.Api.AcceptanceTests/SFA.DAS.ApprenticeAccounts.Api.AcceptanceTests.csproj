@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <SpecFlowObsoleteCodeBehindFiles Remove="Features\ChangeEmailAddress - Copy.feature.cs" />
+    <SpecFlowObsoleteCodeBehindFiles Remove="Features\GetApprenticePreferences - Copy.feature.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,12 +35,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Features\GetPreferences.feature.cs">
+      <DependentUpon>GetPreferences.feature</DependentUpon>
+    </Compile>
     <Compile Update="Features\GetApprenticePreferences.feature.cs">
       <DependentUpon>GetApprenticePreferences.feature</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <SpecFlowFeatureFiles Update="Features\GetPreferences.feature">
+      <Visible>$(UsingMicrosoftNETSdk)</Visible>
+      <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
+    </SpecFlowFeatureFiles>
     <SpecFlowFeatureFiles Update="Features\GetApprenticePreferences.feature">
       <Visible>$(UsingMicrosoftNETSdk)</Visible>
       <CodeBehindFile>%(RelativeDir)%(Filename).feature$(DefaultLanguageSourceExtension)</CodeBehindFile>
