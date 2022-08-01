@@ -4,16 +4,20 @@ namespace SFA.DAS.ApprenticeAccounts.Exceptions
 {
     public class InvalidInputException : Exception
     {
-        public InvalidInputException(Guid apprenticeId, int preferenceId) 
-            :base($"No Apprentice record found, or no Preference record found, or neither found. Apprentice Id used: {apprenticeId}, Preference Id used: {preferenceId}")
+        public static class ExceptionMessages
         {
-            
+            public static readonly string InvalidInputApprentice = "No Apprentice record found.";
+
+            public static readonly string InvalidInputPreference = "No Preference record found.";
+
+            public static readonly string MultipleInputs = "More than one apprentice Id has been entered.";
         }
 
-        public InvalidInputException()
-            : base("More than one apprentice Id has been entered.")
-        {
-
+        public static Exception CreateException(string message)
+        { 
+            var invalidInputException = new Exception(message);
+            return invalidInputException;
         }
     }
+
 }

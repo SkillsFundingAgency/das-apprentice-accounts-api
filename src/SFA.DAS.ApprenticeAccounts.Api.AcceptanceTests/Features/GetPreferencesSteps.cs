@@ -21,8 +21,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Features
             var startDate = new DateTime(2000, 01, 01);
         }
 
-        [Given(@"there is one apprentice")]
-        public async Task GivenThereIsOneApprentice()
+        [Given(@"there are preferences")]
+        public async Task GivenThereArePreferences()
         {
             _preference = _fixture.Build<Preference>().Create();
             _context.DbContext.Preference.Add(_preference);
@@ -39,10 +39,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Features
         public void ThenTheResponseShouldMatchTheExpectedPreferenceValues()
         {
             _context.Api.Response
-                .Should().BeAs(new
-                {
-                    Preference = new[] { new { _preference.PreferenceId, _preference.PreferenceMeaning } }
-                });
+                .Should().BeAs(new[] { new { _preference.PreferenceId, _preference.PreferenceMeaning } });
         }
     }
 }

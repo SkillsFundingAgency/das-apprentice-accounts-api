@@ -7,7 +7,6 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePrefere
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.Exceptions;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Collections.Generic;
@@ -43,9 +42,11 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         public async Task And_ApprenticeIsNull_ReturnInvalidInputException(
             int mockPreferenceId,
             string mockPreferenceMeaning,
-            List<UpdateApprenticePreferenceCommand> apprenticePreferences)
+            List<UpdateApprenticePreferenceCommand> apprenticePreferences, Guid apprenticeId)
         {
+            apprenticePreferences.ForEach(ap => ap.ApprenticeId = apprenticeId);
             _mockCommand.ApprenticePreferences = apprenticePreferences;
+
             foreach (var apprenticePreference in _mockCommand.ApprenticePreferences)
             {
                 _mockApprenticeContext.Setup(a => a.Entities.FindAsync(apprenticePreference.ApprenticeId))
@@ -57,7 +58,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                     _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
                 Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
-                await result.Should().ThrowAsync<InvalidInputException>();
+                await result.Should().ThrowAsync<Exception>().WithMessage("No Apprentice record found.");
             }
         }
 
@@ -65,11 +66,14 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         [MoqAutoData]
         public async Task AndPreferencesIsNull_ReturnInvalidInputException(
             Apprentice apprentice,
-            List<UpdateApprenticePreferenceCommand> apprenticePreferences)
+            List<UpdateApprenticePreferenceCommand> apprenticePreferences, Guid apprenticeId)
         {
+            apprenticePreferences.ForEach(ap => ap.ApprenticeId = apprenticeId);
             _mockCommand.ApprenticePreferences = apprenticePreferences;
+
             foreach (var apprenticePreference in _mockCommand.ApprenticePreferences)
             {
+                apprenticePreference.ApprenticeId = apprenticeId;
                 _mockApprenticeContext.Setup(a => a.Entities.FindAsync(apprenticePreference.ApprenticeId))
                     .ReturnsAsync(apprentice);
                 _mockPreferencesContext.Setup(p => p.Entities.FindAsync(apprenticePreference.PreferenceId))
@@ -79,29 +83,10 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
                     _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
                 Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
 
-                await result.Should().ThrowAsync<InvalidInputException>();
+                await result.Should().ThrowAsync<Exception>().WithMessage("No Preference record found.");
             }
         }
 
-        [Test]
-        public async Task And_BothApprenticeAndPreferencesAreNull_ReturnInvalidInputException(
-            List<UpdateApprenticePreferenceCommand> apprenticePreferences)
-        {
-            _mockCommand.ApprenticePreferences = apprenticePreferences;
-            foreach (var apprenticePreference in _mockCommand.ApprenticePreferences)
-            {
-                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(apprenticePreference.ApprenticeId))
-                    .ReturnsAsync((Apprentice)null);
-                _mockPreferencesContext.Setup(p => p.Entities.FindAsync(apprenticePreference.PreferenceId))
-                    .ReturnsAsync((Preference)null);
-
-                var handler = new UpdateAllApprenticePreferencesCommandHandler(_mockApprenticePreferencesContext.Object,
-                    _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
-                Func<Task> result = async () => await handler.Handle(_mockCommand, CancellationToken.None);
-
-                await result.Should().ThrowAsync<InvalidInputException>();
-            }
-        }
 
         [Test]
         [RecursiveMoqAutoData]
