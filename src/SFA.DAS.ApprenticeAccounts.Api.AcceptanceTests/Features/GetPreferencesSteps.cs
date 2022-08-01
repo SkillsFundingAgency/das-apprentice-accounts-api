@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
@@ -13,19 +13,23 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Features
     {
         private readonly TestContext _context;
         private readonly Fixture _fixture = new Fixture();
-        private Preference _preference;
+        private Preference _preferenceOne;
+        private Preference _preferenceTwo;
 
         public GetPreferencesSteps(TestContext context)
         {
             _context = context;
-            var startDate = new DateTime(2000, 01, 01);
         }
 
         [Given(@"there are preferences")]
         public async Task GivenThereArePreferences()
         {
-            _preference = _fixture.Build<Preference>().Create();
-            _context.DbContext.Preference.Add(_preference);
+            _preferenceOne = _fixture.Build<Preference>().Create();
+            _preferenceTwo = _fixture.Build<Preference>().Create();
+
+            var preferences = new List<Preference>() { _preferenceOne, _preferenceTwo };
+
+            _context.DbContext.Preference.AddRange(preferences);
             await _context.DbContext.SaveChangesAsync();
         }
 
@@ -39,7 +43,20 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Features
         public void ThenTheResponseShouldMatchTheExpectedPreferenceValues()
         {
             _context.Api.Response
-                .Should().BeAs(new[] { new { _preference.PreferenceId, _preference.PreferenceMeaning } });
+                .Should().BeAs(new[]
+                    {
+                                    new
+                                    {
+                                        _preferenceOne.PreferenceId,
+                                        _preferenceOne.PreferenceMeaning
+                                    },
+                        new
+                        {
+                            _preferenceTwo.PreferenceId,
+                            _preferenceTwo.PreferenceMeaning
+                        }
+
+                });
         }
     }
 }

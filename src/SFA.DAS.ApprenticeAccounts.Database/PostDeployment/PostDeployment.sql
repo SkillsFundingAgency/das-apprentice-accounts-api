@@ -16,3 +16,5 @@ BEGIN
 END
 
 GRANT SELECT ON SCHEMA :: DashboardReporting TO DashboardReporting
+
+:r .\AddDefaultNotificationsPreferences.sql

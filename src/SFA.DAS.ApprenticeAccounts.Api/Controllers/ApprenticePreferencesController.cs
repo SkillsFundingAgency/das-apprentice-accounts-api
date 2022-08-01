@@ -33,7 +33,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         {
             var result = await _mediator.Send(new GetApprenticePreferenceForApprenticeAndPreferenceQuery
             {
-                ApprenticeId = apprenticeId, PreferenceId = preferenceId
+                ApprenticeId = apprenticeId,
+                PreferenceId = preferenceId
             });
 
             if (result.PreferenceId == 0)
@@ -52,26 +53,27 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             {
                 var result = await _mediator.Send(new UpdateApprenticePreferenceCommand
                 {
-                    ApprenticeId = apprenticeId, PreferenceId = preferenceId, Status = status
+                    ApprenticeId = apprenticeId,
+                    PreferenceId = preferenceId,
+                    Status = status
                 });
 
 
                 return Ok();
             }
+            catch (InvalidInputException iie)
+            {
+                return NotFound();
+            }
             catch (Exception e)
             {
-                if (e is InvalidInputException)
-                {
-                    return NotFound();
-                }
-
                 return BadRequest();
             }
         }
 
         [HttpPost("apprenticepreferences/{apprenticePreferences}")]
         public async Task<IActionResult> UpdateAllApprenticePreferences(
-            UpdateAllApprenticePreferencesCommand apprenticePreferences)
+                UpdateAllApprenticePreferencesCommand apprenticePreferences)
         {
             try
             {
@@ -81,13 +83,12 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
                 });
                 return Ok();
             }
+            catch (InvalidInputException iie)
+            {
+                return NotFound();
+            }
             catch (Exception e)
             {
-                if (e is InvalidInputException)
-                {
-                    return NotFound();
-                }
-
                 return BadRequest();
             }
         }

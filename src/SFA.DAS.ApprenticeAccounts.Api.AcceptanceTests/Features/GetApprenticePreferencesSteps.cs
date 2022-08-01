@@ -1,7 +1,6 @@
 ﻿using AutoFixture;
 using FluentAssertions;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using System;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
@@ -20,15 +19,15 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Features
         public GetApprenticePreferencesSteps(TestContext context)
         {
             _context = context;
-            var startDate = new DateTime(2000, 01, 01);
         }
 
-        [Given(@"there is an apprentice Id")]
-        public async Task GivenThereIsAnApprenticeId()
+        [Given(@"there is an apprentice with preferences")]
+        public async Task GivenThereIsAnApprenticeWithPreferences()
         {
+            _preference = _fixture.Build<Preference>().Create();
             _apprentice = _fixture.Build<Apprentice>().Without(x => x.TermsOfUseAccepted).Create();
-            _apprenticePreferences =
-                _fixture.Build<ApprenticePreferences>().With(x => x.Apprentice, _apprentice).Create();
+            _apprenticePreferences = _fixture.Build<ApprenticePreferences>().With(x => x.Apprentice, _apprentice)
+                .With(x => x.Preference, _preference).Create();
             _context.DbContext.ApprenticePreferences.Add(_apprenticePreferences);
             await _context.DbContext.SaveChangesAsync();
         }
@@ -37,11 +36,15 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Features
         public async Task WhenWeTryToRetrieveTheApprenticePreferences() =>
             await _context.Api.Get($"apprenticepreferences/{_apprenticePreferences.ApprenticeId}");
 
+        [When(@"we try to retrieve the apprentice preference")]
+        public async Task WhenWeTryToRetrieveTheApprenticePreference() =>
+    await _context.Api.Get($"apprenticepreferences/{_apprenticePreferences.ApprenticeId}/{_apprenticePreferences.PreferenceId}");
+
         [Then(@"the result should return ok")]
         public void ThenTheResultShouldReturnOk() => _context.Api.Response.Should().Be200Ok();
 
-        [Then(@"the response should match the expected apprentice preference values")]
-        public void ThenTheResponseShouldMatchTheExpectedApprenticePreferenceValues() =>
+        [Then(@"the response should match the expected apprentice preferences values")]
+        public void ThenTheResponseShouldMatchTheExpectedApprenticePreferencesValues() =>
             _context.Api.Response
                 .Should().BeAs(new
                 {
@@ -56,15 +59,15 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Features
                     }
                 });
 
-        [Given(@"there is an apprentice Id and a preference Id")]
-        public async Task GivenThereIsAnApprenticeIdAndAPreferenceId()
-        {
-            _preference = _fixture.Build<Preference>().Create();
-            _apprentice = _fixture.Build<Apprentice>().Without(x => x.TermsOfUseAccepted).Create();
-            _apprenticePreferences = _fixture.Build<ApprenticePreferences>().With(x => x.Apprentice, _apprentice)
-                .With(x => x.Preference, _preference).Create();
-            _context.DbContext.ApprenticePreferences.Add(_apprenticePreferences);
-            await _context.DbContext.SaveChangesAsync();
-        }
+
+        [Then(@"the response should match the expected apprentice preference value")]
+        public void ThenTheResponseShouldMatchTheExpectedApprenticePreferenceValue() =>
+            _context.Api.Response
+                .Should().BeAs(new
+                {
+                    _apprenticePreferences.PreferenceId,
+                    _apprenticePreferences.Preference.PreferenceMeaning,
+                    _apprenticePreferences.Status
+                });
     }
 }
