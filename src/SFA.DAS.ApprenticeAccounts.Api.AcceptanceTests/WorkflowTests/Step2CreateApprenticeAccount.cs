@@ -17,9 +17,9 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
         public async Task Validates_command()
         {
             var create = fixture.Build<CreateApprenticeAccountCommand>()
-                //.Without(p => p.Email).
-                .Do(x => x.Email = " ").
-                Create();
+                .Without(p => p.Email)
+                .Do(x => x.Email = " ")
+                .Create();
             var response = await PostCreateAccountCommand(create);
             response
                 .Should().Be400BadRequest()
@@ -92,9 +92,9 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
             {
                 Errors = new Dictionary<string, string[]>
                 {
-                    { "FirstName", new[]{ "'First Name' must not be empty." } },
-                    { "LastName", new[]{ "'Last Name' must not be empty." } },
-                    { "DateOfBirth", new[]{ "'Date Of Birth' is not a valid date." } },
+                    { "FirstName", new[]{ "Enter your first name" } },
+                    { "LastName", new[]{ "Enter your last name" } },
+                    { "DateOfBirth", new[]{ "Enter your date of birth" } },
                 },
             });
 

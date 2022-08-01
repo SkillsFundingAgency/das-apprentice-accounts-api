@@ -34,11 +34,20 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePrefer
             _logger.LogInformation($"Fetch Preference record by Id: {request.PreferenceId}");
             var preference = await _preferencesContext.Entities.FindAsync(request.PreferenceId);
 
-            if (apprentice == null || preference == null)
+            if (apprentice == null)
             {
                 _logger.LogError(
-                    $"No Apprentice record found, or no Preference record found, or neither found. Apprentice Id used: {request.ApprenticeId}, Preference Id used: {request.PreferenceId}");
-                throw new InvalidInputException(request.ApprenticeId, request.PreferenceId);
+                    $"No Apprentice record found. Apprentice Id used: {request.ApprenticeId}");
+                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages
+                    .InvalidInputApprentice);
+            }
+
+            if (preference == null)
+            {
+                _logger.LogError(
+                    $"No Preference record found. Preference Id used: {request.PreferenceId}");
+                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages
+                    .InvalidInputPreference);
             }
 
             _logger.LogInformation(

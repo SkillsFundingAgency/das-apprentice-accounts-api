@@ -31,25 +31,29 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
         {
             _logger.LogInformation($"Fetch Apprentice by Id. Id used: {request.ApprenticePreferences[0].ApprenticeId}");
             var apprenticeId = request.ApprenticePreferences[0].ApprenticeId;
+            
+            if (!(request.ApprenticePreferences.TrueForAll(ap => ap.ApprenticeId == apprenticeId)))
+            {
+                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages.MultipleInputs);
+            }
             var apprentice = await _apprenticeContext.Entities.FindAsync(apprenticeId);
 
-            if (!request.ApprenticePreferences.TrueForAll(ap => ap.ApprenticeId == apprenticeId))
+            if (apprentice == null)
             {
-                throw new InvalidInputException();
+                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages
+                    .InvalidInputApprentice);
             }
-
 
             foreach (var apprenticePreference in request.ApprenticePreferences)
             {
                 _logger.LogInformation($"Fetch Preference by Id. Id used: {apprenticePreference.PreferenceId}");
                 var preference = await _preferencesContext.Entities.FindAsync(apprenticePreference.PreferenceId);
 
-                if (apprentice == null || preference == null)
+                if (preference == null)
                 {
                     _logger.LogError(
                         $"No Apprentice record found, or no Preference record found, or neither record found. Apprentice Id used; {apprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
-                    throw new InvalidInputException(apprenticeId,
-                        apprenticePreference.PreferenceId);
+                    throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages.InvalidInputPreference);
                 }
 
                 _logger.LogInformation(
