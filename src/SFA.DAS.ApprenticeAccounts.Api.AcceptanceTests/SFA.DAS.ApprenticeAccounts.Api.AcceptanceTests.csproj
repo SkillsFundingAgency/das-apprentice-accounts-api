@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <SpecFlowObsoleteCodeBehindFiles Remove="Features\ChangeEmailAddress - Copy.feature.cs" />
-    <SpecFlowObsoleteCodeBehindFiles Remove="Features\GetApprenticePreferences - Copy.feature.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.17.0" />
     <PackageReference Include="AutoFixture.NUnit3" Version="4.17.0" />
     <PackageReference Include="AutoFixture.SeedExtensions" Version="4.17.0" />

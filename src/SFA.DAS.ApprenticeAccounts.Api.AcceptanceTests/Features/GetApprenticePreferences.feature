@@ -6,13 +6,13 @@ Feature: GetApprenticePreferences
 	I want to retrieve valid apprentice preferences from the database
 
 Scenario: Get the apprentice preferences for an apprentice
-	Given there is an apprentice Id
+	Given there is an apprentice with preferences
 	When we try to retrieve the apprentice preferences
 	Then the result should return ok
-	And the response should match the expected apprentice preference values
+	And the response should match the expected apprentice preferences values
 
 Scenario: Get the apprentice preferences for an apprentice and a preference
-	Given there is an apprentice Id and a preference Id
-	When we try to retrieve the apprentice preferences
+	Given there is an apprentice with preferences
+	When we try to retrieve the apprentice preference
 	Then the result should return ok
-	And the response should match the expected apprentice preference values
+	And the response should match the expected apprentice preference value
