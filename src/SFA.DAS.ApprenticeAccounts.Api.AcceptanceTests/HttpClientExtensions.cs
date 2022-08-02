@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Newtonsoft.Json;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -35,12 +36,12 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
                 return (response, default);
 
             var content = await response.Content.ReadAsStringAsync();
-            var responseValue = JsonSerializer.Deserialize<T>(content);
+            var responseValue = JsonConvert.DeserializeObject<T>(content);
 
             return (response, responseValue);
         }
 
         public static StringContent GetStringContent(this object obj)
-            => new StringContent(JsonSerializer.Serialize(obj), Encoding.Default, "application/json");
+            => new StringContent(JsonConvert.SerializeObject(obj), Encoding.Default, "application/json");
     }
 }

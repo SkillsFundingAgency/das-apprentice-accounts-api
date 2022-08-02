@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace SFA.DAS.ApprenticeAccounts.Extensions
 {
@@ -12,7 +12,7 @@ namespace SFA.DAS.ApprenticeAccounts.Extensions
         {
             httpResponse.ContentType = "application/json";
 
-            return httpResponse.WriteAsync(JsonSerializer.Serialize(body, new JsonSerializerOptions
+            return httpResponse.WriteAsync(JsonConvert.SerializeObject(body, new JsonSerializerSettings
             {
                 Converters = new List<JsonConverter> { new StringEnumConverter() },
                 Formatting = Formatting.Indented
