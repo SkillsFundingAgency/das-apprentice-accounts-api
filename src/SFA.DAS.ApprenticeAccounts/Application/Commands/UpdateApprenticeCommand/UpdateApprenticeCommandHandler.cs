@@ -1,8 +1,8 @@
-﻿using System.Threading;
+﻿using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 
@@ -21,7 +21,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
 
         public async Task<Unit> Handle(UpdateApprenticeCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Updating {request.ApprenticeId} - {JsonConvert.SerializeObject(request.Updates)}");
+            _logger.LogInformation($"Updating {request.ApprenticeId} - {JsonSerializer.Serialize(request.Updates)}");
             var app = await _apprentices.GetById(request.ApprenticeId);
             request.Updates.ApplyTo(new ApprenticePatchDto(app, _logger));
             var validation = await new UpdateApprenticeValidator().ValidateAsync(app, cancellationToken);

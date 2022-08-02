@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿
+using System.Text.Json;
 
 namespace SFA.DAS.ApprenticeAccounts.UnitTests
 {
@@ -6,8 +7,8 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests
     {
         public static T Clone<T>(this T self)
         {
-            var serialized = JsonConvert.SerializeObject(self);
-            return JsonConvert.DeserializeObject<T>(serialized);
+            var serialized = JsonSerializer.Serialize(self);
+            return JsonSerializer.Deserialize<T>(serialized);
         }
     }
 }
