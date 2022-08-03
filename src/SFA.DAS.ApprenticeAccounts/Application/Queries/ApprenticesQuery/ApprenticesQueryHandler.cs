@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using MediatR;
+using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System.Threading;
