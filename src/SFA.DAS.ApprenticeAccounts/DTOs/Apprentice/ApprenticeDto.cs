@@ -1,5 +1,4 @@
-﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
 #nullable enable
@@ -18,7 +17,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
         public bool ReacceptTermsOfUseRequired { get; set; }
 
         [return: NotNullIfNotNull("source")]
-        public static ApprenticeDto? Create(Apprentice source, DateTime termsOfServiceUpdatedOn)
+        public static ApprenticeDto? Create(Data.Models.Apprentice source, DateTime termsOfServiceUpdatedOn)
         {
             if (source == null) return null;
 
