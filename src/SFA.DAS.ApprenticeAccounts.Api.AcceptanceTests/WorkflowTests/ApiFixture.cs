@@ -1,18 +1,19 @@
+
+
+#nullable enable
+
 using AutoFixture;
 using FluentAssertions;
 using Microsoft.AspNetCore.JsonPatch;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.DTOs;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using SFA.DAS.NServiceBus.Testing.Services;
 using System;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Threading.Tasks;
-
-#nullable enable
-
 namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
 {
     public class ApiFixture

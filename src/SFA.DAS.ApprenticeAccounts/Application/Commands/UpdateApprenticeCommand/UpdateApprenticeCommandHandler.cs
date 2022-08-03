@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SFA.DAS.ApprenticeAccounts.Data;
-using SFA.DAS.ApprenticeAccounts.DTOs;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand
 {

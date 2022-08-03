@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateRegistrationCommand
+namespace SFA.DAS.ApprenticeAccounts.Application.Commands.ChangeEmailAddressCommand
 {
     public class ChangeEmailAddressCommandHandler : IRequestHandler<ChangeEmailAddressCommand>
     {

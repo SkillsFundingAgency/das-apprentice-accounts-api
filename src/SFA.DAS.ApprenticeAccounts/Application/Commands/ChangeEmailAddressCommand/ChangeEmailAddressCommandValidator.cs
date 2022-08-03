@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateRegistrationCommand
+namespace SFA.DAS.ApprenticeAccounts.Application.Commands.ChangeEmailAddressCommand
 {
     public class ChangeEmailAddressCommandValidator : AbstractValidator<ChangeEmailAddressCommand>
     {

@@ -14,6 +14,8 @@ using Microsoft.Extensions.Options;
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
 using SFA.DAS.ApprenticeAccounts.Api.Authentication;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.Exceptions;
@@ -102,7 +104,12 @@ namespace SFA.DAS.ApprenticeAccounts.Api
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateApprenticeAccountCommandValidator>());
+                .AddFluentValidation(fv =>
+                    fv.RegisterValidatorsFromAssemblyContaining<CreateApprenticeAccountCommandValidator>())
+                .AddFluentValidation(fv =>
+                    fv.RegisterValidatorsFromAssemblyContaining<UpdateApprenticePreferenceCommandValidator>())
+                .AddFluentValidation(fv =>
+                    fv.RegisterValidatorsFromAssemblyContaining<UpdateAllApprenticePreferencesCommandValidator>());
 
             services.AddProblemDetails(ConfigureProblemDetails);
         }
@@ -113,6 +120,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api
             o.Map<ValidationException>(ex => ex.ToProblemDetails());
             o.Map<DomainException>(ex => ex.ToProblemDetails());
             o.Map<EntityNotFoundException>(ex => ex.ToProblemDetails());
+            o.Map<InvalidInputException>(ex => ex.ToProblemDetails());
             o.MapToStatusCode<DBConcurrencyException>(StatusCodes.Status409Conflict);
             o.MapToStatusCode<NotImplementedException>(StatusCodes.Status501NotImplemented);
         }

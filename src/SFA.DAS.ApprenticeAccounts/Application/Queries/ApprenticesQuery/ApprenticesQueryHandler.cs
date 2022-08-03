@@ -1,12 +1,10 @@
-﻿using MediatR;
+﻿#nullable enable
+using MediatR;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data;
-using SFA.DAS.ApprenticeAccounts.DTOs;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System.Threading;
 using System.Threading.Tasks;
-
-#nullable enable
-
 namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
 {
     public class ApprenticesQueryHandler
