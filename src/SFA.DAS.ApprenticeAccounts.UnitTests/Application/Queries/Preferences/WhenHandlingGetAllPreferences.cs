@@ -22,12 +22,14 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.Preferences
             int mockPreferenceId,
             int mockPreferenceId2,
             string mockPreferenceMeaning,
-            string mockPreferenceMeaning2)
+            string mockPreferenceMeaning2,
+            string mockPreferenceHint,
+            string mockPreferenceHint2)
         {
             var response = new List<Preference>(2)
             {
-                new Preference(mockPreferenceId, mockPreferenceMeaning),
-                new Preference(mockPreferenceId2, mockPreferenceMeaning2)
+                new Preference(mockPreferenceId, mockPreferenceMeaning, mockPreferenceHint),
+                new Preference(mockPreferenceId2, mockPreferenceMeaning2, mockPreferenceHint2)
             };
             mockContext.Setup(c => c.GetAllPreferences()).ReturnsAsync(response);
 

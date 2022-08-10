@@ -1,11 +1,12 @@
 ﻿CREATE TABLE #TempPreference
 (
 	[PreferenceId] INT ,
-    [PreferenceMeaning] NVARCHAR(50)
+    [PreferenceMeaning] NVARCHAR(200),
+	[PreferenceHint] NVARCHAR(2000)
 )
 
 INSERT INTO #TempPreference VALUES 
-(1,'Feedback on your training provider')
+(1,'Feedback on your training provider','These emails will be sent every 3 months.')
 
 SET IDENTITY_INSERT [dbo].[Preference] ON;
 
@@ -13,10 +14,10 @@ MERGE [Preference] TARGET
 USING #TempPreference SOURCE
 ON TARGET.PreferenceId=SOURCE.PreferenceId
 WHEN MATCHED THEN
-UPDATE SET TARGET.PreferenceMeaning = SOURCE.PreferenceMeaning
+UPDATE SET TARGET.PreferenceMeaning = SOURCE.PreferenceMeaning, TARGET.PreferenceHint = SOURCE.PreferenceHint
 WHEN NOT MATCHED BY TARGET THEN 
-INSERT (PreferenceId,PreferenceMeaning)
-VALUES (SOURCE.PreferenceId,SOURCE.PreferenceMeaning);
+INSERT (PreferenceId,PreferenceMeaning,PreferenceHint)
+VALUES (SOURCE.PreferenceId,SOURCE.PreferenceMeaning, SOURCE.PreferenceHint);
 
 SET IDENTITY_INSERT [dbo].[Preference] OFF;
 DROP TABLE #TempPreference

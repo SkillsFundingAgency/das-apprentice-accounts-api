@@ -24,12 +24,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
             DateTime mockCreatedOn,
             DateTime mockUpdatedOn,
             string mockPreferenceMeaning,
+            string mockPreferenceHint,
             MailAddress mockApprenticeMailAddress,
             string mockFirstName,
             string mockLastName)
         {
             var apprentice = new Apprentice(Guid.NewGuid(), mockFirstName, mockLastName, mockApprenticeMailAddress, mockDateOfBirth);
-            var preference = new Preference(query.PreferenceId, mockPreferenceMeaning);
+            var preference = new Preference(query.PreferenceId, mockPreferenceMeaning, mockPreferenceHint);
             var response =
                 new Data.Models.ApprenticePreferences(query.ApprenticeId, query.PreferenceId, mockStatus, mockCreatedOn,
                     mockUpdatedOn) { Preference = preference, Apprentice = apprentice };

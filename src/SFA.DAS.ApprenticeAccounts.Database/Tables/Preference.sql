@@ -3,5 +3,6 @@
 	[PreferenceId] INT NOT NULL
 					IDENTITY(1, 1)
 					PRIMARY KEY, 
-	[PreferenceMeaning] NVARCHAR(50) NOT NULL
+	[PreferenceMeaning] NVARCHAR(200) NOT NULL,
+	[PreferenceHint] NVARCHAR(2000) NULL
 )

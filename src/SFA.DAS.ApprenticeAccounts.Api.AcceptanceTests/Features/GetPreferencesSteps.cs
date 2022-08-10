@@ -48,12 +48,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Features
                                     new
                                     {
                                         _preferenceOne.PreferenceId,
-                                        _preferenceOne.PreferenceMeaning
+                                        _preferenceOne.PreferenceMeaning,
+                                        _preferenceOne.PreferenceHint
                                     },
                         new
                         {
                             _preferenceTwo.PreferenceId,
-                            _preferenceTwo.PreferenceMeaning
+                            _preferenceTwo.PreferenceMeaning,
+                            _preferenceTwo.PreferenceHint
                         }
 
                 });

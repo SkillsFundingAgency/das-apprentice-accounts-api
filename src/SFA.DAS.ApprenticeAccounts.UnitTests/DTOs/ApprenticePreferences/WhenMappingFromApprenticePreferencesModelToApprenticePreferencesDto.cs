@@ -13,9 +13,9 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
     public class WhenMappingFromApprenticePreferencesModelToApprenticePreferencesDto
     {
         [Test, RecursiveMoqAutoData]
-        public async Task ThenTheFieldsAreCorrectlyMapped(Guid mockGuid, DateTime mockDateTimeOne, DateTime mockDateTimeTwo)
+        public async Task ThenTheFieldsAreCorrectlyMapped(Guid mockGuid, DateTime mockDateTimeOne, DateTime mockDateTimeTwo, string mockPreferenceMeaning, string mockPreferenceHint)
         {
-            var preference = new Preference(1, "Pref meaning");
+            var preference = new Preference(1, mockPreferenceMeaning, mockPreferenceHint);
             var apprenticePreferences = new List<Data.Models.ApprenticePreferences>(2) 
             { 
                 new Data.Models.ApprenticePreferences(mockGuid, 1, true, mockDateTimeOne, mockDateTimeTwo), 

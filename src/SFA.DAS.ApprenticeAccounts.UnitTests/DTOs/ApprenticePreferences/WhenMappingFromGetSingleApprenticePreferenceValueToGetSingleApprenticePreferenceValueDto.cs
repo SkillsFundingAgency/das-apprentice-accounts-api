@@ -10,9 +10,9 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
     public class WhenMappingFromGetSingleApprenticePreferenceValueToGetSingleApprenticePreferenceValueDto
     {
         [Test, MoqAutoData]
-        public async Task AndRecordIsFound_MapToDto(int preferenceId, bool mockStatus, DateTime createdOn, DateTime updatedOn)
+        public async Task AndRecordIsFound_MapToDto(int preferenceId, bool mockStatus, DateTime createdOn, DateTime updatedOn, string mockPreferenceMeaning, string mockPreferenceHint)
         {
-            var preference = new Data.Models.Preference(preferenceId, "meaning");
+            var preference = new Data.Models.Preference(preferenceId, mockPreferenceMeaning, mockPreferenceHint);
             var apprenticePreferences = new Data.Models.ApprenticePreferences(Guid.NewGuid(), preferenceId, mockStatus, createdOn, updatedOn);
             apprenticePreferences.Preference = preference;
             

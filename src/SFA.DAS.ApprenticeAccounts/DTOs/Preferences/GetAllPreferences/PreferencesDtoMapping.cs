@@ -14,7 +14,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Preferences.GetAllPreferences
                 Preferences = new List<PreferenceDto>(
                     preferencesReturned.Select(p => new PreferenceDto
                     {
-                        PreferenceId = p.PreferenceId, PreferenceMeaning = p.PreferenceMeaning
+                        PreferenceId = p.PreferenceId, PreferenceMeaning = p.PreferenceMeaning, PreferenceHint = p.PreferenceHint
                     }))
             };
                 return preferencesDto;

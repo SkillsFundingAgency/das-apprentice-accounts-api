@@ -15,22 +15,27 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.Preferences
             int preferenceIdOne,
             int preferenceIdTwo,
             string preferenceMeaningOne,
-            string preferenceMeaningTwo) 
+            string preferenceMeaningTwo,
+            string preferenceHintOne,
+            string preferenceHintTwo)
         {
             var response = new List<PreferenceDto>();
 
-            var preferences = new List<Preference>(2) { new Preference(preferenceIdOne, preferenceMeaningOne), new Preference(preferenceIdTwo, preferenceMeaningTwo)};
+            var preferences = new List<Preference>(2) { new Preference(preferenceIdOne, preferenceMeaningOne, preferenceHintOne), new Preference(preferenceIdTwo, preferenceMeaningTwo, preferenceHintTwo) };
 
             foreach (var p in preferences)
             {
-                var preferenceDtoOption = new PreferenceDto() 
-                { PreferenceId = p.PreferenceId,
-                  PreferenceMeaning = p.PreferenceMeaning}; 
+                var preferenceDtoOption = new PreferenceDto()
+                {
+                    PreferenceId = p.PreferenceId,
+                    PreferenceMeaning = p.PreferenceMeaning,
+                    PreferenceHint = p.PreferenceHint
+                };
                 response.Add(preferenceDtoOption);
             }
 
             var result = preferences.MapToPreferenceDto();
-            
+
             result.Preferences.Should().BeEquivalentTo(response);
         }
     }

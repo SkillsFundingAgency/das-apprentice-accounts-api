@@ -23,6 +23,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
             int mockPreferenceId,
             int mockPreferenceId2,
             string mockPreferenceMeaning,
+            string mockPreferenceHint,
             bool mockStatus,
             bool mockStatus2,
             DateTime mockCreatedOn,
@@ -30,7 +31,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
             DateTime mockUpdatedOn,
             DateTime mockUpdatedOn2)
         {
-            var preference = new Preference(mockPreferenceId, mockPreferenceMeaning);
+            var preference = new Preference(mockPreferenceId, mockPreferenceMeaning, mockPreferenceHint);
             var response = new List<Data.Models.ApprenticePreferences>(2)
             {
                 new Data.Models.ApprenticePreferences

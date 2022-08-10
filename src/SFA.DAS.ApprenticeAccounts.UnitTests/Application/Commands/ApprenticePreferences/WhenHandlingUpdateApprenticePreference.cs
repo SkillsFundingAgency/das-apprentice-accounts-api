@@ -6,7 +6,6 @@ using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.Exceptions;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Net.Mail;
@@ -41,12 +40,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         [MoqAutoData]
         public async Task And_ApprenticeIsNull_ReturnInvalidInputException(
             int mockPreferenceId,
-            string mockPreferenceMeaning)
+            string mockPreferenceMeaning,
+            string mockPreferenceHint)
         {
             _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))
                 .ReturnsAsync((Apprentice)null);
             _mockPreferencesContext.Setup(p => p.Entities.FindAsync(_mockCommand.PreferenceId))
-                .ReturnsAsync(new Preference(mockPreferenceId, mockPreferenceMeaning));
+                .ReturnsAsync(new Preference(mockPreferenceId, mockPreferenceMeaning, mockPreferenceHint));
 
             var handler = new UpdateApprenticePreferenceCommandHandler(_mockApprenticePreferencesContext.Object,
                 _mockApprenticeContext.Object, _mockPreferencesContext.Object, _logger.Object);
@@ -78,12 +78,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             DateTime mockDateTime,
             MailAddress mockApprenticeMailAddress,
             string mockPreferenceMeaning,
+            string mockPreferenceHint,
             string mockFirstName,
             string mockLastName)
         {
             var apprentice = new Apprentice(_mockCommand.ApprenticeId, mockFirstName, mockLastName,
                 mockApprenticeMailAddress, mockDateTime);
-            var preference = new Preference(_mockCommand.PreferenceId, mockPreferenceMeaning);
+            var preference = new Preference(_mockCommand.PreferenceId, mockPreferenceMeaning, mockPreferenceHint);
 
             _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId)).ReturnsAsync(apprentice);
             _mockPreferencesContext.Setup(p => p.Entities.FindAsync(_mockCommand.PreferenceId))
@@ -110,12 +111,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             DateTime mockDateOfBirth,
             MailAddress mockApprenticeMailAddress,
             string mockPreferenceMeaning,
+            string mockPreferenceHint,
             string mockFirstName,
             string mockLastName)
         {
             var apprentice = new Apprentice(_mockCommand.ApprenticeId, mockFirstName, mockLastName,
                 mockApprenticeMailAddress, mockDateOfBirth);
-            var preference = new Preference(_mockCommand.PreferenceId, mockPreferenceMeaning);
+            var preference = new Preference(_mockCommand.PreferenceId, mockPreferenceMeaning, mockPreferenceHint);
             var response = new Data.Models.ApprenticePreferences(_mockCommand.ApprenticeId, _mockCommand.PreferenceId,
                 _mockCommand.Status, mockCreatedOn, mockUpdatedOn);
 
