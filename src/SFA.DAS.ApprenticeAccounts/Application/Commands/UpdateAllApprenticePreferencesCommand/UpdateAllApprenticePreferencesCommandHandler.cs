@@ -43,7 +43,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
                 if (preference == null)
                 {
                     _logger.LogError(
-                        $"No Apprentice record found, or no Preference record found, or neither record found. Apprentice Id used; {apprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
+                        $"No Apprentice record found, or no Preference record found, or neither record found. Apprentice Id used; {request.ApprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
                     throw new InvalidInputException(InvalidInputException.InvalidInputPreference);
                 }
 
