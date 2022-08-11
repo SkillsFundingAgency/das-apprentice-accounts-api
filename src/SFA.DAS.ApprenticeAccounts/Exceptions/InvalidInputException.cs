@@ -9,8 +9,6 @@ namespace SFA.DAS.ApprenticeAccounts.Exceptions
             public static readonly string InvalidInputApprentice = "No Apprentice record found.";
 
             public static readonly string InvalidInputPreference = "No Preference record found.";
-
-            public static readonly string MultipleInputs = "More than one apprentice Id has been entered.";
         }
 
         public static Exception CreateException(string message)

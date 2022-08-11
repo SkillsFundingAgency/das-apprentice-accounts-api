@@ -4,7 +4,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.Testing.AutoFixture;
@@ -32,7 +31,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             _mockPreferencesContext = new Mock<IPreferencesContext>();
             _mockCommand = new UpdateAllApprenticePreferencesCommand
             {
-                ApprenticePreferences = new List<UpdateApprenticePreferenceCommand>()
+                ApprenticePreferences = new List<ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand>()
             };
             _logger = new Mock<ILogger<UpdateAllApprenticePreferencesCommandHandler>>();
         }
@@ -43,14 +42,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             int mockPreferenceId,
             string mockPreferenceMeaning,
             string mockPreferenceHint,
-            List<UpdateApprenticePreferenceCommand> apprenticePreferences, Guid apprenticeId)
+            List<UpdateApprenticePreferenceCommand> apprenticePreferences)
         {
-            apprenticePreferences.ForEach(ap => ap.ApprenticeId = apprenticeId);
             _mockCommand.ApprenticePreferences = apprenticePreferences;
 
             foreach (var apprenticePreference in _mockCommand.ApprenticePreferences)
             {
-                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(apprenticePreference.ApprenticeId))
+                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))
                     .ReturnsAsync((Apprentice)null);
                 _mockPreferencesContext.Setup(p => p.Entities.FindAsync(apprenticePreference.PreferenceId))
                     .ReturnsAsync(new Preference(mockPreferenceId, mockPreferenceMeaning, mockPreferenceHint));
@@ -67,15 +65,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         [MoqAutoData]
         public async Task AndPreferencesIsNull_ReturnInvalidInputException(
             Apprentice apprentice,
-            List<UpdateApprenticePreferenceCommand> apprenticePreferences, Guid apprenticeId)
+            List<ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand> apprenticePreferences)
         {
-            apprenticePreferences.ForEach(ap => ap.ApprenticeId = apprenticeId);
             _mockCommand.ApprenticePreferences = apprenticePreferences;
 
             foreach (var apprenticePreference in _mockCommand.ApprenticePreferences)
             {
-                apprenticePreference.ApprenticeId = apprenticeId;
-                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(apprenticePreference.ApprenticeId))
+                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))
                     .ReturnsAsync(apprentice);
                 _mockPreferencesContext.Setup(p => p.Entities.FindAsync(apprenticePreference.PreferenceId))
                     .ReturnsAsync((Preference)null);
@@ -98,21 +94,21 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             string mockPreferenceHint,
             string mockFirstName,
             string mockLastName,
-            UpdateApprenticePreferenceCommand apprenticePreference)
+            ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand apprenticePreference)
         {
-            _mockCommand.ApprenticePreferences = new List<UpdateApprenticePreferenceCommand>(){apprenticePreference};
+            _mockCommand.ApprenticePreferences = new List<ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand>(){apprenticePreference};
             foreach (var item in _mockCommand.ApprenticePreferences)
             {
-                var apprentice = new Apprentice(apprenticePreference.ApprenticeId, mockFirstName, mockLastName,
+                var apprentice = new Apprentice(_mockCommand.ApprenticeId, mockFirstName, mockLastName,
                     mockApprenticeMailAddress, mockDateOfBirth);
                 var preference = new Preference(apprenticePreference.PreferenceId, mockPreferenceMeaning, mockPreferenceHint);
 
-                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(apprenticePreference.ApprenticeId))
+                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))
                     .ReturnsAsync(apprentice);
                 _mockPreferencesContext.Setup(p => p.Entities.FindAsync(apprenticePreference.PreferenceId))
                     .ReturnsAsync(preference);
                 _mockApprenticePreferencesContext
-                    .Setup(ap => ap.GetApprenticePreferenceForApprenticeAndPreference(apprenticePreference.ApprenticeId,
+                    .Setup(ap => ap.GetApprenticePreferenceForApprenticeAndPreference(_mockCommand.ApprenticeId,
                         apprenticePreference.PreferenceId))
                     .ReturnsAsync((Data.Models.ApprenticePreferences)null);
 
@@ -136,24 +132,24 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             string mockPreferenceHint,
             string mockFirstName,
             string mockLastName,
-            UpdateApprenticePreferenceCommand apprenticePreferences)
+            ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand apprenticePreferences)
         {
-            _mockCommand.ApprenticePreferences = new List<UpdateApprenticePreferenceCommand>(){ apprenticePreferences };
+            _mockCommand.ApprenticePreferences = new List<ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand>(){ apprenticePreferences };
             foreach (var item in _mockCommand.ApprenticePreferences)
             {
-                var apprentice = new Apprentice(item.ApprenticeId, mockFirstName, mockLastName,
+                var apprentice = new Apprentice(_mockCommand.ApprenticeId, mockFirstName, mockLastName,
                     mockApprenticeMailAddress, mockDateOfBirth);
                 var preference = new Preference(item.PreferenceId, mockPreferenceMeaning, mockPreferenceHint);
-                var response = new Data.Models.ApprenticePreferences(item.ApprenticeId,
+                var response = new Data.Models.ApprenticePreferences(_mockCommand.ApprenticeId,
                     item.PreferenceId,
                     item.Status, mockCreatedOn, mockUpdatedOn);
 
-                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(item.ApprenticeId))
+                _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))
                     .ReturnsAsync(apprentice);
                 _mockPreferencesContext.Setup(p => p.Entities.FindAsync(item.PreferenceId))
                     .ReturnsAsync(preference);
                 _mockApprenticePreferencesContext
-                    .Setup(ap => ap.GetApprenticePreferenceForApprenticeAndPreference(item.ApprenticeId,
+                    .Setup(ap => ap.GetApprenticePreferenceForApprenticeAndPreference(_mockCommand.ApprenticeId,
                         item.PreferenceId))
                     .ReturnsAsync(response);
 

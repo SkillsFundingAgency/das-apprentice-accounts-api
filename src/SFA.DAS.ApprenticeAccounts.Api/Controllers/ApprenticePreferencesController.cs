@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.GetAllApprenticePreferencesForApprenticeQuery;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.GetApprenticePreferenceForApprenticeAndPreferenceQuery;
 using SFA.DAS.ApprenticeAccounts.Exceptions;
@@ -51,7 +50,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         {
             try
             {
-                var result = await _mediator.Send(new UpdateApprenticePreferenceCommand
+                var result = await _mediator.Send(new Application.Commands.UpdateApprenticePreferenceCommand.UpdateApprenticePreferenceCommand
                 {
                     ApprenticeId = apprenticeId,
                     PreferenceId = preferenceId,
@@ -65,29 +64,27 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             {
                 return NotFound();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest();
             }
         }
 
-        [HttpPost("apprenticepreferences/{apprenticePreferences}")]
+        [HttpPost("apprenticepreferences/{apprenticeId}")]
         public async Task<IActionResult> UpdateAllApprenticePreferences(
-                UpdateAllApprenticePreferencesCommand apprenticePreferences)
+                [FromBody] UpdateAllApprenticePreferencesCommand command, Guid apprenticeId)
         {
             try
             {
-                var result = await _mediator.Send(new UpdateAllApprenticePreferencesCommand
-                {
-                    ApprenticePreferences = apprenticePreferences.ApprenticePreferences
-                });
+                command.ApprenticeId = apprenticeId;
+                var result = await _mediator.Send(command);
                 return Ok();
             }
             catch (InvalidInputException iie)
             {
                 return NotFound();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return BadRequest();
             }
