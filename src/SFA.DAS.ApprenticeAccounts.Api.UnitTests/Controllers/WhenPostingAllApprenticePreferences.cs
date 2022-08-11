@@ -20,7 +20,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
         [MoqAutoData]
         public async Task AndInvalidInputExceptionIsReturned_ThenReturnNotFound(
             [Frozen] Mock<IMediator> mediator,
-            UpdateAllApprenticePreferencesCommand command)
+            UpdateAllApprenticePreferencesCommand command,
+            Guid apprenticeId)
         {
             mediator.Setup(m =>
                     m.Send(It.IsAny<UpdateAllApprenticePreferencesCommand>(), It.IsAny<CancellationToken>()))
@@ -29,7 +30,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
             var controller = new ApprenticePreferencesController(mediator.Object);
 
             var result =
-                await controller.UpdateAllApprenticePreferences(command) as ActionResult;
+                await controller.UpdateAllApprenticePreferences(command, apprenticeId) as ActionResult;
 
             result.Should().BeOfType<NotFoundResult>();
         }
@@ -38,14 +39,15 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
         [MoqAutoData]
         public async Task AndAnyOtherExceptionIsReturned_ThenReturnBadRequest(
             [Frozen] Mock<IMediator> mediator,
-            UpdateAllApprenticePreferencesCommand command)
+            UpdateAllApprenticePreferencesCommand command,
+            Guid apprenticeId)
         {
             mediator.Setup(m =>
                     m.Send(It.IsAny<UpdateAllApprenticePreferencesCommand>(), It.IsAny<CancellationToken>()))
                 .Throws(new Exception());
 
             var controller = new ApprenticePreferencesController(mediator.Object);
-            var result = await controller.UpdateAllApprenticePreferences(command) as ActionResult;
+            var result = await controller.UpdateAllApprenticePreferences(command, apprenticeId) as ActionResult;
 
             result.Should().BeOfType<BadRequestResult>();
         }
@@ -55,13 +57,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
         public async Task AndMediatorCommandIsSuccessful_ThenReturnOk(
             [Greedy] ApprenticePreferencesController controller,
             [Frozen] Mock<IMediator> mediator,
-            UpdateAllApprenticePreferencesCommand command)
+            UpdateAllApprenticePreferencesCommand command,
+            Guid apprenticeId)
         {
             mediator.Setup(m =>
                     m.Send(It.IsAny<UpdateAllApprenticePreferencesCommand>(), It.IsAny<CancellationToken>()))
                 .Returns(Unit.Task);
 
-            var result = await controller.UpdateAllApprenticePreferences(command);
+            var result = await controller.UpdateAllApprenticePreferences(command, apprenticeId);
 
             result.Should().BeOfType(typeof(OkResult));
         }

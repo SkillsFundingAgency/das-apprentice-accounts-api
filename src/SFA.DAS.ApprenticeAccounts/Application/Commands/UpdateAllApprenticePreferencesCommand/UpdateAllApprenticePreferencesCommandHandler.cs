@@ -26,17 +26,9 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
             _logger = logger;
         }
 
-        public async Task<Unit> Handle(UpdateAllApprenticePreferencesCommand request,
-            CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateAllApprenticePreferencesCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Fetch Apprentice by Id. Id used: {request.ApprenticePreferences[0].ApprenticeId}");
-            var apprenticeId = request.ApprenticePreferences[0].ApprenticeId;
-            
-            if (!(request.ApprenticePreferences.TrueForAll(ap => ap.ApprenticeId == apprenticeId)))
-            {
-                throw new InvalidInputException(InvalidInputException.MultipleInputs);
-            }
-            var apprentice = await _apprenticeContext.Entities.FindAsync(apprenticeId);
+            var apprentice = await _apprenticeContext.Entities.FindAsync(request.ApprenticeId);
 
             if (apprentice == null)
             {
@@ -56,18 +48,18 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
                 }
 
                 _logger.LogInformation(
-                    $"Fetch ApprenticePreferences record by Apprentice Id and Preference Id. Apprentice Id used: {apprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
+                    $"Fetch ApprenticePreferences record by Apprentice Id and Preference Id. Apprentice Id used: {request.ApprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
                 var record =
                     await _apprenticePreferencesContext.GetApprenticePreferenceForApprenticeAndPreference(
-                        apprenticeId, apprenticePreference.PreferenceId);
+                        request.ApprenticeId, apprenticePreference.PreferenceId);
 
                 if (record == null)
                 {
                     await _apprenticePreferencesContext.AddAsync(new ApprenticePreferences(
-                        apprenticePreference.ApprenticeId, apprenticePreference.PreferenceId,
+                        request.ApprenticeId, apprenticePreference.PreferenceId,
                         apprenticePreference.Status, DateTime.Now, DateTime.Now), CancellationToken.None);
                     _logger.LogDebug(
-                        $"Successfully created a new ApprenticePreferences record with Apprentice Id: {apprenticeId} and Preference Id: {apprenticePreference.PreferenceId}");
+                        $"Successfully created a new ApprenticePreferences record with Apprentice Id: {request.ApprenticeId} and Preference Id: {apprenticePreference.PreferenceId}");
                 }
                 else
                 {
@@ -75,7 +67,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
                     record.UpdatedOn = DateTime.Now;
 
                     _logger.LogDebug(
-                        $"Successfully updated an ApprenticePreferences record with Apprentice Id: {apprenticeId} and Preference Id: {apprenticePreference.PreferenceId}");
+                        $"Successfully updated an ApprenticePreferences record with Apprentice Id: {request.ApprenticeId} and Preference Id: {apprenticePreference.PreferenceId}");
                 }
             }
 
