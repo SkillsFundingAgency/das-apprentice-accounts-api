@@ -25,7 +25,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers
         {
             mediator.Setup(m =>
                     m.Send(It.IsAny<UpdateAllApprenticePreferencesCommand>(), It.IsAny<CancellationToken>()))
-                .Throws(new InvalidInputException());
+                .Throws(new InvalidInputException(It.IsAny<string>()));
 
             var controller = new ApprenticePreferencesController(mediator.Object);
 

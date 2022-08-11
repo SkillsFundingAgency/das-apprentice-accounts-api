@@ -32,8 +32,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
 
             if (apprentice == null)
             {
-                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages
-                    .InvalidInputApprentice);
+                throw new InvalidInputException(InvalidInputException.InvalidInputApprentice);
             }
 
             foreach (var apprenticePreference in request.ApprenticePreferences)
@@ -44,8 +43,8 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
                 if (preference == null)
                 {
                     _logger.LogError(
-                        $"No Apprentice record found, or no Preference record found, or neither record found. Apprentice Id used; {request.ApprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
-                    throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages.InvalidInputPreference);
+                        $"No Apprentice record found, or no Preference record found, or neither record found. Apprentice Id used; {apprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
+                    throw new InvalidInputException(InvalidInputException.InvalidInputPreference);
                 }
 
                 _logger.LogInformation(
