@@ -34,14 +34,13 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
             
             if (!(request.ApprenticePreferences.TrueForAll(ap => ap.ApprenticeId == apprenticeId)))
             {
-                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages.MultipleInputs);
+                throw new InvalidInputException(InvalidInputException.MultipleInputs);
             }
             var apprentice = await _apprenticeContext.Entities.FindAsync(apprenticeId);
 
             if (apprentice == null)
             {
-                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages
-                    .InvalidInputApprentice);
+                throw new InvalidInputException(InvalidInputException.InvalidInputApprentice);
             }
 
             foreach (var apprenticePreference in request.ApprenticePreferences)
@@ -53,7 +52,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePre
                 {
                     _logger.LogError(
                         $"No Apprentice record found, or no Preference record found, or neither record found. Apprentice Id used; {apprenticeId}, Preference Id used: {apprenticePreference.PreferenceId}");
-                    throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages.InvalidInputPreference);
+                    throw new InvalidInputException(InvalidInputException.InvalidInputPreference);
                 }
 
                 _logger.LogInformation(

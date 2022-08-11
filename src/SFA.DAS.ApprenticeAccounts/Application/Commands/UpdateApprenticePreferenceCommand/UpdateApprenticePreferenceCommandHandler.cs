@@ -38,16 +38,14 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePrefer
             {
                 _logger.LogError(
                     $"No Apprentice record found. Apprentice Id used: {request.ApprenticeId}");
-                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages
-                    .InvalidInputApprentice);
+                throw new InvalidInputException(InvalidInputException.InvalidInputApprentice);
             }
 
             if (preference == null)
             {
                 _logger.LogError(
                     $"No Preference record found. Preference Id used: {request.PreferenceId}");
-                throw InvalidInputException.CreateException(InvalidInputException.ExceptionMessages
-                    .InvalidInputPreference);
+                throw new InvalidInputException(InvalidInputException.InvalidInputPreference);
             }
 
             _logger.LogInformation(
