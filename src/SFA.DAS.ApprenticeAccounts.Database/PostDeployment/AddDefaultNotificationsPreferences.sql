@@ -6,7 +6,7 @@
 )
 
 INSERT INTO #TempPreference VALUES 
-(1,'Feedback on your training provider','These emails will be sent every 3 months.')
+(1,'Giving feedback on your training provider','Emails will be sent every 3 months.')
 
 SET IDENTITY_INSERT [dbo].[Preference] ON;
 
