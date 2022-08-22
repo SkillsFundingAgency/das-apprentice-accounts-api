@@ -3,7 +3,7 @@ using System;
 
 #nullable disable
 
-namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateRegistrationCommand
+namespace SFA.DAS.ApprenticeAccounts.Application.Commands.ChangeEmailAddressCommand
 {
     public class ChangeEmailAddressCommand : IUnitOfWorkCommand
     {

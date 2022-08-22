@@ -24,5 +24,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api
 
         public static ProblemDetails ToProblemDetails(this EntityNotFoundException ex)
             => new ProblemDetails { Detail = ex.Message, Status = StatusCodes.Status404NotFound };
+
+        public static ProblemDetails ToProblemDetails(this InvalidInputException ex)
+            => new ProblemDetails { Detail = ex.Message, Status = StatusCodes.Status400BadRequest };
     }
 }

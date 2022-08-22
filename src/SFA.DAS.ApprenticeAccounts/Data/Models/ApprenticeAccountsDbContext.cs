@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
     public class ApprenticeAccountsDbContext
-        : DbContext, IApprenticeContext
+        : DbContext, IApprenticeContext, IPreferencesContext, IApprenticePreferencesContext
     {
         protected IEventDispatcher _dispatcher;
 
@@ -26,8 +26,13 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         }
 
         public virtual DbSet<Apprentice> Apprentices { get; set; } = null!;
+        public virtual DbSet<Preference> Preference { get; set; } = null!;
+        public virtual DbSet<ApprenticePreferences> ApprenticePreferences { get; set; } = null!;
 
         DbSet<Apprentice> IEntityContext<Apprentice>.Entities => Apprentices;
+
+        DbSet<Preference> IEntityContext<Preference>.Entities => Preference;
+        DbSet<ApprenticePreferences> IEntityContext<ApprenticePreferences>.Entities => ApprenticePreferences;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -55,6 +60,27 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 a.Ignore(e => e.TermsOfUseAccepted)
                     .Property("_termsOfUseAcceptedOn")
                     .HasColumnName("TermsOfUseAcceptedOn");
+            });
+
+            modelBuilder.Entity<Preference>(p =>
+            {
+                p.ToTable("Preference")
+                 .HasKey(p => p.PreferenceId);                
+            });
+
+            modelBuilder.Entity<ApprenticePreferences>( ap =>
+            {
+                ap.ToTable("ApprenticePreferences")
+                 .HasKey(a => new { a.PreferenceId, a.ApprenticeId });
+
+                ap.HasOne(a => a.Apprentice)
+                .WithMany(b => b.Preferences)
+                .HasForeignKey(c => c.ApprenticeId);
+
+                ap.HasOne(p => p.Preference)
+                .WithMany(q => q.ApprenticePreferences)
+                .HasForeignKey(r => r.PreferenceId);
+
             });
             base.OnModelCreating(modelBuilder);
         }

@@ -3,7 +3,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.DTOs;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;

@@ -1,16 +1,15 @@
 ﻿using Microsoft.Extensions.Logging;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System;
 using System.Net.Mail;
 
-namespace SFA.DAS.ApprenticeAccounts.DTOs
+namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
 {
     public sealed class ApprenticePatchDto
     {
-        private readonly Apprentice _apprentice;
+        private readonly Data.Models.Apprentice _apprentice;
         private readonly ILogger _logger;
 
-        public ApprenticePatchDto(Apprentice apprentice, ILogger logger)
+        public ApprenticePatchDto(Data.Models.Apprentice apprentice, ILogger logger)
         {
             _apprentice = apprentice;
             _logger = logger;

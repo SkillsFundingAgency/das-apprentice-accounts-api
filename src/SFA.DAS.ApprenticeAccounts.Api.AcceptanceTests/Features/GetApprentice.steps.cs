@@ -6,6 +6,7 @@ using Moq;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
