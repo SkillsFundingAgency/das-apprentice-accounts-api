@@ -21,3 +21,10 @@ VALUES (SOURCE.PreferenceId,SOURCE.PreferenceMeaning, SOURCE.PreferenceHint);
 
 SET IDENTITY_INSERT [dbo].[Preference] OFF;
 DROP TABLE #TempPreference
+
+-- Add Default value for new apprentice preferences if they don't already exist and set to true.
+MERGE INTO ApprenticePreferences Target
+  USING (SELECT a.Id AS ApprenticeId,p.PreferenceId, 1 AS Status, GetUtcDate() AS CreatedOn, GetUtcDate() AS UpdatedOn FROM Apprentice a CROSS JOIN Preference p) AS Source
+  ON Target.ApprenticeId = source.ApprenticeId AND Target.PreferenceId = source.PreferenceId
+  WHEN NOT MATCHED THEN
+	INSERT (ApprenticeId,PreferenceId,Status,CreatedOn,UpdatedOn) VALUES(ApprenticeId,PreferenceId,Status,CreatedOn,UpdatedOn);
