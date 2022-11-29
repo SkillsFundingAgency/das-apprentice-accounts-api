@@ -1,5 +1,6 @@
 ﻿using AutoFixture.NUnit3;
 using FluentAssertions;
+using MediatR;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
@@ -49,7 +50,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
             _unitOfWorkManager.Verify(x => x.EndAsync(It.Is<Exception>(e => e.Message == "failed")), Times.Once);
         }
 
-        public class SimpleUnitOfWorkRequest : IUnitOfWorkCommand
+        public class SimpleUnitOfWorkRequest : IRequest<SimpleResponse>, IUnitOfWorkCommand
         {
         }
 

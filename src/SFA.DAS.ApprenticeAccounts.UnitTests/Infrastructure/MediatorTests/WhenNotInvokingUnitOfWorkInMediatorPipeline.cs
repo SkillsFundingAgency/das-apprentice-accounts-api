@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoFixture.NUnit3;
 using FluentAssertions;
+using MediatR;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -40,7 +41,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
             _unitOfWorkManager.Verify(x=>x.EndAsync(It.IsAny<Exception>()), Times.Never);
         }
 
-        public class SimpleRequest
+        public class SimpleRequest : IRequest<SimpleResponse>
         {
         }
 

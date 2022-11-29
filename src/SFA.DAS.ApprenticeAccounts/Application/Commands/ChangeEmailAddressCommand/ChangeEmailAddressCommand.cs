@@ -1,11 +1,12 @@
-﻿using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
+﻿using MediatR;
+using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using System;
 
 #nullable disable
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.ChangeEmailAddressCommand
 {
-    public class ChangeEmailAddressCommand : IUnitOfWorkCommand
+    public class ChangeEmailAddressCommand : IRequest<Unit>, IUnitOfWorkCommand
     {
         public ChangeEmailAddressCommand(Guid apprenticeId, string email)
         {

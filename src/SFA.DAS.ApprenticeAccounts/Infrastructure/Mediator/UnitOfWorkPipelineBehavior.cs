@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator
 {
-    public class UnitOfWorkPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+    public class UnitOfWorkPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly IUnitOfWorkManager _unitOfWorkManager;
 
