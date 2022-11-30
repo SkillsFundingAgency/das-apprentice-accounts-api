@@ -12,10 +12,8 @@ using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.Extensions;
 using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
-using SFA.DAS.NServiceBus.Configuration;
 using SFA.DAS.NServiceBus.Configuration.AzureServiceBus;
 using SFA.DAS.NServiceBus.Configuration.MicrosoftDependencyInjection;
-using SFA.DAS.NServiceBus.Configuration.NewtonsoftJsonSerializer;
 using SFA.DAS.NServiceBus.Extensions;
 using SFA.DAS.NServiceBus.Hosting;
 using System;
@@ -64,14 +62,10 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
 
         public static async Task<UpdateableServiceProvider> StartNServiceBus(this UpdateableServiceProvider serviceProvider, IConfiguration configuration)
         {
-            var endpointConfiguration = new EndpointConfiguration("SFA.DAS.ApprenticeAccounts.Api");
-            endpointConfiguration = SFA.DAS.NServiceBus.Extensions.EndpointConfigurationExtensions.UseMessageConventions(endpointConfiguration);
-            endpointConfiguration = SFA.DAS.NServiceBus.Extensions.EndpointConfigurationExtensions.UseNewtonsoftJsonSerializer(endpointConfiguration);
-
-            endpointConfiguration.UseServicesBuilder(serviceProvider);
-
-            var scanner = endpointConfiguration.AssemblyScanner();
-            scanner.ScanAppDomainAssemblies = true;
+            var endpointConfiguration = new EndpointConfiguration("SFA.DAS.ApprenticeAccounts.Api")
+                .UseMessageConventions()
+                .UseNewtonsoftJsonSerializer()
+                .UseServicesBuilder(serviceProvider);
 
             if (UseLearningTransport(configuration))
             {
