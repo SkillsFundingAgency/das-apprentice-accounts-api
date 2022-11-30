@@ -1,6 +1,5 @@
 ﻿using MediatR;
-using SFA.DAS.UnitOfWork.Managers;
-using System;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,11 +7,11 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator
 {
     public class UnitOfWorkPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
-        private readonly IUnitOfWorkManager _unitOfWorkManager;
+        private readonly ApprenticeAccountsDbContext _context;
 
-        public UnitOfWorkPipelineBehavior(IUnitOfWorkManager unitOfWorkManager)
+        public UnitOfWorkPipelineBehavior(ApprenticeAccountsDbContext context)
         {
-            _unitOfWorkManager = unitOfWorkManager;
+            _context = context;
         }
 
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
@@ -22,17 +21,18 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator
                 return await next();
             }
 
-            await _unitOfWorkManager.BeginAsync();
+            var transaction = await _context.Database.BeginTransactionAsync(CancellationToken.None);
 
             try
             {
                 var response = await next();
-                await _unitOfWorkManager.EndAsync();
+                await _context.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(CancellationToken.None);
                 return response;
             }
-            catch (Exception e)
+            catch
             {
-                await _unitOfWorkManager.EndAsync(e);
+                await transaction.RollbackAsync(CancellationToken.None);
                 throw;
             }
         }

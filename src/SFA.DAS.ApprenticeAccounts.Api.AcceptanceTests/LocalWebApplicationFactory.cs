@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NServiceBus;
 using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using SFA.DAS.NServiceBus.Services;
 using SFA.DAS.NServiceBus.Testing.Services;
-using SFA.DAS.UnitOfWork.Managers;
 using System;
 using System.Collections.Generic;
 
@@ -28,10 +28,10 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests
         {
             builder.ConfigureServices(s =>
             {
-                s.AddTransient<IUnitOfWorkManager, FakeUnitOfWorkManager>();
                 s.AddTransient<IConnectionFactory, TestsDbConnectionFactory>();
                 s.AddTransient((_) => _timeProvider());
                 s.AddTransient<IEventPublisher>((_) => _events());
+                s.AddTransient<IMessageSession>((_) => new TestEventPublisher(_events.Invoke()));
             });
 
             builder.ConfigureAppConfiguration(a =>

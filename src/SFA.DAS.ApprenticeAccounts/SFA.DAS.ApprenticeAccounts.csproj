@@ -12,14 +12,15 @@
     <PackageReference Include="MediatR.Extensions.FluentValidation.AspNetCore" Version="3.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.8" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NinjaNye.SearchExtensions.Soundex" Version="3.0.1" />
     <PackageReference Include="Scrutor" Version="3.3.0" />
-    <PackageReference Include="SFA.DAS.NServiceBus" Version="16.0.21" />
-    <PackageReference Include="SFA.DAS.NServiceBus.SqlServer" Version="16.0.21" />
-    <PackageReference Include="SFA.DAS.UnitOfWork.NServiceBus" Version="9.0.28" />
+    <PackageReference Include="SFA.DAS.NServiceBus" Version="17.0.49" />
+    <PackageReference Include="SFA.DAS.NServiceBus.Extensions" Version="17.1.14" />
+    <PackageReference Include="SFA.DAS.NServiceBus.SqlServer" Version="17.0.49" />
     <PackageReference Include="String.Similarity" Version="3.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>

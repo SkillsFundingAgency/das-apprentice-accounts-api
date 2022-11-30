@@ -17,13 +17,10 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCom
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Configuration;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.Exceptions;
 using SFA.DAS.ApprenticeAccounts.Extensions;
 using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using SFA.DAS.Configuration.AzureTableStorage;
-using SFA.DAS.UnitOfWork.EntityFrameworkCore.DependencyResolution.Microsoft;
-using SFA.DAS.UnitOfWork.NServiceBus.Features.ClientOutbox.DependencyResolution.Microsoft;
 using System;
 using System.Data;
 using System.IO;
@@ -84,9 +81,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddSingleton(s => s.GetRequiredService<IOptions<ApplicationSettings>>().Value);
 
-            services.AddEntityFrameworkForApprenticeAccounts(Configuration)
-                .AddEntityFrameworkUnitOfWork<ApprenticeAccountsDbContext>()
-                .AddNServiceBusClientUnitOfWork();
+            services.AddEntityFrameworkForApprenticeAccounts(Configuration);
 
             services.AddServicesForApprenticeAccounts();
 
