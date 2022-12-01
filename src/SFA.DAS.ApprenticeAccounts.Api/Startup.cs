@@ -88,23 +88,23 @@ namespace SFA.DAS.ApprenticeAccounts.Api
             services.AddHealthChecks()
                 .AddCheck<ApprenticeAccountsHealthCheck>(nameof(ApprenticeAccountsHealthCheck));
 
+
             services
-                .AddMvc(o =>
+                .AddControllers(o =>
                 {
                     if (!Configuration.IsLocalAcceptanceOrDev())
                     {
                         o.Filters.Add(new AuthorizeFilter(PolicyNames.Default));
                     }
-                }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                });
 
             services.AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddFluentValidation(fv =>
-                    fv.RegisterValidatorsFromAssemblyContaining<CreateApprenticeAccountCommandValidator>())
-                .AddFluentValidation(fv =>
-                    fv.RegisterValidatorsFromAssemblyContaining<UpdateApprenticePreferenceCommandValidator>())
-                .AddFluentValidation(fv =>
-                    fv.RegisterValidatorsFromAssemblyContaining<UpdateAllApprenticePreferencesCommandValidator>());
+                .AddNewtonsoftJson();
+
+            services.AddFluentValidationClientsideAdapters();
+            services.AddValidatorsFromAssemblyContaining<CreateApprenticeAccountCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateApprenticePreferenceCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateAllApprenticePreferencesCommandValidator>();
 
             services.AddProblemDetails(ConfigureProblemDetails);
         }
