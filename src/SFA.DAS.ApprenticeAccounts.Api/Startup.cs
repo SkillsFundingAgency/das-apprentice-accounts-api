@@ -17,13 +17,10 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCom
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Configuration;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.Exceptions;
 using SFA.DAS.ApprenticeAccounts.Extensions;
 using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using SFA.DAS.Configuration.AzureTableStorage;
-using SFA.DAS.UnitOfWork.EntityFrameworkCore.DependencyResolution.Microsoft;
-using SFA.DAS.UnitOfWork.NServiceBus.Features.ClientOutbox.DependencyResolution.Microsoft;
 using System;
 using System.Data;
 using System.IO;
@@ -84,32 +81,30 @@ namespace SFA.DAS.ApprenticeAccounts.Api
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
             services.AddSingleton(s => s.GetRequiredService<IOptions<ApplicationSettings>>().Value);
 
-            services.AddEntityFrameworkForApprenticeAccounts(Configuration)
-                .AddEntityFrameworkUnitOfWork<ApprenticeAccountsDbContext>()
-                .AddNServiceBusClientUnitOfWork();
+            services.AddEntityFrameworkForApprenticeAccounts(Configuration);
 
             services.AddServicesForApprenticeAccounts();
 
             services.AddHealthChecks()
                 .AddCheck<ApprenticeAccountsHealthCheck>(nameof(ApprenticeAccountsHealthCheck));
 
+
             services
-                .AddMvc(o =>
+                .AddControllers(o =>
                 {
                     if (!Configuration.IsLocalAcceptanceOrDev())
                     {
                         o.Filters.Add(new AuthorizeFilter(PolicyNames.Default));
                     }
-                }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                });
 
             services.AddControllersWithViews()
-                .AddNewtonsoftJson()
-                .AddFluentValidation(fv =>
-                    fv.RegisterValidatorsFromAssemblyContaining<CreateApprenticeAccountCommandValidator>())
-                .AddFluentValidation(fv =>
-                    fv.RegisterValidatorsFromAssemblyContaining<UpdateApprenticePreferenceCommandValidator>())
-                .AddFluentValidation(fv =>
-                    fv.RegisterValidatorsFromAssemblyContaining<UpdateAllApprenticePreferencesCommandValidator>());
+                .AddNewtonsoftJson();
+
+            services.AddFluentValidationClientsideAdapters();
+            services.AddValidatorsFromAssemblyContaining<CreateApprenticeAccountCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateApprenticePreferenceCommandValidator>();
+            services.AddValidatorsFromAssemblyContaining<UpdateAllApprenticePreferencesCommandValidator>();
 
             services.AddProblemDetails(ConfigureProblemDetails);
         }

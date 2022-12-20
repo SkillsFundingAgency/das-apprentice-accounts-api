@@ -1,9 +1,10 @@
-﻿using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
+﻿using MediatR;
+using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand
 {
-    public class CreateApprenticeAccountCommand : IUnitOfWorkCommand
+    public class CreateApprenticeAccountCommand : IRequest<Unit>, IUnitOfWorkCommand
     {
         public Guid ApprenticeId { get; set; }
         public string? FirstName { get; set; }

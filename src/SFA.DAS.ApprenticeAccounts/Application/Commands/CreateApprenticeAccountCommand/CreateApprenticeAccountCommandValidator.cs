@@ -10,7 +10,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccoun
             RuleFor(model => model.FirstName).NotEmpty().WithMessage("Enter your first name");
             RuleFor(model => model.LastName).NotEmpty().WithMessage("Enter your last name");
             RuleFor(model => model.DateOfBirth).Must(dob => dob != default).WithMessage("Enter your date of birth");
-            RuleFor(model => model.Email).Transform(e => e.ToString()).EmailAddress();
+            RuleFor(model => model.Email).EmailAddress();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator
 {
-    public class LoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+    public class LoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly ILogger<TRequest> _logger;
 
@@ -19,14 +19,14 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator
         {
             try
             {
-                _logger.LogInformation($"Start handling '{typeof(TRequest)}'");
+                _logger.LogInformation("Start handling '{Request}'", typeof(TRequest));
                 var response = await next();
-                _logger.LogInformation($"End handling '{typeof(TRequest)}'");
+                _logger.LogInformation("End handling '{Request}'", typeof(TRequest));
                 return response;
             }
-catch (Exception e)
+            catch (Exception e)
             {
-                _logger.LogError(e, $"Error handling '{typeof(TRequest)}'");
+                _logger.LogError(e, "Error handling '{Request}'", typeof(TRequest));
                 throw;
             }
         }
