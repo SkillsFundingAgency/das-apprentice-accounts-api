@@ -39,7 +39,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddEnvironmentVariables();
 
-            if (!Configuration.IsLocalAcceptanceOrDev())
+            if (!Configuration.IsAcceptanceOrDev())
             {
                 config.AddAzureTableStorage(options =>
                 {
@@ -48,10 +48,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api
                     options.EnvironmentName = configuration["EnvironmentName"];
                     options.PreFixConfigurationKeys = false;
                 });
-#if DEBUG
-                config.AddJsonFile($"appsettings.Development.json", optional: true);
-#endif
             }
+            config.AddJsonFile($"appsettings.Development.json", optional: true);
 
             Configuration = config.Build();
         }
