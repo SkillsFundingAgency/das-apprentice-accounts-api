@@ -25,4 +25,20 @@ namespace SFA.DAS.ApprenticeAccounts.Data
                 .Where(x => x.Email == email)
                 .ToArrayAsync();
     }
+
+    public interface IMyApprenticeContext : IEntityContext<MyApprenticeship>
+    {
+        internal async Task<Apprentice> GetById(Guid apprenticeId)
+            => await Find(apprenticeId)
+               ?? throw new DomainException(
+                   $"Apprentice {apprenticeId} not found");
+
+        internal async Task<Apprentice?> Find(Guid apprenticeId)
+            => await Entities.SingleOrDefaultAsync(a => a.Id == apprenticeId);
+
+        internal async Task<Apprentice[]> GetByEmail(MailAddress email)
+            => await Entities
+                .Where(x => x.Email == email)
+                .ToArrayAsync();
+    }
 }
