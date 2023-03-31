@@ -13,5 +13,5 @@
 	[StandardUId] [nvarchar](20) NULL,
 	[CreatedOn] [datetime2](7) NOT NULL DEFAULT (getutcdate()),
  	CONSTRAINT [PK_MyApprenticeship_Id] PRIMARY KEY (Id),
-	INDEX IX_MyApprenticeship_ApprenticeIdCreatedOn NONCLUSTERED (ApprenticeId,CreatedOn)
+	INDEX IX_MyApprenticeship_ApprenticeId NONCLUSTERED (ApprenticeId)
 	)
