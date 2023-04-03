@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand
 {
-    public class CreateMyApprenticeCommandHandler : IRequestHandler<CreateApprenticeAccountCommand>
+    public class CreateApprenticeAccountCommandHandler : IRequestHandler<CreateApprenticeAccountCommand>
     {
         private readonly IApprenticeContext _apprentices;
 
-        public CreateMyApprenticeCommandHandler(IApprenticeContext apprentices)
+        public CreateApprenticeAccountCommandHandler(IApprenticeContext apprentices)
             => _apprentices = apprentices;
 
         public Task<Unit> Handle(CreateApprenticeAccountCommand request, CancellationToken cancellationToken)

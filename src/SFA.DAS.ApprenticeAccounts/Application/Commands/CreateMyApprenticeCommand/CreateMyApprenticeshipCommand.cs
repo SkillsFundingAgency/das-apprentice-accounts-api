@@ -6,8 +6,9 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeComm
 
 public class CreateMyApprenticeshipCommand : IRequest<Unit>, IUnitOfWorkCommand
 {
+    public int? Uln { get; set; }
     public Guid ApprenticeId { get; set; }
-    public Guid ApprenticeshipId { get; set; }
+    public int? ApprenticeshipId { get; set; }
     public string? EmployerName { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
