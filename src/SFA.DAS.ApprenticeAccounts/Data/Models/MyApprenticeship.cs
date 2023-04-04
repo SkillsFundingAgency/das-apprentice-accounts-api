@@ -10,9 +10,9 @@ public class MyApprenticeship : Entity
         // for Entity Framework
     }
 
-    public MyApprenticeship(Guid Id, CreateMyApprenticeshipCommand command )
+    public MyApprenticeship(Guid id, CreateMyApprenticeshipCommand command )
     {
-        this.Id = Id;
+        Id = id;
         ApprenticeId = command.ApprenticeId;
         Uln = command.Uln;
         ApprenticeshipId = command.ApprenticeshipId;
@@ -22,7 +22,7 @@ public class MyApprenticeship : Entity
         TrainingProviderId = command.TrainingProviderId;
         TrainingProviderName = command.TrainingProviderName;
         TrainingCode = command.TrainingCode;
-        StandardUid = StandardUid;
+        StandardUId = command.StandardUId;
 
     }
 
@@ -36,6 +36,5 @@ public class MyApprenticeship : Entity
     public long? TrainingProviderId { get; set; }
     public string? TrainingProviderName { get; set; }
     public string? TrainingCode { get; set; }
-
-    public string? StandardUid { get; set; }
+    public string? StandardUId { get; set; }
 }
