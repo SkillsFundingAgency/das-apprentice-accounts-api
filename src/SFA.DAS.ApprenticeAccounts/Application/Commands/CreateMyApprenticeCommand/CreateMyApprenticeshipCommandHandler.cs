@@ -16,9 +16,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeComm
     
         public Task<Unit> Handle(CreateMyApprenticeshipCommand command, CancellationToken cancellationToken)
         {
-            _myApprenticeships.Add(new MyApprenticeship(Guid.NewGuid(),command.ApprenticeId,command.Uln,command.ApprenticeshipId,
-                command.EmployerName,command.StartDate,command.EndDate,command.TrainingProviderId,command.TrainingProviderName,
-                command.TrainingCode,command.StandardUId));
+            _myApprenticeships.Add(new MyApprenticeship(Guid.NewGuid(),command));
     
             return Unit.Task;
         }

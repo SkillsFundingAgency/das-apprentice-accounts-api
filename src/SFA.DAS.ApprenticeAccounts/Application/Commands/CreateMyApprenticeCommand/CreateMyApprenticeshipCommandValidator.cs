@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SFA.DAS.ApprenticeAccounts.Data;
+using System;
 using System.Linq;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
@@ -22,7 +23,7 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
         RuleFor(model => model.TrainingProviderName).MaximumLength(200).WithMessage(TrainingProviderNameTooLong);
         RuleFor(model => model.TrainingCode).MaximumLength(15).WithMessage(TrainingCodeTooLong);
         RuleFor(model => model.StandardUId).MaximumLength(20).WithMessage(StandardUIdTooLong);
-        RuleFor(model => model.ApprenticeId).Must(id => id != default).WithMessage(ApprenticeIdNotValid);
+        RuleFor(model => model.ApprenticeId).Must(id => id != Guid.Empty).WithMessage(ApprenticeIdNotValid);
         RuleFor(model => model.ApprenticeId)
             .Must((model, apprenticeId,cancellation) =>
             {

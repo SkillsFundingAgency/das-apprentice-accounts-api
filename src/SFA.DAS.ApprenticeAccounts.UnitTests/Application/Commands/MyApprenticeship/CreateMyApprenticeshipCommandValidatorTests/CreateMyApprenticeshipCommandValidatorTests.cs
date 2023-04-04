@@ -17,16 +17,14 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.MyApprentice
 [TestFixture]
 public class CreateMyApprenticeshipCommandValidatorTests
 {
-    private static Random random = new Random();
+    private static readonly Random random = new Random();
     private Mock<IApprenticeContext> _mockApprenticeContext = new Mock<IApprenticeContext>();
     private Mock<IMyApprenticeshipContext> _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
-
 
     [TestCase(0, true)]
     [TestCase(1, true)]
     [TestCase(200, true)]
     [TestCase(201, false)]
-
     public async Task EmployerName_Validation(int lengthOfString, bool isValid)
     {
         var employerName = RandomString(lengthOfString);
@@ -44,12 +42,10 @@ public class CreateMyApprenticeshipCommandValidatorTests
         }
     }
 
-
     [TestCase(0, true)]
     [TestCase(1, true)]
     [TestCase(200, true)]
     [TestCase(201, false)]
-
     public async Task TrainingProviderName_Validation(int lengthOfString, bool isValid)
     {
         var trainingProviderName = RandomString(lengthOfString);
@@ -71,7 +67,6 @@ public class CreateMyApprenticeshipCommandValidatorTests
     [TestCase(1, true)]
     [TestCase(15, true)]
     [TestCase(16, false)]
-
     public async Task TrainingCode_Validation(int lengthOfString, bool isValid)
     {
         var trainingCode = RandomString(lengthOfString);
@@ -93,7 +88,6 @@ public class CreateMyApprenticeshipCommandValidatorTests
     [TestCase(1, true)]
     [TestCase(20, true)]
     [TestCase(21, false)]
-
     public async Task StandardUId_Validation(int lengthOfString, bool isValid)
     {
         var standardUId = RandomString(lengthOfString);
@@ -156,7 +150,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
 
         _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(new List<Data.Models.MyApprenticeship>
         {
-            new(Guid.NewGuid(),apprenticeId,null,apprenticeshipId,null,null,null,null,null,null,null)
+            new(Guid.NewGuid(),new CreateMyApprenticeshipCommand {ApprenticeshipId = apprenticeshipId, ApprenticeId = apprenticeId})
         });
 
         var validator = new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
@@ -167,23 +161,21 @@ public class CreateMyApprenticeshipCommandValidatorTests
         result.Errors[0].ErrorMessage.Should().Be(CreateMyApprenticeshipCommandValidator.ApprenticeshipIdAlreadyExists);
     }
 
-
     [Test]
     public async Task ApprenticeshipIdNull_ApprenticeshipIdNullAlreadyPresent_Validation()
     {
         var apprenticeId = Guid.NewGuid();
-        long? apprenticeshipId = null;
         _mockApprenticeContext = new Mock<IApprenticeContext>();
         _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
         _mockApprenticeContext.Setup(x => x.Find(It.IsAny<Guid>())).ReturnsAsync(new Apprentice(apprenticeId, "first name", "last name", new MailAddress("test@test.com"), DateTime.Now));
 
         _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(new List<Data.Models.MyApprenticeship>
         {
-            new(Guid.NewGuid(),apprenticeId,null,apprenticeshipId,null,null,null,null,null,null,null)
+            new(Guid.NewGuid(),new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId})
         });
 
         var validator = new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
-        var command = new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = apprenticeshipId };
+        var command = new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = null };
         var result = await validator.TestValidateAsync(command);
 
         result.ShouldNotHaveValidationErrorFor(c => c.ApprenticeshipId);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
+using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models;
 
@@ -9,19 +10,19 @@ public class MyApprenticeship : Entity
         // for Entity Framework
     }
 
-    public MyApprenticeship(Guid Id, Guid apprenticeId, long? uln, long? apprenticeshipId,string? employerName, DateTime? startDate, DateTime? endDate,long? trainingProviderId, string? trainingProviderName, string? trainingCode, string? standardUid )
+    public MyApprenticeship(Guid Id, CreateMyApprenticeshipCommand command )
     {
         this.Id = Id;
-        ApprenticeId = apprenticeId;
-        Uln = uln;
-        ApprenticeshipId = apprenticeshipId;
-        EmployerName = employerName;
-        StartDate = startDate;
-        EndDate = endDate;
-        TrainingProviderId = trainingProviderId;
-        TrainingProviderName = trainingProviderName;
-        TrainingCode = trainingCode;
-        StandardUid = standardUid;
+        ApprenticeId = command.ApprenticeId;
+        Uln = command.Uln;
+        ApprenticeshipId = command.ApprenticeshipId;
+        EmployerName = command.EmployerName;
+        StartDate = command.StartDate;
+        EndDate = command.EndDate;
+        TrainingProviderId = command.TrainingProviderId;
+        TrainingProviderName = command.TrainingProviderName;
+        TrainingCode = command.TrainingCode;
+        StandardUid = StandardUid;
 
     }
 
