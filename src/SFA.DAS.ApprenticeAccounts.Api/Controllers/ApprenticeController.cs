@@ -8,7 +8,6 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
