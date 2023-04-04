@@ -1,19 +1,27 @@
 ﻿using MediatR;
 using SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 
-public class CreateMyApprenticeshipCommand : IRequest<Unit>, IUnitOfWorkCommand
+public class CreateMyApprenticeshipCommand : MyApprenticeshipCommand, IRequest<Unit>, IUnitOfWorkCommand
 {
-    public int? Uln { get; set; }
     public Guid ApprenticeId { get; set; }
-    public int? ApprenticeshipId { get; set; }
-    public string? EmployerName { get; set; }
-    public DateTime? StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
-    public int? TrainingProviderId { get; set; }
-    public string? TrainingProviderName { get; set; }
-    public string? TrainingCode { get; set; }
-    public string? StandardUId { get; set; }
+
+    public static implicit operator CreateMyApprenticeshipCommand(CreateMyApprenticeshipRequest command)
+    {
+        return new CreateMyApprenticeshipCommand
+        {
+            Uln = command.Uln,
+            ApprenticeshipId = command.ApprenticeshipId,
+            EmployerName = command.EmployerName,
+            StartDate = command.StartDate,
+            EndDate = command.EndDate,
+            StandardUId = command.StandardUId,
+            TrainingCode = command.TrainingCode,
+            TrainingProviderId = command.TrainingProviderId,
+            TrainingProviderName = command.TrainingProviderName
+        };
+    }
 }

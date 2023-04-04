@@ -1,4 +1,9 @@
-﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 #nullable enable
 
@@ -6,7 +11,10 @@ namespace SFA.DAS.ApprenticeAccounts.Data
 {
     public interface IMyApprenticeshipContext : IEntityContext<MyApprenticeship>
     {
-        // internal async Task<MyApprenticeship> Find(Guid apprenticeId)
-        //     => await Entities.SingleOrDefaultAsync(a => a.Id == apprenticeId);
+        public async Task<IEnumerable<MyApprenticeship>> FindAll(Guid apprenticeId)
+        {
+            return await Entities.Where(x => x.ApprenticeId == apprenticeId).ToListAsync();
+        }
+
     }
 }

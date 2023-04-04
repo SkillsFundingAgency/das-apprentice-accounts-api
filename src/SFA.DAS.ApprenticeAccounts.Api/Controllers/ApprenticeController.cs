@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
@@ -7,6 +8,7 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
@@ -37,12 +39,15 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         public async Task UpdateApprentice(Guid id, JsonPatchDocument<ApprenticePatchDto> changes)
             => await _mediator.Send(new UpdateApprenticeCommand(id, changes));
 
-
-
-
         [HttpPost("apprentices/{id}/MyApprenticeships")]
-        public async Task PostMyApprenticeship(CreateMyApprenticeshipCommand command)
-            => await _mediator.Send(command);
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> PostMyApprenticeship(Guid id, CreateMyApprenticeshipRequest command)
+        {
+            var request = (CreateMyApprenticeshipCommand)command;
 
+            request.ApprenticeId = id;
+            await _mediator.Send(request);
+            return new NoContentResult();
+        }
     }
 }

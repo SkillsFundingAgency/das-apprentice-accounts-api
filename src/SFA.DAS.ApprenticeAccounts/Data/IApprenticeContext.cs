@@ -17,7 +17,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data
                      ?? throw new DomainException(
                         $"Apprentice {apprenticeId} not found");
 
-        internal async Task<Apprentice?> Find(Guid apprenticeId)
+        public async Task<Apprentice?> Find(Guid apprenticeId)
             => await Entities.SingleOrDefaultAsync(a => a.Id == apprenticeId);
 
         internal async Task<Apprentice[]> GetByEmail(MailAddress email)

@@ -100,9 +100,6 @@ namespace SFA.DAS.ApprenticeAccounts.Api
                 .AddNewtonsoftJson();
 
             services.AddFluentValidationClientsideAdapters();
-            services.AddValidatorsFromAssemblyContaining<CreateApprenticeAccountCommandValidator>();
-            services.AddValidatorsFromAssemblyContaining<UpdateApprenticePreferenceCommandValidator>();
-            services.AddValidatorsFromAssemblyContaining<UpdateAllApprenticePreferencesCommandValidator>();
 
             services.AddProblemDetails(ConfigureProblemDetails);
         }
