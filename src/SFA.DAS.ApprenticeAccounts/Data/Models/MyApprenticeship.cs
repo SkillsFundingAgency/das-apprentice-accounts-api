@@ -7,7 +7,7 @@ public class MyApprenticeship : Entity
 {
     private MyApprenticeship()
     {
-        // for Entity Framework
+        /// for Entity Framework
     }
 
     public MyApprenticeship(Guid id, CreateMyApprenticeshipCommand command )
@@ -37,4 +37,5 @@ public class MyApprenticeship : Entity
     public string? TrainingProviderName { get; set; }
     public string? TrainingCode { get; set; }
     public string? StandardUId { get; set; }
+    public Apprentice Apprentice { get; set; } = null!;
 }

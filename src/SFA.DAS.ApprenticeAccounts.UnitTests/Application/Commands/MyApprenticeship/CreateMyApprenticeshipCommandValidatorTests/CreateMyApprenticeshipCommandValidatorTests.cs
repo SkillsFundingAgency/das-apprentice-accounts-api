@@ -27,7 +27,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     [TestCase(201, false)]
     public async Task EmployerName_Validation(int lengthOfString, bool isValid)
     {
-        var employerName = RandomString(lengthOfString);
+        var employerName = new string('a', lengthOfString);
         var command = new CreateMyApprenticeshipCommand { EmployerName = employerName};
 
         var sut = GetValidator();
@@ -48,7 +48,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     [TestCase(201, false)]
     public async Task TrainingProviderName_Validation(int lengthOfString, bool isValid)
     {
-        var trainingProviderName = RandomString(lengthOfString);
+        var trainingProviderName = new string('a', lengthOfString);
         var command = new CreateMyApprenticeshipCommand { EmployerName = "employer Name", TrainingProviderName = trainingProviderName};
 
         var sut = GetValidator();
@@ -69,7 +69,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     [TestCase(16, false)]
     public async Task TrainingCode_Validation(int lengthOfString, bool isValid)
     {
-        var trainingCode = RandomString(lengthOfString);
+        var trainingCode = new string('a', lengthOfString);
         var command = new CreateMyApprenticeshipCommand { TrainingCode = trainingCode };
 
         var sut = GetValidator();
@@ -90,7 +90,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     [TestCase(21, false)]
     public async Task StandardUId_Validation(int lengthOfString, bool isValid)
     {
-        var standardUId = RandomString(lengthOfString);
+        var standardUId = new string('a', lengthOfString);
         var command = new CreateMyApprenticeshipCommand { StandardUId = standardUId };
 
         var sut = GetValidator();
@@ -189,13 +189,5 @@ public class CreateMyApprenticeshipCommandValidatorTests
         _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(new List<Data.Models.MyApprenticeship>());
 
         return new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object,_mockMyApprenticeshipContext.Object);
-    }
-
-
-    public static string RandomString(int length)
-    {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        return new string(Enumerable.Repeat(chars, length)
-            .Select(s => s[random.Next(s.Length)]).ToArray());
     }
 }

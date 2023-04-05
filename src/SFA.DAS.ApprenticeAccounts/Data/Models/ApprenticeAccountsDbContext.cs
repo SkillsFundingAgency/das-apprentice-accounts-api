@@ -85,6 +85,17 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 .HasForeignKey(r => r.PreferenceId);
 
             });
+
+
+            modelBuilder.Entity<MyApprenticeship>(ma =>
+                {
+                    ma.ToTable("MyApprenticeship");
+                    ma.HasKey(a =>  new {a.Id, a.ApprenticeId});
+                    ma.HasOne(a => a.Apprentice)
+                        .WithMany(x=>x.MyApprenticeships)
+                        .HasForeignKey(c => c.ApprenticeId);
+                }
+            );
             base.OnModelCreating(modelBuilder);
         }
 
