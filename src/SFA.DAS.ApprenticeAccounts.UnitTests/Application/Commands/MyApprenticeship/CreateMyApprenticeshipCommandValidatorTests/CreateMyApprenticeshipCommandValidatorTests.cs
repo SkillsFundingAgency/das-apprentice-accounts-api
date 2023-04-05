@@ -37,8 +37,8 @@ public class CreateMyApprenticeshipCommandValidatorTests
             result.ShouldNotHaveValidationErrorFor(c => c.EmployerName);
         else
         {
-            result.ShouldHaveValidationErrorFor(c => c.EmployerName);
-            result.Errors[0].ErrorMessage.Should().Be(CreateMyApprenticeshipCommandValidator.EmployerNameTooLong);
+            result.ShouldHaveValidationErrorFor(c => c.EmployerName)
+                .WithErrorMessage(CreateMyApprenticeshipCommandValidator.EmployerNameTooLong);
         }
     }
 
@@ -58,8 +58,8 @@ public class CreateMyApprenticeshipCommandValidatorTests
             result.ShouldNotHaveValidationErrorFor(c => c.TrainingProviderName);
         else
         {
-            result.ShouldHaveValidationErrorFor(c => c.TrainingProviderName);
-            result.Errors[0].ErrorMessage.Should().Be(CreateMyApprenticeshipCommandValidator.TrainingProviderNameTooLong);
+            result.ShouldHaveValidationErrorFor(c => c.TrainingProviderName)
+                .WithErrorMessage(CreateMyApprenticeshipCommandValidator.TrainingProviderNameTooLong);
         }
     }
 
@@ -79,8 +79,8 @@ public class CreateMyApprenticeshipCommandValidatorTests
             result.ShouldNotHaveValidationErrorFor(c => c.TrainingCode);
         else
         {
-            result.ShouldHaveValidationErrorFor(c => c.TrainingCode);
-            result.Errors[0].ErrorMessage.Should().Be(CreateMyApprenticeshipCommandValidator.TrainingCodeTooLong);
+            result.ShouldHaveValidationErrorFor(c => c.TrainingCode)
+                .WithErrorMessage(CreateMyApprenticeshipCommandValidator.TrainingCodeTooLong);
         }
     }
 
@@ -100,8 +100,8 @@ public class CreateMyApprenticeshipCommandValidatorTests
             result.ShouldNotHaveValidationErrorFor(c => c.StandardUId);
         else
         {
-            result.ShouldHaveValidationErrorFor(c => c.StandardUId);
-            result.Errors[0].ErrorMessage.Should().Be(CreateMyApprenticeshipCommandValidator.StandardUIdTooLong);
+            result.ShouldHaveValidationErrorFor(c => c.StandardUId)
+                .WithErrorMessage(CreateMyApprenticeshipCommandValidator.StandardUIdTooLong);
         }
     }
 
@@ -118,8 +118,8 @@ public class CreateMyApprenticeshipCommandValidatorTests
             result.ShouldNotHaveValidationErrorFor(c => c.ApprenticeId);
         else
         {
-            result.ShouldHaveValidationErrorFor(c => c.ApprenticeId);
-            result.Errors[0].ErrorMessage.Should().Be(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid);
+            result.ShouldHaveValidationErrorFor(c => c.ApprenticeId)
+                .WithErrorMessage(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid);
         }
     }
 
@@ -135,8 +135,8 @@ public class CreateMyApprenticeshipCommandValidatorTests
         var command = new CreateMyApprenticeshipCommand { ApprenticeId = Guid.NewGuid() };
         var result = await validator.TestValidateAsync(command);
 
-        result.ShouldHaveValidationErrorFor(c => c.ApprenticeId);
-        result.Errors[0].ErrorMessage.Should().Be(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent);
+        result.ShouldHaveValidationErrorFor(c => c.ApprenticeId)
+            .WithErrorMessage(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent);
     }
 
     [Test]
@@ -157,8 +157,8 @@ public class CreateMyApprenticeshipCommandValidatorTests
         var command = new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = apprenticeshipId};
         var result = await validator.TestValidateAsync(command);
 
-        result.ShouldHaveValidationErrorFor(c => c.ApprenticeshipId);
-        result.Errors[0].ErrorMessage.Should().Be(CreateMyApprenticeshipCommandValidator.ApprenticeshipIdAlreadyExists);
+        result.ShouldHaveValidationErrorFor(c => c.ApprenticeshipId)
+            .WithErrorMessage(CreateMyApprenticeshipCommandValidator.ApprenticeshipIdAlreadyExists);
     }
 
     [Test]

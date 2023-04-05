@@ -11,10 +11,9 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
     public const string TrainingProviderNameTooLong = "Training Provider Name must be 200 characters or fewer";
     public const string TrainingCodeTooLong = "Training Code must be 15 characters or fewer";
     public const string StandardUIdTooLong = "StandardUId must be 20 characters or fewer";
-    public const string ApprenticeIdNotValid = "Apprentice ID is not a valid identifier.";
-    public const string ApprenticeIdNotPresent = "Apprentice ID is not present in the Apprentice table";
-    public const string ApprenticeshipIdAlreadyExists =
-        "Apprenticeship Id is already present in the MyApprenticeship table for Apprentice Id";
+    public const string ApprenticeIdNotValid = "Apprentice Id is not valid";
+    public const string ApprenticeIdNotPresent = "Apprentice Id is not present in the Apprentice table";
+    public const string ApprenticeshipIdAlreadyExists = "This Apprenticeship is already recorded for this apprentice";
 
     public CreateMyApprenticeshipCommandValidator(IApprenticeContext apprenticeContext, IMyApprenticeshipContext myApprenticeshipContext)
     {
