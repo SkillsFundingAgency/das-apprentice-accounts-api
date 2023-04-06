@@ -6,6 +6,7 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCom
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
 using System.Threading.Tasks;
@@ -47,6 +48,17 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             request.ApprenticeId = id;
             await _mediator.Send(request);
             return new NoContentResult();
+        }
+
+        [HttpGet("apprentices/{apprenticeId}/MyApprenticeships")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PostMyApprenticeship(Guid apprenticeId)
+        {
+            
+            var result =await _mediator.Send(new MyApprenticeshipsQuery(apprenticeId));
+            if (result == null) return NotFound();
+            return Ok(result);
         }
     }
 }
