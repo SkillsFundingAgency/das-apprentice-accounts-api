@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
@@ -26,8 +27,7 @@ public class WhenHandlingGetMyApprenticeships
             Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext,
             ApprenticeWithMyApprenticeshipsDto apprenticeWithMyApprenticeships,
             List<MyApprenticeshipsDto> myApprenticeships,
-            Guid apprenticeId,
-            [Greedy]List<MyApprenticeship> myApprenticeshipsList
+            Guid apprenticeId
         )
         // int mockPreferenceId,
         // int mockPreferenceId2,
@@ -42,7 +42,11 @@ public class WhenHandlingGetMyApprenticeships
     {
         var apprentice = new Apprentice(apprenticeId, "first name", "last name", new MailAddress("test@test.com"),
             DateTime.Now);
-        //var myApprenticeshipsList = new List<MyApprenticeship>();
+        
+        var myApprenticeshipsList = new List<MyApprenticeship>
+        {
+            new MyApprenticeship(Guid.NewGuid(),new CreateMyApprenticeshipCommand())
+        };
 
         // public Apprentice(Guid Id, string firstName, string lastName, MailAddress email, DateTime dateOfBirth)
         {
