@@ -4,20 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
-public class ApprenticeMyApprenticeshipsDto
+public class ApprenticeWithMyApprenticeshipsDto
 {
     public Guid ApprenticeId { get; set; }
     public string FirstName { get; set; } = null!;
     public string LastName { get; set; } = null!;
     public string Email { get; set; } = null!;
     public DateTime DateOfBirth { get; set; }
-    public IEnumerable<MyApprenticeshipsDto> MyApprenticeships { get; set; }
+    public IEnumerable<MyApprenticeshipsDto>? MyApprenticeships { get; set; }
 
-    public static ApprenticeMyApprenticeshipsDto? Create(Data.Models.Apprentice? source, IEnumerable<MyApprenticeship> myApprenticeships)
+    public static ApprenticeWithMyApprenticeshipsDto? Create(Data.Models.Apprentice? source, IEnumerable<MyApprenticeship> myApprenticeships)
     {
         if (source == null) return null!;
 
-        var myApprenticeshipsDto = new ApprenticeMyApprenticeshipsDto
+        var apprentice = new ApprenticeWithMyApprenticeshipsDto
         {
             ApprenticeId = source.Id,
             FirstName = source.FirstName,
@@ -27,6 +27,6 @@ public class ApprenticeMyApprenticeshipsDto
             MyApprenticeships = myApprenticeships.OrderByDescending(c=>c.CreatedOn).Select(myApprenticeship => (MyApprenticeshipsDto)myApprenticeship).ToList()
         };
 
-        return myApprenticeshipsDto;
+        return apprentice;
     }
 }

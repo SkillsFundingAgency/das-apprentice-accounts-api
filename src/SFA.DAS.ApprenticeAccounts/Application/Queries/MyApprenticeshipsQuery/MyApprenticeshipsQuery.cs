@@ -4,7 +4,7 @@ using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery;
 
-public class MyApprenticeshipsQuery : IRequest<ApprenticeMyApprenticeshipsDto>
+public class MyApprenticeshipsQuery : IRequest<ApprenticeWithMyApprenticeshipsDto>
 {
     public MyApprenticeshipsQuery(Guid id) => ApprenticeId = id;
 
