@@ -37,16 +37,5 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         [HttpPatch("apprentices/{id}")]
         public async Task UpdateApprentice(Guid id, JsonPatchDocument<ApprenticePatchDto> changes)
             => await _mediator.Send(new UpdateApprenticeCommand(id, changes));
-
-        [HttpPost("apprentices/{id}/MyApprenticeships")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> PostMyApprenticeship(Guid id, CreateMyApprenticeshipRequest command)
-        {
-            var request = (CreateMyApprenticeshipCommand)command;
-
-            request.ApprenticeId = id;
-            await _mediator.Send(request);
-            return new NoContentResult();
-        }
     }
 }
