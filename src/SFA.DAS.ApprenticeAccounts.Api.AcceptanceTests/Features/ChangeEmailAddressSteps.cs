@@ -30,6 +30,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
         {
             _apprentice = _fixture.Build<Apprentice>()
                 .Without(a => a.TermsOfUseAccepted)
+                .Without(a=>a.MyApprenticeships)
                 .Create();
 
             _context.DbContext.Apprentices.Add(_apprentice);
@@ -65,11 +66,11 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
         public void ThenTheApprenticeRecordIsCreated()
         {
             _context.Api.Response.Should().Be2XXSuccessful();
-            _context.DbContext.Apprentices.Should().ContainEquivalentOf(new
-            {
-                _apprentice.Id,
-                Email = new MailAddress(_mailAddress),
-            });
+             _context.DbContext.Apprentices.Should().ContainEquivalentOf(new
+             {
+                 _apprentice.Id,
+                 Email = new MailAddress(_mailAddress),
+             });
         }
 
         [Then(@"the apprentice record is not updated")]
