@@ -20,12 +20,12 @@ public class MyApprenticeshipsController: ControllerBase
     [HttpPost("apprentices/{apprenticeId}/MyApprenticeships")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PostMyApprenticeship(Guid apprenticeId, CreateMyApprenticeshipRequest command)
+    public async Task<IActionResult> PostMyApprenticeship(Guid apprenticeId, CreateMyApprenticeshipRequest request)
     {
-        var request = (CreateMyApprenticeshipCommand)command;
+        var command = (CreateMyApprenticeshipCommand)request;
 
-        request.ApprenticeId = apprenticeId;
-        await _mediator.Send(request);
+        command.ApprenticeId = apprenticeId;
+        await _mediator.Send(command);
         return new NoContentResult();
     }
 }

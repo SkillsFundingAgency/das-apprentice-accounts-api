@@ -12,7 +12,7 @@ public class MyApprenticeshipConstructorTests
     [Test, AutoData]
     public void Constructor_TransformsCommandToEntity(Guid id, CreateMyApprenticeshipCommand command)
     {
-        var entity = new Data.Models.MyApprenticeship(id,command);
+        var entity = (Data.Models.MyApprenticeship) command;
         entity.Should().BeEquivalentTo(command);
     }
 }

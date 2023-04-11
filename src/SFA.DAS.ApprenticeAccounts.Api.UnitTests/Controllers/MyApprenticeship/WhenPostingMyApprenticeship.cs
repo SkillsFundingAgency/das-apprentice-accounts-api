@@ -19,26 +19,26 @@ public class WhenPostingMyApprenticeship
     public async Task CreateMyApprenticeship_InvokesRequest(
         [Frozen] Mock<IMediator> mediatorMock,
         [Greedy] MyApprenticeshipsController sut,
-        CreateMyApprenticeshipRequest model,
+        CreateMyApprenticeshipRequest request,
         Guid apprenticeId)
     {
         mediatorMock.Setup(m => m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
             .Returns(Unit.Task);
 
-        var result = await sut.PostMyApprenticeship(apprenticeId, model);
+        var result = await sut.PostMyApprenticeship(apprenticeId, request);
 
         (result as NoContentResult).Should().NotBeNull();
 
         mediatorMock.Verify(m => m.Send(It.Is<CreateMyApprenticeshipCommand>(c =>
-                c.ApprenticeshipId == model.ApprenticeshipId
-                && c.EmployerName == model.EmployerName
-                && c.StartDate == model.StartDate
-                && c.EndDate == model.EndDate
-                && c.StandardUId == model.StandardUId
-                && c.TrainingCode == model.TrainingCode
-                && c.TrainingProviderId == model.TrainingProviderId
-                && c.TrainingProviderName == model.TrainingProviderName
-                && c.Uln == model.Uln
+                c.ApprenticeshipId == request.ApprenticeshipId
+                && c.EmployerName == request.EmployerName
+                && c.StartDate == request.StartDate
+                && c.EndDate == request.EndDate
+                && c.StandardUId == request.StandardUId
+                && c.TrainingCode == request.TrainingCode
+                && c.TrainingProviderId == request.TrainingProviderId
+                && c.TrainingProviderName == request.TrainingProviderName
+                && c.Uln == request.Uln
                 && c.ApprenticeId == apprenticeId
             ), It.IsAny<CancellationToken>()));
     }
