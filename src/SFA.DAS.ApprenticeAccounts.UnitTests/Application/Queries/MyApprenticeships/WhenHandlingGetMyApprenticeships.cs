@@ -24,9 +24,8 @@ public class WhenHandlingGetMyApprenticeships
     public async Task ThenExpectedMyApprenticeshpsAreReturned(
             MyApprenticeshipsQuery query,
             Mock<IApprenticeContext> mockApprenticeContext,
-            Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext,
-            ApprenticeWithMyApprenticeshipsDto apprenticeWithMyApprenticeships,
-            List<MyApprenticeshipsDto> myApprenticeships,
+            //ApprenticeWithMyApprenticeshipsDto apprenticeWithMyApprenticeships,
+            List<MyApprenticeship> myApprenticeships,
             Guid apprenticeId
         )
         // int mockPreferenceId,
@@ -41,23 +40,17 @@ public class WhenHandlingGetMyApprenticeships
         // DateTime mockUpdatedOn2)
     {
         var apprentice = new Apprentice(apprenticeId, "first name", "last name", new MailAddress("test@test.com"),
-            DateTime.Now);
-        
-        var myApprenticeshipsList = new List<MyApprenticeship>
-        {
-            new MyApprenticeship(Guid.NewGuid(),new CreateMyApprenticeshipCommand())
-        };
+            DateTime.Now) { MyApprenticeships = myApprenticeships, TermsOfUseAccepted = true};
 
         // public Apprentice(Guid Id, string firstName, string lastName, MailAddress email, DateTime dateOfBirth)
         {
             mockApprenticeContext.Setup(x => x.Find(query.ApprenticeId)).ReturnsAsync(apprentice);
-            mockMyApprenticeshipContext.Setup(x => x.FindAll(query.ApprenticeId)).ReturnsAsync(myApprenticeshipsList);
-
+         
             var handler =
-                new MyApprenticeshipsQueryHandler(mockApprenticeContext.Object, mockMyApprenticeshipContext.Object);
+                new MyApprenticeshipsQueryHandler(mockApprenticeContext.Object);
             var result = await handler.Handle(query, CancellationToken.None);
 
-            result.MyApprenticeships.Count().Should().Be(myApprenticeshipsList.Count);
+            result.MyApprenticeships.Count().Should().Be(myApprenticeships.Count);
 
             // var preference = new Preference(mockPreferenceId, mockPreferenceMeaning, mockPreferenceHint);
             // var response = new List<Data.Models.ApprenticePreferences>(2)

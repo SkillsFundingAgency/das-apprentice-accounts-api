@@ -11,14 +11,12 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery
         : IRequestHandler<MyApprenticeshipsQuery, ApprenticeWithMyApprenticeshipsDto?>
     {
         private readonly IApprenticeContext _apprentices;
-        private readonly IMyApprenticeshipContext _myApprenticeships;
-    
+
 
         public  MyApprenticeshipsQueryHandler
-            (IApprenticeContext apprenticeshipRepository,  IMyApprenticeshipContext myApprenticeships)
+            (IApprenticeContext apprenticeshipRepository)
         {
             _apprentices = apprenticeshipRepository;
-            _myApprenticeships = myApprenticeships;
         }
 
         public async Task<ApprenticeWithMyApprenticeshipsDto?> Handle(
@@ -26,8 +24,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery
             CancellationToken cancellationToken)
         {
             var apprentice = await _apprentices.Find(request.ApprenticeId);
-            var myApprenticeships = await _myApprenticeships.FindAll(request.ApprenticeId);
-            return apprentice != null ? ApprenticeWithMyApprenticeshipsDto.Create(apprentice, myApprenticeships) : null;
+            return apprentice != null ? ApprenticeWithMyApprenticeshipsDto.Create(apprentice) : null;
         }
     }
 }
