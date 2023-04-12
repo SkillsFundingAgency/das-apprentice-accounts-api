@@ -11,30 +11,12 @@ public class MyApprenticeship : Entity
         /// for Entity Framework
     }
 
-
-    //MFCMFC
-    //public MyApprenticeship(Guid id, CreateMyApprenticeshipCommand command )
-    //{
-    //    Id = id;
-    //    ApprenticeId = command.ApprenticeId;
-    //    Uln = command.Uln;
-    //    ApprenticeshipId = command.ApprenticeshipId;
-    //    EmployerName = command.EmployerName;
-    //    StartDate = command.StartDate;
-    //    EndDate = command.EndDate;
-    //    TrainingProviderId = command.TrainingProviderId;
-    //    TrainingProviderName = command.TrainingProviderName;
-    //    TrainingCode = command.TrainingCode;
-    //    StandardUId = command.StandardUId;
-
-    //}
-
     public static implicit operator MyApprenticeship(CreateMyApprenticeshipCommand command)
     { 
         return new MyApprenticeship
         { 
-            Id = command.Id,
-        ApprenticeId = command.ApprenticeId,
+            Id = command.Id, 
+            ApprenticeId = command.ApprenticeId,
             Uln = command.Uln,
             ApprenticeshipId = command.ApprenticeshipId,
             EmployerName = command.EmployerName,
