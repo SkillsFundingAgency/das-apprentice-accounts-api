@@ -4,8 +4,9 @@ using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 
-public class CreateMyApprenticeshipCommand : IMyApprenticeshipCommand, IRequest<Unit>, IUnitOfWorkCommand
+public class CreateMyApprenticeshipCommand :  IRequest<Unit>, IUnitOfWorkCommand
 {
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid ApprenticeId { get; set; }
     public long? Uln { get; set; }
     public long? ApprenticeshipId { get; set; }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NServiceBus;
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
+using SFA.DAS.ApprenticeAccounts.Application.Mediatr.Behaviours;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
@@ -26,9 +28,12 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
         public static IServiceCollection AddServicesForApprenticeAccounts(this IServiceCollection services)
         {
             services.AddMediatR(typeof(UnitOfWorkPipelineBehavior<,>).Assembly);
+            
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>)); 
             services.AddFluentValidation(new[] { typeof(UnitOfWorkPipelineBehavior<,>).Assembly });
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkPipelineBehavior<,>));
+
 
             services.AddTransient<ITimeProvider, UtcTimeProvider>();
             services.AddSingleton<IManagedIdentityTokenProvider, ManagedIdentityTokenProvider>();
@@ -38,6 +43,7 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
             services.AddScoped<IApprenticePreferencesContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
             services.AddScoped<IMyApprenticeshipContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
             services.AddScoped<EventDispatcher>();
+
 
             return services;
         }

@@ -6,8 +6,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
-#nullable enable
-
 namespace SFA.DAS.ApprenticeAccounts.Data
 {
 
@@ -16,8 +14,9 @@ namespace SFA.DAS.ApprenticeAccounts.Data
         [ExcludeFromCodeCoverage]
         public async Task<IEnumerable<MyApprenticeship>> FindAll(Guid apprenticeId)
         {
-            return await Entities.Where(x => x.ApprenticeId == apprenticeId).ToListAsync();
+            return await Entities
+                .AsNoTracking()
+                .Where(x => x.ApprenticeId == apprenticeId).ToListAsync();
         }
-
     }
 }

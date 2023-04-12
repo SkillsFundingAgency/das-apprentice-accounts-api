@@ -9,35 +9,38 @@ using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery;
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
 
 [ApiController]
-public class MyApprenticeshipsController: ControllerBase
+public class MyApprenticeshipController: ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public MyApprenticeshipsController(IMediator mediator)
+    public MyApprenticeshipController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
-    [HttpPost("apprentices/{apprenticeId}/MyApprenticeships")]
+    [HttpPost("apprentices/{apprenticeId}/MyApprenticeship")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PostMyApprenticeship(Guid apprenticeId, CreateMyApprenticeshipRequest command)
+    public async Task<IActionResult> PostMyApprenticeship(Guid apprenticeId, CreateMyApprenticeshipRequest request)
     {
-        var request = (CreateMyApprenticeshipCommand)command;
+        var command = (CreateMyApprenticeshipCommand)request;
 
-        request.ApprenticeId = apprenticeId;
-        await _mediator.Send(request);
+        command.ApprenticeId = apprenticeId;
+        await _mediator.Send(command);
         return new NoContentResult();
     }
 
-    [HttpGet("apprentices/{apprenticeId}/MyApprenticeships")]
+    [HttpGet("apprentices/{apprenticeId}/MyApprenticeship")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetMyApprenticeship(Guid apprenticeId)
     {
+        var result = await _mediator.Send(new MyApprenticeshipQuery(apprenticeId));
+        if (result == null)
+        {
+            return NotFound();
+        }
 
-        var result = await _mediator.Send(new MyApprenticeshipsQuery(apprenticeId));
-        if (result == null) return NotFound();
         return Ok(result);
     }
 }

@@ -17,26 +17,28 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
 
     public CreateMyApprenticeshipCommandValidator(IApprenticeContext apprenticeContext, IMyApprenticeshipContext myApprenticeshipContext)
     {
-
+        
         RuleFor(model => model.EmployerName).MaximumLength(200).WithMessage(EmployerNameTooLong);
         RuleFor(model => model.TrainingProviderName).MaximumLength(200).WithMessage(TrainingProviderNameTooLong);
         RuleFor(model => model.TrainingCode).MaximumLength(15).WithMessage(TrainingCodeTooLong);
         RuleFor(model => model.StandardUId).MaximumLength(20).WithMessage(StandardUIdTooLong);
         RuleFor(model => model.ApprenticeId).Must(id => id != Guid.Empty).WithMessage(ApprenticeIdNotValid);
+        
         RuleFor(model => model.ApprenticeId)
-            .Must((model, apprenticeId,cancellation) =>
+            .MustAsync(async (model, apprenticeId,cancellation) =>
             {
-                var result =  apprenticeContext.Find(apprenticeId).Result;
+                var result =  await apprenticeContext.Find(apprenticeId);
                 return result != null;
             }).WithMessage(ApprenticeIdNotPresent);
+
         RuleFor(model => model.ApprenticeshipId)
-            .Must((model,apprenticeshipId, cancellation) =>
+            .MustAsync(async (model,apprenticeshipId, cancellation) =>
             { 
                 if (model.ApprenticeshipId == null) return true;
-
-                var myApprenticeships =  myApprenticeshipContext.FindAll(model.ApprenticeId).Result;
+        
+                var myApprenticeships =  await myApprenticeshipContext.FindAll(model.ApprenticeId);
                 return myApprenticeships.All(x => x.ApprenticeshipId != apprenticeshipId);
-
+        
             }).WithMessage(ApprenticeshipIdAlreadyExists);
     }
 }

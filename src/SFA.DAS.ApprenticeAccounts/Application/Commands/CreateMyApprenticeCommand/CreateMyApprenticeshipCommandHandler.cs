@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using SFA.DAS.ApprenticeAccounts.Data;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,8 +14,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeComm
     
         public Task<Unit> Handle(CreateMyApprenticeshipCommand command, CancellationToken cancellationToken)
         {
-            _myApprenticeships.Add(new MyApprenticeship(Guid.NewGuid(),command));
-    
+            _myApprenticeships.Add( command);
             return Unit.Task;
         }
     }

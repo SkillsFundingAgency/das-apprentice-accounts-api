@@ -21,8 +21,6 @@ public class WhenHandlingCreateMyApprenticeship
         _mockCommand = new CreateMyApprenticeshipCommand();
     }
 
-
-
     [Test]
     [RecursiveMoqAutoData]
     public async Task AndRecordIsCreated()

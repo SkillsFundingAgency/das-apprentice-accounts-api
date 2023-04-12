@@ -1,5 +1,4 @@
-﻿using FluentAssertions;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
@@ -7,9 +6,7 @@ using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.MyApprenticeship.CreateMyApprenticeshipCommandValidatorTests;
@@ -17,9 +14,8 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.MyApprentice
 [TestFixture]
 public class CreateMyApprenticeshipCommandValidatorTests
 {
-    private static readonly Random random = new Random();
-    private Mock<IApprenticeContext> _mockApprenticeContext = new Mock<IApprenticeContext>();
-    private Mock<IMyApprenticeshipContext> _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
+    private Mock<IApprenticeContext> _mockApprenticeContext = new();
+    private Mock<IMyApprenticeshipContext> _mockMyApprenticeshipContext = new();
 
     [TestCase(0, true)]
     [TestCase(1, true)]
@@ -150,7 +146,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
 
         _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(new List<Data.Models.MyApprenticeship>
         {
-            new(Guid.NewGuid(),new CreateMyApprenticeshipCommand {ApprenticeshipId = apprenticeshipId, ApprenticeId = apprenticeId})
+            new CreateMyApprenticeshipCommand {ApprenticeshipId = apprenticeshipId, ApprenticeId = apprenticeId}
         });
 
         var validator = new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
@@ -169,10 +165,11 @@ public class CreateMyApprenticeshipCommandValidatorTests
         _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
         _mockApprenticeContext.Setup(x => x.Find(It.IsAny<Guid>())).ReturnsAsync(new Apprentice(apprenticeId, "first name", "last name", new MailAddress("test@test.com"), DateTime.Now));
 
-        _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(new List<Data.Models.MyApprenticeship>
-        {
-            new(Guid.NewGuid(),new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId})
-        });
+        _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(
+            new List<Data.Models.MyApprenticeship>
+            {
+                new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId }
+            });
 
         var validator = new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
         var command = new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = null };

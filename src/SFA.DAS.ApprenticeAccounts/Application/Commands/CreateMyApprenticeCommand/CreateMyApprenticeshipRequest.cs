@@ -2,7 +2,7 @@
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 
-public class CreateMyApprenticeshipRequest : IMyApprenticeshipCommand
+public class CreateMyApprenticeshipRequest 
 {
     public long? Uln { get; set; }
     public long? ApprenticeshipId { get; set; }
