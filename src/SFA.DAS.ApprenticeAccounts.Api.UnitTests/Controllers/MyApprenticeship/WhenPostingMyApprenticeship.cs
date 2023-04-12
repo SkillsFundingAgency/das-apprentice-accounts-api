@@ -18,7 +18,7 @@ public class WhenPostingMyApprenticeship
     [Test, MoqAutoData]
     public async Task CreateMyApprenticeship_InvokesRequest(
         [Frozen] Mock<IMediator> mediatorMock,
-        [Greedy] MyApprenticeshipsController sut,
+        [Greedy] MyApprenticeshipController sut,
         CreateMyApprenticeshipRequest request,
         Guid apprenticeId)
     {

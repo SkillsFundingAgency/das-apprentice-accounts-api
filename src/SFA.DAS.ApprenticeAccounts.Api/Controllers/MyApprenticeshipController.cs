@@ -8,16 +8,16 @@ using MediatR;
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
 
 [ApiController]
-public class MyApprenticeshipsController: ControllerBase
+public class MyApprenticeshipController: ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public MyApprenticeshipsController(IMediator mediator)
+    public MyApprenticeshipController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
-    [HttpPost("apprentices/{apprenticeId}/MyApprenticeships")]
+    [HttpPost("apprentices/{apprenticeId}/MyApprenticeship")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PostMyApprenticeship(Guid apprenticeId, CreateMyApprenticeshipRequest request)
