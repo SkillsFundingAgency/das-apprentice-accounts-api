@@ -66,11 +66,11 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
         public void ThenTheApprenticeRecordIsCreated()
         {
             _context.Api.Response.Should().Be2XXSuccessful();
-             _context.DbContext.Apprentices.Should().ContainEquivalentOf(new
-             {
-                 _apprentice.Id,
-                 Email = new MailAddress(_mailAddress),
-             });
+            _context.DbContext.Apprentices.Should().ContainEquivalentOf(new
+            {
+                _apprentice.Id,
+                Email = new MailAddress(_mailAddress),
+            });
         }
 
         [Then(@"the apprentice record is not updated")]
