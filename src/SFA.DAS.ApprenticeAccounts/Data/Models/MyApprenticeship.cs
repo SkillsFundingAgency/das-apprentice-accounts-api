@@ -1,16 +1,10 @@
 ﻿using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models;
 
 public class MyApprenticeship : Entity
 {
-    private MyApprenticeship()
-    {
-        /// for Entity Framework
-    }
-
     public static implicit operator MyApprenticeship(CreateMyApprenticeshipCommand command)
     { 
         return new MyApprenticeship
@@ -28,7 +22,6 @@ public class MyApprenticeship : Entity
             TrainingProviderName = command.TrainingProviderName
         };
     }
-
 
     public Guid Id { get; set; }
     public Guid ApprenticeId { get; set; }

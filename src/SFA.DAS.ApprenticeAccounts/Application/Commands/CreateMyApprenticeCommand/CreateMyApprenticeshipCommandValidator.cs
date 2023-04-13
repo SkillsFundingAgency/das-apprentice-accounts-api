@@ -25,18 +25,18 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
         RuleFor(model => model.ApprenticeId).Must(id => id != Guid.Empty).WithMessage(ApprenticeIdNotValid);
         
         RuleFor(model => model.ApprenticeId)
-            .MustAsync(async (model, apprenticeId,cancellation) =>
+            .Must((model, apprenticeId,cancellation) =>
             {
-                var result =  await apprenticeContext.Find(apprenticeId);
+                var result =  apprenticeContext.Find(apprenticeId).Result;
                 return result != null;
             }).WithMessage(ApprenticeIdNotPresent);
 
         RuleFor(model => model.ApprenticeshipId)
-            .MustAsync(async (model,apprenticeshipId, cancellation) =>
+            .Must((model,apprenticeshipId, cancellation) =>
             { 
                 if (model.ApprenticeshipId == null) return true;
         
-                var myApprenticeships =  await myApprenticeshipContext.FindAll(model.ApprenticeId);
+                var myApprenticeships =  myApprenticeshipContext.FindAll(model.ApprenticeId).Result;
                 return myApprenticeships.All(x => x.ApprenticeshipId != apprenticeshipId);
         
             }).WithMessage(ApprenticeshipIdAlreadyExists);
