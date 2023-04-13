@@ -6,6 +6,7 @@ using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Collections.Generic;
@@ -64,10 +65,14 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         [Test]
         [MoqAutoData]
         public async Task AndPreferencesIsNull_ReturnInvalidInputException(
-            Apprentice apprentice,
+            ApprenticeDto apprenticeDto,
             List<ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand> apprenticePreferences)
         {
             _mockCommand.ApprenticePreferences = apprenticePreferences;
+            apprenticeDto.Email = "test@test.com";
+
+            var apprentice = new Apprentice(apprenticeDto.ApprenticeId, apprenticeDto.FirstName, apprenticeDto.LastName,
+                new MailAddress(apprenticeDto.Email), apprenticeDto.DateOfBirth);
 
             foreach (var apprenticePreference in _mockCommand.ApprenticePreferences)
             {

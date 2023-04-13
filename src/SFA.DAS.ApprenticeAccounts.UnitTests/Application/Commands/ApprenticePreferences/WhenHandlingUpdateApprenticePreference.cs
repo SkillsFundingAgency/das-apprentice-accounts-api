@@ -6,6 +6,7 @@ using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Net.Mail;
@@ -58,10 +59,14 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         [Test]
         [MoqAutoData]
         public async Task AndPreferencesIsNull_ReturnInvalidInputException(
-            Apprentice mockApprentice)
+            Apprentice apprentice)
         {
+            //mockApprentice.Email = "test@test.com";
+            // var apprentice = new Apprentice(mockApprentice.ApprenticeId, mockApprentice.FirstName, mockApprentice.LastName,
+            //     new MailAddress(mockApprentice.Email), mockApprentice.DateOfBirth);
+
             _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))
-                .ReturnsAsync(mockApprentice);
+                .ReturnsAsync(apprentice);
             _mockPreferencesContext.Setup(p => p.Entities.FindAsync(_mockCommand.PreferenceId))
                 .ReturnsAsync((Preference)null);
 
