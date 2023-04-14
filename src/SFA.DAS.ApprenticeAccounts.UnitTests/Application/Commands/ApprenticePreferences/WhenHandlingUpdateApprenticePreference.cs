@@ -59,14 +59,10 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         [Test]
         [MoqAutoData]
         public async Task AndPreferencesIsNull_ReturnInvalidInputException(
-            Apprentice apprentice)
+            Apprentice mockApprentice)
         {
-            //mockApprentice.Email = "test@test.com";
-            // var apprentice = new Apprentice(mockApprentice.ApprenticeId, mockApprentice.FirstName, mockApprentice.LastName,
-            //     new MailAddress(mockApprentice.Email), mockApprentice.DateOfBirth);
-
             _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))
-                .ReturnsAsync(apprentice);
+                .ReturnsAsync(mockApprentice);
             _mockPreferencesContext.Setup(p => p.Entities.FindAsync(_mockCommand.PreferenceId))
                 .ReturnsAsync((Preference)null);
 

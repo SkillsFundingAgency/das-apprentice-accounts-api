@@ -65,15 +65,9 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
         [Test]
         [MoqAutoData]
         public async Task AndPreferencesIsNull_ReturnInvalidInputException(
-            ApprenticeDto apprenticeDto,
+            Apprentice apprentice,
             List<ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand> apprenticePreferences)
         {
-            _mockCommand.ApprenticePreferences = apprenticePreferences;
-            apprenticeDto.Email = "test@test.com";
-
-            var apprentice = new Apprentice(apprenticeDto.ApprenticeId, apprenticeDto.FirstName, apprenticeDto.LastName,
-                new MailAddress(apprenticeDto.Email), apprenticeDto.DateOfBirth);
-
             foreach (var apprenticePreference in _mockCommand.ApprenticePreferences)
             {
                 _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))

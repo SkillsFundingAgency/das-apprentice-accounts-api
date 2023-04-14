@@ -30,7 +30,6 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
         {
             _apprentice = _fixture.Build<Apprentice>()
                 .Without(a => a.TermsOfUseAccepted)
-                .Without(a=>a.MyApprenticeships)
                 .Create();
 
             _context.DbContext.Apprentices.Add(_apprentice);

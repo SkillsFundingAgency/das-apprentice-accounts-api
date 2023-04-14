@@ -19,7 +19,6 @@ namespace SFA.DAS.ApprenticeAccounts.Data
 
         public async Task<Apprentice?> Find(Guid apprenticeId)
             => await Entities.AsNoTracking()
-                .Include(x=>x.MyApprenticeships)
                 .SingleOrDefaultAsync(a => a.Id == apprenticeId);
 
         internal async Task<Apprentice[]> GetByEmail(MailAddress email)

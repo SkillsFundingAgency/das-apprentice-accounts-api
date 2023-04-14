@@ -63,12 +63,6 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 a.Ignore(e => e.TermsOfUseAccepted)
                     .Property("_termsOfUseAcceptedOn")
                     .HasColumnName("TermsOfUseAcceptedOn");
-
-                a.HasMany(e => e.MyApprenticeships)
-                    .WithOne(e => e.Apprentice)
-                    .HasForeignKey(e => e.ApprenticeId)
-                    .IsRequired(false);
-
             });
 
             modelBuilder.Entity<Preference>(p =>
@@ -91,13 +85,6 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 .HasForeignKey(r => r.PreferenceId);
 
             });
-
-            modelBuilder.Entity<MyApprenticeship>(ma =>
-                {
-                    ma.ToTable("MyApprenticeship").HasKey("Id");
-                    ma.HasOne(a => a.Apprentice);
-                }
-            );
 
             base.OnModelCreating(modelBuilder);
         }
