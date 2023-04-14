@@ -15,7 +15,6 @@ namespace SFA.DAS.ApprenticeAccounts.Data
         public async Task<IEnumerable<MyApprenticeship>> FindAll(Guid apprenticeId)
         {
             return await Entities
-                .AsNoTracking()
                 .Where(x => x.ApprenticeId == apprenticeId).ToListAsync();
         }
     }

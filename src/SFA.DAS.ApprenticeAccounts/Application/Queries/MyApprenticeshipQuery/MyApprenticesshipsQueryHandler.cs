@@ -24,9 +24,9 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery
             CancellationToken cancellationToken)
         {
             var apprentice = await _apprentices.Find(request.ApprenticeId);
+            if (apprentice == null) return null;
             var myApprenticeships = await _myApprenticeships.FindAll(request.ApprenticeId);
-
-            return apprentice != null ? ApprenticeWithMyApprenticeshipsDto.Create(apprentice, myApprenticeships) : null;
+            return ApprenticeWithMyApprenticeshipsDto.Create(apprentice, myApprenticeships);
         }
     }
 }

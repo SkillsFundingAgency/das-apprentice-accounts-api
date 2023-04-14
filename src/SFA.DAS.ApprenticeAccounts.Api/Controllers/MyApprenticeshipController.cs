@@ -31,12 +31,12 @@ public class MyApprenticeshipController : ControllerBase
         return new CreatedResult(uri,result);
     }
 
-    [HttpGet("apprentices/{apprenticeId}/MyApprenticeship")]
+    [HttpGet("apprentices/{id}/MyApprenticeship")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetMyApprenticeship(Guid apprenticeId)
+    public async Task<IActionResult> GetMyApprenticeship(Guid id)
     {
-        var result = await _mediator.Send(new MyApprenticeshipQuery(apprenticeId));
+        var result = await _mediator.Send(new MyApprenticeshipQuery(id));
         if (result == null)
         {
             return NotFound();
