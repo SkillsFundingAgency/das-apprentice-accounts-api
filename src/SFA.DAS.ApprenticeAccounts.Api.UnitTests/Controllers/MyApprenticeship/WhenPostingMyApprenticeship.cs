@@ -25,9 +25,10 @@ public class WhenPostingMyApprenticeship
         mediatorMock.Setup(m => m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
             .Returns(Unit.Task);
 
-        var result = await sut.PostMyApprenticeship(apprenticeId, request);
+        var result = await sut.PostMyApprenticeship(apprenticeId, request) as CreatedResult;
 
-        (result as NoContentResult).Should().NotBeNull();
+        result.Should().NotBeNull();
+        result.Location.Should().Be($"apprentices/{apprenticeId}/MyApprenticeship");
 
         mediatorMock.Verify(m => m.Send(It.Is<CreateMyApprenticeshipCommand>(c =>
                 c.ApprenticeshipId == request.ApprenticeshipId

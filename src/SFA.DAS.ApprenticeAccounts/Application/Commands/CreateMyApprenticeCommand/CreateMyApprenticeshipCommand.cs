@@ -18,19 +18,19 @@ public class CreateMyApprenticeshipCommand :  IRequest<Unit>, IUnitOfWorkCommand
     public string? TrainingCode { get; set; }
     public string? StandardUId { get; set; }
 
-    public static implicit operator CreateMyApprenticeshipCommand(CreateMyApprenticeshipRequest command)
+    public static implicit operator CreateMyApprenticeshipCommand(CreateMyApprenticeshipRequest request)
     {
         return new CreateMyApprenticeshipCommand
         {
-            Uln = command.Uln,
-            ApprenticeshipId = command.ApprenticeshipId,
-            EmployerName = command.EmployerName,
-            StartDate = command.StartDate,
-            EndDate = command.EndDate,
-            StandardUId = command.StandardUId,
-            TrainingCode = command.TrainingCode,
-            TrainingProviderId = command.TrainingProviderId,
-            TrainingProviderName = command.TrainingProviderName
+            Uln = request.Uln,
+            ApprenticeshipId = request.ApprenticeshipId,
+            EmployerName = request.EmployerName,
+            StartDate = request.StartDate,
+            EndDate = request.EndDate,
+            StandardUId = request.StandardUId,
+            TrainingCode = request.TrainingCode,
+            TrainingProviderId = request.TrainingProviderId,
+            TrainingProviderName = request.TrainingProviderName
         };
     }
 }
