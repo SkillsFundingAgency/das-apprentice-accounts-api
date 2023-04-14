@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using SFA.DAS.ApprenticeAccounts.Data;
-using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
+using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 using System.Threading;
 using System.Threading.Tasks;
 

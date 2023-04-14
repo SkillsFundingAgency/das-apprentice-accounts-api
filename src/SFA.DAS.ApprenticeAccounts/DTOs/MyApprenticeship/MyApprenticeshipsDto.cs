@@ -1,7 +1,6 @@
-﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
-using System;
+﻿using System;
 
-namespace SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
+namespace SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 
 public class MyApprenticeshipsDto
 {
@@ -17,7 +16,7 @@ public class MyApprenticeshipsDto
     public string? StandardUId { get; set; }
     public DateTime CreatedOn { get; set; }
 
-    public static implicit operator MyApprenticeshipsDto(MyApprenticeship? source)
+    public static implicit operator MyApprenticeshipsDto(Data.Models.MyApprenticeship? source)
     {
         if (source == null) return null!;
 

@@ -1,9 +1,8 @@
-﻿using SFA.DAS.ApprenticeAccounts.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
+namespace SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 public class ApprenticeWithMyApprenticeshipsDto
 {
     public Guid ApprenticeId { get; set; }
@@ -13,7 +12,7 @@ public class ApprenticeWithMyApprenticeshipsDto
     public DateTime DateOfBirth { get; set; }
     public IEnumerable<MyApprenticeshipsDto>? MyApprenticeships { get; set; }
     
-    public static ApprenticeWithMyApprenticeshipsDto? Create(Data.Models.Apprentice? source, IEnumerable<MyApprenticeship> myApprenticeships)
+    public static ApprenticeWithMyApprenticeshipsDto? Create(Data.Models.Apprentice? source, IEnumerable<Data.Models.MyApprenticeship> myApprenticeships)
     {
         if (source == null) return null!;
 

@@ -6,7 +6,7 @@ using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Api.Controllers;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
-using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
+using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Threading;
@@ -38,7 +38,7 @@ public class WhenGettingMyApprenticeship
              c.ApprenticeId == apprenticeId
          ), It.IsAny<CancellationToken>()));
      }
-    
+
      [Test]
      [MoqAutoData]
      public async Task AndMediatorCommandReturnsNull_ThenReturnNotFound(
@@ -47,7 +47,7 @@ public class WhenGettingMyApprenticeship
      {
          mediator.Setup(m => m.Send(It.IsAny<MyApprenticeshipQuery>(),
              CancellationToken.None)).ReturnsAsync((ApprenticeWithMyApprenticeshipsDto)null);
-    
+
          var result = await controller.GetMyApprenticeship(Guid.NewGuid());
          result.Should().BeOfType<NotFoundResult>();
      }

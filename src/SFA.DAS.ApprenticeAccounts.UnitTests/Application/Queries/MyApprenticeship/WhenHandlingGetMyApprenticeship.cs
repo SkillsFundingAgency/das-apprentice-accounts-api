@@ -5,7 +5,7 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
+using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Collections.Generic;
@@ -67,8 +67,7 @@ public class WhenHandlingGetMyApprenticeship
             l 
                 => l.Excluding(a => a.DomainEvents)
                     .Excluding(a=>a.ApprenticeId)
-                    .Excluding(a=>a.Apprentice)
-                );
+        );
      }
     
     [Test]

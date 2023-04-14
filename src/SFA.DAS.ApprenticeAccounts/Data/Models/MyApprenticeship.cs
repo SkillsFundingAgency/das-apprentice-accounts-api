@@ -35,5 +35,4 @@ public class MyApprenticeship : Entity
     public string? TrainingCode { get; set; }
     public string? StandardUId { get; set; }
     public DateTime CreatedOn { get; set; }
-    public Apprentice Apprentice { get; set; } = null!;
 }
