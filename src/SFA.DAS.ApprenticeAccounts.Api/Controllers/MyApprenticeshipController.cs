@@ -17,15 +17,15 @@ public class MyApprenticeshipController : ControllerBase
         _mediator = mediator;
     }
 
-    [HttpPost("apprentices/{apprenticeId}/MyApprenticeship")]
+    [HttpPost("apprentices/{id}/MyApprenticeship")]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> PostMyApprenticeship(Guid apprenticeId, CreateMyApprenticeshipRequest request)
+    public async Task<IActionResult> PostMyApprenticeship(Guid id, CreateMyApprenticeshipRequest request)
     {
         var command = (CreateMyApprenticeshipCommand)request;
-        command.ApprenticeId = apprenticeId;
+        command.ApprenticeId = id;
         var result = await _mediator.Send(command);
-        var uri = new Uri($"apprentices/{apprenticeId}/MyApprenticeship",UriKind.Relative);
+        var uri = new Uri($"apprentices/{id}/MyApprenticeship",UriKind.Relative);
 
         return new CreatedResult(uri,result);
     }
