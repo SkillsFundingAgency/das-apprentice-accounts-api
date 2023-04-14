@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using System.Threading.Tasks;
 using System;
 using MediatR;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
+
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
 

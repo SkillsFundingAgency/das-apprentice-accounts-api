@@ -18,7 +18,6 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.MyApprentices
 
 public class WhenHandlingGetMyApprenticeship
 {
-    //MFCMFC
     [Test]
     [RecursiveMoqAutoData]
     public async Task ThenExpectedMyApprenticeshipsAreReturned(
