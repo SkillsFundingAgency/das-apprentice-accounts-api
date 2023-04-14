@@ -6,13 +6,12 @@ using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticeWithMyApprenticeships;
 public class WhenMappingApprenticeAndMyApprenticeshipsToApprenticeWithMyApprenticeships
 {
     [Test, RecursiveMoqAutoData]
-    public async Task ThenTheFieldsAreCorrectlyMappedAndOrdered(
+    public void ThenTheFieldsAreCorrectlyMappedAndOrdered(
         Apprentice apprentice,
         MyApprenticeship myApprenticeship1_CreatedBetweenFirstAndLast,
         MyApprenticeship myApprenticeship2_CreatedLeastRecently,

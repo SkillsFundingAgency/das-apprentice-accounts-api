@@ -6,13 +6,14 @@ using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticePreferences
 {
     public class WhenMappingFromApprenticePreferencesModelToApprenticePreferencesDto
     {
         [Test, RecursiveMoqAutoData]
-        public void ThenTheFieldsAreCorrectlyMapped(Guid mockGuid, DateTime mockDateTimeOne, DateTime mockDateTimeTwo, string mockPreferenceMeaning, string mockPreferenceHint)
+        public async Task ThenTheFieldsAreCorrectlyMapped(Guid mockGuid, DateTime mockDateTimeOne, DateTime mockDateTimeTwo, string mockPreferenceMeaning, string mockPreferenceHint)
         {
             var preference = new Preference(1, mockPreferenceMeaning, mockPreferenceHint);
             var apprenticePreferences = new List<Data.Models.ApprenticePreferences>(2) 
