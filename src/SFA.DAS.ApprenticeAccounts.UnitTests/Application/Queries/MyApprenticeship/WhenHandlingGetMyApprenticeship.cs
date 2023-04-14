@@ -2,7 +2,7 @@
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
@@ -19,8 +19,8 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.MyApprentices
 public class WhenHandlingGetMyApprenticeship
 {
     //MFCMFC
-    // [Test]
-    // [RecursiveMoqAutoData]
+    [Test]
+    [RecursiveMoqAutoData]
     // public async Task ThenExpectedMyApprenticeshipsAreReturned(
     //         MyApprenticeshipQuery query,
     //         Mock<IApprenticeContext> mockApprenticeContext,
@@ -51,7 +51,7 @@ public class WhenHandlingGetMyApprenticeship
     //     }
     //
     //     var apprentice = new Apprentice(apprenticeId, "first name", "last name", new MailAddress("test@test.com"),
-    //         DateTime.Now) {TermsOfUseAccepted = true, MyApprenticeships = myApprenticeships};
+    //         DateTime.Now) {TermsOfUseAccepted = true--, MyApprenticeships = myApprenticeships};
     //
     //     mockApprenticeContext.Setup(x => x.Find(query.ApprenticeId)).ReturnsAsync(apprentice);
     //     
@@ -68,7 +68,7 @@ public class WhenHandlingGetMyApprenticeship
     //                 .Excluding(a=>a.Apprentice)
     //             );
     // }
-    //
+    
     // [Test]
     // [RecursiveMoqAutoData]
     // public async Task ThenNoMatchingApprenticeReturnsNull(

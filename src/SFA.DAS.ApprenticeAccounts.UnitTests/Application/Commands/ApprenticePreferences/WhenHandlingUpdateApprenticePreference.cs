@@ -6,7 +6,6 @@ using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Net.Mail;

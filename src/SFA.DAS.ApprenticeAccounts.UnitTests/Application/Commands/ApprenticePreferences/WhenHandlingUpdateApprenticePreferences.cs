@@ -68,6 +68,8 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.ApprenticePr
             Apprentice apprentice,
             List<ApprenticeAccounts.Application.Commands.UpdateAllApprenticePreferencesCommand.UpdateApprenticePreferenceCommand> apprenticePreferences)
         {
+            _mockCommand.ApprenticePreferences = apprenticePreferences;
+
             foreach (var apprenticePreference in _mockCommand.ApprenticePreferences)
             {
                 _mockApprenticeContext.Setup(a => a.Entities.FindAsync(_mockCommand.ApprenticeId))

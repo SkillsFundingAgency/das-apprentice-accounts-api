@@ -4,26 +4,29 @@ using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery
+namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery
 {
-    //MFCMFC this is definitely changing
     public class MyApprenticeshipQueryHandler
         : IRequestHandler<MyApprenticeshipQuery, ApprenticeWithMyApprenticeshipsDto?>
     {
         private readonly IApprenticeContext _apprentices;
+        private readonly IMyApprenticeshipContext _myApprenticeships;
 
         public  MyApprenticeshipQueryHandler
-            (IApprenticeContext apprenticeshipRepository)
+            (IApprenticeContext apprenticeshipRepository, IMyApprenticeshipContext myApprenticeships)
         {
             _apprentices = apprenticeshipRepository;
+            _myApprenticeships = myApprenticeships;
         }
 
         public async Task<ApprenticeWithMyApprenticeshipsDto?> Handle(
-            MyApprenticeshipQuery request,
+            Queries.MyApprenticeshipQuery.MyApprenticeshipQuery request,
             CancellationToken cancellationToken)
         {
             var apprentice = await _apprentices.Find(request.ApprenticeId);
-            return apprentice != null ? ApprenticeWithMyApprenticeshipsDto.Create(apprentice) : null;
+            var myApprenticeships = await _myApprenticeships.FindAll(request.ApprenticeId);
+
+            return apprentice != null ? ApprenticeWithMyApprenticeshipsDto.Create(apprentice, myApprenticeships) : null;
         }
     }
 }

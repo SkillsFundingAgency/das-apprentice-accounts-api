@@ -2,7 +2,7 @@
 using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeships;
 using System;
 
-namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery;
+namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 
 public class MyApprenticeshipQuery : IRequest<ApprenticeWithMyApprenticeshipsDto>
 {

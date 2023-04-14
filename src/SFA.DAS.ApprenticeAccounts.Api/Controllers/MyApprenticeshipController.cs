@@ -4,7 +4,7 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using System.Threading.Tasks;
 using System;
 using MediatR;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
 

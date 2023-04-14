@@ -31,8 +31,6 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public MailAddress Email { get; private set; } = null!;
         public ICollection<ApprenticeEmailAddressHistory> PreviousEmailAddresses { get; private set; } = null!;
         public ICollection<ApprenticePreferences> Preferences { get; private set; } = null!;
-        //MFCMFC not sure about this....
-        //public ICollection<MyApprenticeship> MyApprenticeships { get; set; } = null!;
 
         private DateTime _dateOfBirth;
 

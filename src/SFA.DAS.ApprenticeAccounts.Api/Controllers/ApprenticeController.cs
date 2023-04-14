@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipsQuery;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
 using System.Threading.Tasks;
