@@ -1,15 +1,14 @@
-﻿using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
-using System;
+﻿using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models;
 
 public class MyApprenticeship : Entity
 {
     public static implicit operator MyApprenticeship(Application.Commands.CreateMyApprenticeCommand.MyApprenticeship command)
-    { 
+    {
         return new MyApprenticeship
-        { 
-            Id = command.Id, 
+        {
+            Id = command.Id,
             ApprenticeId = command.ApprenticeId,
             Uln = command.Uln,
             ApprenticeshipId = command.ApprenticeshipId,
@@ -19,7 +18,8 @@ public class MyApprenticeship : Entity
             StandardUId = command.StandardUId,
             TrainingCode = command.TrainingCode,
             TrainingProviderId = command.TrainingProviderId,
-            TrainingProviderName = command.TrainingProviderName
+            TrainingProviderName = command.TrainingProviderName,
+            CreatedOn = command.CreatedOn
         };
     }
 

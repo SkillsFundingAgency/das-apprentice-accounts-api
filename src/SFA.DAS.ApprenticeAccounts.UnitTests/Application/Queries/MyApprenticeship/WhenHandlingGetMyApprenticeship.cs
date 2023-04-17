@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;

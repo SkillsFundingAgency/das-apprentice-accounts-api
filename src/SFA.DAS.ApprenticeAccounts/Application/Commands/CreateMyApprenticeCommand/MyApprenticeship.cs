@@ -17,6 +17,7 @@ public class MyApprenticeship :  IRequest<Unit>, IUnitOfWorkCommand
     public string? TrainingProviderName { get; set; }
     public string? TrainingCode { get; set; }
     public string? StandardUId { get; set; }
+    public DateTime CreatedOn { get; private init; }
 
     public static implicit operator MyApprenticeship(CreateMyApprenticeshipRequest request)
     {
@@ -30,7 +31,8 @@ public class MyApprenticeship :  IRequest<Unit>, IUnitOfWorkCommand
             StandardUId = request.StandardUId,
             TrainingCode = request.TrainingCode,
             TrainingProviderId = request.TrainingProviderId,
-            TrainingProviderName = request.TrainingProviderName
+            TrainingProviderName = request.TrainingProviderName,
+            CreatedOn = DateTime.UtcNow
         };
     }
 }
