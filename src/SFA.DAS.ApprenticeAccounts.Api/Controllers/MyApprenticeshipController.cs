@@ -24,7 +24,7 @@ public class MyApprenticeshipController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> PostMyApprenticeship(Guid id, CreateMyApprenticeshipRequest request)
     {
-        var command = (CreateMyApprenticeshipCommand)request;
+        var command = (MyApprenticeship)request;
         command.ApprenticeId = id;
         var result = await _mediator.Send(command);
         var uri = new Uri($"apprentices/{id}/MyApprenticeship",UriKind.Relative);

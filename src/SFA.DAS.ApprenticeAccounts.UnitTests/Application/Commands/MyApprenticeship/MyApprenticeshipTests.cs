@@ -10,7 +10,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.MyApprentice
 public class MyApprenticeshipConstructorTests
 {
     [Test, AutoData]
-    public void Constructor_TransformsCommandToEntity(Guid id, CreateMyApprenticeshipCommand command)
+    public void Constructor_TransformsCommandToEntity(Guid id, ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.MyApprenticeship command)
     {
         var entity = (Data.Models.MyApprenticeship) command;
         entity.Should().BeEquivalentTo(command);

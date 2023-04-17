@@ -11,7 +11,7 @@ public class CreateMyApprenticeshipCommandTests
     [Test, AutoData]
     public void Operator_TransformsToCommand(CreateMyApprenticeshipRequest request)
     {
-        CreateMyApprenticeshipCommand cmd = request;
+        ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.MyApprenticeship cmd = request;
         cmd.Should().BeEquivalentTo(request);
     }
 }

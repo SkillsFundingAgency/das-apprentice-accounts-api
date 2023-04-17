@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 
-public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMyApprenticeshipCommand>
+public class CreateMyApprenticeshipCommandValidator : AbstractValidator<MyApprenticeship>
 {
     public const string EmployerNameTooLong = "Employer Name must be 200 characters or fewer";
     public const string TrainingProviderNameTooLong = "Training Provider Name must be 200 characters or fewer";

@@ -19,7 +19,7 @@ public class WhenGettingMyApprenticeship
      public async Task AndMediatorCommandSuccessful_ThenReturnOk(
          [Frozen] Mock<IMediator> mediatorMock,
          [Greedy] MyApprenticeshipController controller,
-         [Greedy]ApprenticeWithMyApprenticeshipsDto response,
+         [Greedy]ApprenticeDto response,
          Guid apprenticeId)
      {
          response.ApprenticeId = apprenticeId;
@@ -46,7 +46,7 @@ public class WhenGettingMyApprenticeship
          [Greedy] MyApprenticeshipController controller)
      {
          mediator.Setup(m => m.Send(It.IsAny<MyApprenticeshipQuery>(),
-             CancellationToken.None)).ReturnsAsync((ApprenticeWithMyApprenticeshipsDto)null);
+             CancellationToken.None)).ReturnsAsync((ApprenticeDto)null);
 
          var result = await controller.GetMyApprenticeship(Guid.NewGuid());
          result.Should().BeOfType<NotFoundResult>();

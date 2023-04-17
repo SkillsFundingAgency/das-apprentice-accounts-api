@@ -24,15 +24,15 @@ public class WhenHandlingGetMyApprenticeship
             MyApprenticeshipQuery query,
             Mock<IApprenticeContext> mockApprenticeContext,
             Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext,
-            ApprenticeWithMyApprenticeshipsDto apprenticeWithMyApprenticeships,
+            ApprenticeDto apprenticeDto,
             Guid apprenticeId
         )
     {
         var myApprenticeships = new List<Data.Models.MyApprenticeship>();
-        foreach (var apprenticeship in apprenticeWithMyApprenticeships.MyApprenticeships)
+        foreach (var apprenticeship in apprenticeDto.MyApprenticeships)
         {
             apprenticeship.Id = apprenticeId;
-            var command = new CreateMyApprenticeshipCommand
+            var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.MyApprenticeship
                 {
                     Id = apprenticeship.Id, 
                     ApprenticeId = apprenticeId, 
@@ -74,10 +74,8 @@ public class WhenHandlingGetMyApprenticeship
     public async Task ThenNoMatchingApprenticeReturnsNull(
             MyApprenticeshipQuery query,
             Mock<IApprenticeContext> mockApprenticeContext,
-            Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext,
-            ApprenticeWithMyApprenticeshipsDto apprenticeWithMyApprenticeships,
-            Guid apprenticeId
-        )
+            Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext
+    )
     {
         mockApprenticeContext.Setup(x => x.Find(query.ApprenticeId)).ReturnsAsync((Apprentice)null);
     

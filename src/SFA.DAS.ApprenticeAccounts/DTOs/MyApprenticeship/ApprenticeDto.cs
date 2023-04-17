@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
-public class ApprenticeWithMyApprenticeshipsDto
+public class ApprenticeDto
 {
     public Guid ApprenticeId { get; set; }
     public string FirstName { get; set; } = null!;
@@ -12,11 +12,11 @@ public class ApprenticeWithMyApprenticeshipsDto
     public DateTime DateOfBirth { get; set; }
     public IEnumerable<MyApprenticeshipsDto>? MyApprenticeships { get; set; }
     
-    public static ApprenticeWithMyApprenticeshipsDto? Create(Data.Models.Apprentice? source, IEnumerable<Data.Models.MyApprenticeship> myApprenticeships)
+    public static ApprenticeDto? Create(Data.Models.Apprentice? source, IEnumerable<Data.Models.MyApprenticeship> myApprenticeships)
     {
         if (source == null) return null!;
 
-        var apprentice = new ApprenticeWithMyApprenticeshipsDto
+        var apprentice = new ApprenticeDto
         {
             ApprenticeId = source.Id,
             FirstName = source.FirstName,

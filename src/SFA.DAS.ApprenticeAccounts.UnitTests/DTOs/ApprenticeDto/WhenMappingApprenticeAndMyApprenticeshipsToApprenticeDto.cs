@@ -1,14 +1,13 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 using SFA.DAS.Testing.AutoFixture;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticeWithMyApprenticeships;
-public class WhenMappingApprenticeAndMyApprenticeshipsToApprenticeWithMyApprenticeships
+namespace SFA.DAS.ApprenticeAccounts.UnitTests.DTOs.ApprenticeDto;
+public class WhenMappingApprenticeAndMyApprenticeshipsToApprenticeDto
 {
     [Test, RecursiveMoqAutoData]
     public void ThenTheFieldsAreCorrectlyMappedAndOrdered(
@@ -28,7 +27,7 @@ public class WhenMappingApprenticeAndMyApprenticeshipsToApprenticeWithMyApprenti
                 myApprenticeship3_CreatedMostRecently
             };
 
-        var mappedApprenticeship = ApprenticeWithMyApprenticeshipsDto.Create(apprentice, myApprenticeships);
+        var mappedApprenticeship = ApprenticeAccounts.DTOs.MyApprenticeship.ApprenticeDto.Create(apprentice, myApprenticeships);
 
         mappedApprenticeship.Should().NotBeNull();
         mappedApprenticeship.MyApprenticeships.Count().Should().Be(myApprenticeships.Count);
