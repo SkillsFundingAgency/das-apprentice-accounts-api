@@ -4,7 +4,7 @@ using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 
-public class MyApprenticeship :  IRequest<Unit>, IUnitOfWorkCommand
+public class CreateMyApprenticeshipCommand :  IRequest<Unit>, IUnitOfWorkCommand
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public Guid ApprenticeId { get; set; }
@@ -19,9 +19,9 @@ public class MyApprenticeship :  IRequest<Unit>, IUnitOfWorkCommand
     public string? StandardUId { get; set; }
     public DateTime CreatedOn { get; private init; }
 
-    public static implicit operator MyApprenticeship(CreateMyApprenticeshipRequest request)
+    public static implicit operator CreateMyApprenticeshipCommand(CreateMyApprenticeshipRequest request)
     {
-        return new MyApprenticeship
+        return new CreateMyApprenticeshipCommand
         {
             Uln = request.Uln,
             ApprenticeshipId = request.ApprenticeshipId,

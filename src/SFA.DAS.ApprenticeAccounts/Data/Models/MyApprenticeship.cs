@@ -1,10 +1,11 @@
-﻿using System;
+﻿using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
+using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models;
 
 public class MyApprenticeship : Entity
 {
-    public static implicit operator MyApprenticeship(Application.Commands.CreateMyApprenticeCommand.MyApprenticeship command)
+    public static implicit operator MyApprenticeship(CreateMyApprenticeshipCommand command)
     {
         return new MyApprenticeship
         {

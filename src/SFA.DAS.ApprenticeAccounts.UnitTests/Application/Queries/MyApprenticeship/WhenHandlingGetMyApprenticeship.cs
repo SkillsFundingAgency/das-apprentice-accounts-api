@@ -30,23 +30,21 @@ public class WhenHandlingGetMyApprenticeship
         var myApprenticeships = new List<Data.Models.MyApprenticeship>();
         foreach (var apprenticeship in apprenticeDto.MyApprenticeships)
         {
+            myApprenticeships.Add(new Data.Models.MyApprenticeship
+            {
+                Id = apprenticeship.Id,
+                ApprenticeId = apprenticeId, 
+                ApprenticeshipId = apprenticeship.ApprenticeshipId,
+                StandardUId = apprenticeship.StandardUId,
+                StartDate = apprenticeship.StartDate,
+                EndDate = apprenticeship.EndDate,
+                EmployerName = apprenticeship.EmployerName,
+                TrainingCode = apprenticeship.TrainingCode,
+                TrainingProviderId = apprenticeship.TrainingProviderId,
+                TrainingProviderName = apprenticeship.TrainingProviderName,
+                Uln = apprenticeship.Uln
+            });
             apprenticeship.Id = apprenticeId;
-            var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.MyApprenticeship
-                {
-                    Id = apprenticeship.Id, 
-                    ApprenticeId = apprenticeId, 
-                    ApprenticeshipId = apprenticeship.ApprenticeshipId,
-                    StandardUId = apprenticeship.StandardUId,
-                    StartDate = apprenticeship.StartDate,
-                    EndDate = apprenticeship.EndDate,
-                    EmployerName = apprenticeship.EmployerName,
-                    TrainingCode = apprenticeship.TrainingCode,
-                    TrainingProviderId = apprenticeship.TrainingProviderId,
-                    TrainingProviderName = apprenticeship.TrainingProviderName,
-                    Uln = apprenticeship.Uln
-                };
-    
-            myApprenticeships.Add(command);
         }
 
         var apprentice = new Apprentice(apprenticeId, "first name", "last name", new MailAddress("test@test.com"),

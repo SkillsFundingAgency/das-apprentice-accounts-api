@@ -12,13 +12,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.MyApprentice
 public class WhenHandlingCreateMyApprenticeship
 {
     private Mock<IMyApprenticeshipContext> _mockMyApprenticeshipContext;
-    private ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.MyApprenticeship _mock;
+    private ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand _mock;
 
     [SetUp]
     public void SetUp()
     {
         _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
-        _mock = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.MyApprenticeship();
+        _mock = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand();
     }
 
     [Test]
