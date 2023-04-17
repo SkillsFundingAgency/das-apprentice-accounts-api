@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Api.UnitTests.Controllers.MyApprenticeship;
 
-public class WhenPostingCreateMyApprenticeship
+public class WhenPostingMyApprenticeship
 {
     [Test, MoqAutoData]
     public async Task CreateMyApprenticeship_InvokesRequest(

@@ -12,13 +12,13 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.MyApprentice
 public class WhenHandlingCreateMyApprenticeship
 {
     private Mock<IMyApprenticeshipContext> _mockMyApprenticeshipContext;
-    private CreateMyApprenticeshipCommand _mock;
+    private CreateMyApprenticeshipCommand _mockCommand;
 
     [SetUp]
     public void SetUp()
     {
         _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
-        _mock = new CreateMyApprenticeshipCommand();
+        _mockCommand = new CreateMyApprenticeshipCommand();
     }
 
     [Test]
@@ -27,7 +27,7 @@ public class WhenHandlingCreateMyApprenticeship
     {
         _mockMyApprenticeshipContext.Setup(x => x.Entities.Add(It.IsAny<Data.Models.MyApprenticeship>()));
         var handler = new CreateMyApprenticeshipCommandHandler(_mockMyApprenticeshipContext.Object);
-        var result = await handler.Handle(_mock, CancellationToken.None);
+        var result = await handler.Handle(_mockCommand, CancellationToken.None);
         result.GetType().Should().Be(typeof(Unit));
     }
 }

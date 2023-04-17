@@ -128,7 +128,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
         _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(new List<Data.Models.MyApprenticeship>());
 
         var validator= new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
-        var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { ApprenticeId = Guid.NewGuid() };
+        var command = new CreateMyApprenticeshipCommand { ApprenticeId = Guid.NewGuid() };
         var result = await validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(c => c.ApprenticeId)
@@ -150,7 +150,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
         });
 
         var validator = new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
-        var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = apprenticeshipId};
+        var command = new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = apprenticeshipId};
         var result = await validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(c => c.ApprenticeshipId)
