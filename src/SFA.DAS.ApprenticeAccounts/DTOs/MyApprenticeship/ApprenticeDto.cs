@@ -23,7 +23,7 @@ public class ApprenticeDto
             LastName = source.LastName,
             Email = source.Email.ToString(),
             DateOfBirth = source.DateOfBirth,
-            MyApprenticeships = myApprenticeships.OrderByDescending(c => c.CreatedOn).Select(myApprenticeship => (MyApprenticeshipsDto)myApprenticeship).ToList()
+            MyApprenticeships = myApprenticeships.OrderByDescending(c => c.CreatedOn).Select(myApprenticeship => (MyApprenticeshipsDto)myApprenticeship)
         };
 
         return apprentice;
