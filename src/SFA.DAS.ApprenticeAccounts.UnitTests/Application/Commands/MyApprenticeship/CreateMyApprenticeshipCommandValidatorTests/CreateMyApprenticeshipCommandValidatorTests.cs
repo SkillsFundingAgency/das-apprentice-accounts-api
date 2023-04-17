@@ -24,7 +24,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     public async Task EmployerName_Validation(int lengthOfString, bool isValid)
     {
         var employerName = new string('a', lengthOfString);
-        var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { EmployerName = employerName};
+        var command = new CreateMyApprenticeshipCommand { EmployerName = employerName};
 
         var sut = GetValidator();
 
@@ -45,7 +45,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     public async Task TrainingProviderName_Validation(int lengthOfString, bool isValid)
     {
         var trainingProviderName = new string('a', lengthOfString);
-        var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { EmployerName = "employer Name", TrainingProviderName = trainingProviderName};
+        var command = new CreateMyApprenticeshipCommand { EmployerName = "employer Name", TrainingProviderName = trainingProviderName};
 
         var sut = GetValidator();
 
@@ -66,7 +66,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     public async Task TrainingCode_Validation(int lengthOfString, bool isValid)
     {
         var trainingCode = new string('a', lengthOfString);
-        var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { TrainingCode = trainingCode };
+        var command = new CreateMyApprenticeshipCommand { TrainingCode = trainingCode };
 
         var sut = GetValidator();
 
@@ -87,7 +87,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     public async Task StandardUId_Validation(int lengthOfString, bool isValid)
     {
         var standardUId = new string('a', lengthOfString);
-        var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { StandardUId = standardUId };
+        var command = new CreateMyApprenticeshipCommand { StandardUId = standardUId };
 
         var sut = GetValidator();
 
@@ -105,7 +105,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     [TestCase("a06595aa-0681-4bd2-aa8a-62116bf535c4", true)]
     public async Task ApprenticeId_Validation(Guid apprenticeIdGuid, bool isValid)
     {
-        var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { ApprenticeId = apprenticeIdGuid};
+        var command = new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeIdGuid};
 
         var sut = GetValidator();
 
@@ -146,7 +146,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
 
         _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(new List<Data.Models.MyApprenticeship>
         {
-            new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand {ApprenticeshipId = apprenticeshipId, ApprenticeId = apprenticeId}
+            new CreateMyApprenticeshipCommand {ApprenticeshipId = apprenticeshipId, ApprenticeId = apprenticeId}
         });
 
         var validator = new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
@@ -168,11 +168,11 @@ public class CreateMyApprenticeshipCommandValidatorTests
         _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(
             new List<Data.Models.MyApprenticeship>
             {
-                new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId }
+                new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId }
             });
 
         var validator = new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
-        var command = new ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand.CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = null };
+        var command = new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = null };
         var result = await validator.TestValidateAsync(command);
 
         result.ShouldNotHaveValidationErrorFor(c => c.ApprenticeshipId);
