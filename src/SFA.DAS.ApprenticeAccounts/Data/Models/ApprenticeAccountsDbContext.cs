@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
     public class ApprenticeAccountsDbContext
-        : DbContext, IApprenticeContext, IPreferencesContext, IApprenticePreferencesContext
+        : DbContext, IApprenticeContext, IPreferencesContext, IApprenticePreferencesContext, IMyApprenticeshipContext
     {
         protected IEventDispatcher _dispatcher;
 
@@ -28,11 +28,14 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public virtual DbSet<Apprentice> Apprentices { get; set; } = null!;
         public virtual DbSet<Preference> Preference { get; set; } = null!;
         public virtual DbSet<ApprenticePreferences> ApprenticePreferences { get; set; } = null!;
+        public virtual DbSet<MyApprenticeship> MyApprenticeships { get; set; } = null!;
 
         DbSet<Apprentice> IEntityContext<Apprentice>.Entities => Apprentices;
 
         DbSet<Preference> IEntityContext<Preference>.Entities => Preference;
         DbSet<ApprenticePreferences> IEntityContext<ApprenticePreferences>.Entities => ApprenticePreferences;
+
+        DbSet<MyApprenticeship> IEntityContext<MyApprenticeship>.Entities => MyApprenticeships;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -82,6 +85,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 .HasForeignKey(r => r.PreferenceId);
 
             });
+
             base.OnModelCreating(modelBuilder);
         }
 

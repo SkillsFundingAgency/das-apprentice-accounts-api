@@ -32,6 +32,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public ICollection<ApprenticeEmailAddressHistory> PreviousEmailAddresses { get; private set; } = null!;
         public ICollection<ApprenticePreferences> Preferences { get; private set; } = null!;
 
+
         private DateTime _dateOfBirth;
 
         public DateTime DateOfBirth
