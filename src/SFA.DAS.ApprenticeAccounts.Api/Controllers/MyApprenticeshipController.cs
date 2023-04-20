@@ -35,9 +35,9 @@ public class MyApprenticeshipController : ControllerBase
     [HttpGet("apprentices/{id}/MyApprenticeship")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> GetMyApprenticeship(Guid id)
+    public async Task<IActionResult> GetMyApprenticeship(Guid id, int? apprenticeshipId)
     {
-        var result = await _mediator.Send(new MyApprenticeshipQuery(id));
+        var result = await _mediator.Send(new MyApprenticeshipQuery(id, apprenticeshipId));
         if (result == null)
         {
             return NotFound();

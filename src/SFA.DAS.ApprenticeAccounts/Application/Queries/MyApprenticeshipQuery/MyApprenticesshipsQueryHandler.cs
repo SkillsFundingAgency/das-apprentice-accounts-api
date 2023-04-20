@@ -19,14 +19,12 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery
             _myApprenticeships = myApprenticeships;
         }
 
-        public async Task<ApprenticeDto?> Handle(
-            Queries.MyApprenticeshipQuery.MyApprenticeshipQuery request,
-            CancellationToken cancellationToken)
+        public async Task<ApprenticeDto?> Handle(MyApprenticeshipQuery request, CancellationToken cancellationToken)
         {
             var apprentice = await _apprentices.Find(request.ApprenticeId);
             if (apprentice == null) return null;
             var myApprenticeships = await _myApprenticeships.FindAll(request.ApprenticeId);
-            return ApprenticeDto.Create(apprentice, myApprenticeships);
+            return ApprenticeDto.Create(apprentice, myApprenticeships, request.ApprenticeshipId);
         }
     }
 }

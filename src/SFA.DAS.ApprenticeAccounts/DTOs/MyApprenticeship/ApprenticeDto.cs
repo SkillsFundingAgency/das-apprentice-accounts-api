@@ -12,7 +12,7 @@ public class ApprenticeDto
     public DateTime DateOfBirth { get; set; }
     public IEnumerable<MyApprenticeshipsDto>? MyApprenticeships { get; set; }
     
-    public static ApprenticeDto? Create(Data.Models.Apprentice? source, IEnumerable<Data.Models.MyApprenticeship> myApprenticeships)
+    public static ApprenticeDto? Create(Data.Models.Apprentice? source, IEnumerable<Data.Models.MyApprenticeship> myApprenticeships, int? apprenticeshipId)
     {
         if (source == null) return null!;
 
@@ -23,9 +23,25 @@ public class ApprenticeDto
             LastName = source.LastName,
             Email = source.Email.ToString(),
             DateOfBirth = source.DateOfBirth,
-            MyApprenticeships = myApprenticeships.OrderByDescending(c => c.CreatedOn).Select(myApprenticeship => (MyApprenticeshipsDto)myApprenticeship)
         };
 
+        if (apprenticeshipId == null)
+        {
+            apprentice.MyApprenticeships = myApprenticeships.OrderByDescending(c => c.CreatedOn)
+                .Select(myApprenticeship => (MyApprenticeshipsDto)myApprenticeship);
+        }
+        else
+        {
+            var apprenticeship = myApprenticeships.FirstOrDefault(c => c.ApprenticeshipId == apprenticeshipId);
+            var myApprenticeshipDtos = new List<MyApprenticeshipsDto>();
+            if (apprenticeship != null)
+            {
+                myApprenticeshipDtos.Add(apprenticeship);
+            }
+
+            apprentice.MyApprenticeships = myApprenticeshipDtos;
+        }
+ 
         return apprentice;
     }
 }
