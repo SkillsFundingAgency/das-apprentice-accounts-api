@@ -13,5 +13,5 @@ public class MyApprenticeshipQuery : IRequest<ApprenticeDto>
     }
 
     public Guid ApprenticeId { get; set; }
-    public int? ApprenticeshipId { get; }
+    public int? ApprenticeshipId { get; set; }
 }

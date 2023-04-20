@@ -27,7 +27,8 @@ public class WhenMappingApprenticeAndMyApprenticeshipsToApprenticeDto
                 myApprenticeship3_CreatedMostRecently
             };
 
-        var mappedApprenticeship = ApprenticeAccounts.DTOs.MyApprenticeship.ApprenticeDto.Create(apprentice, myApprenticeships);
+        var mappedApprenticeship =
+            ApprenticeAccounts.DTOs.MyApprenticeship.ApprenticeDto.Create(apprentice, myApprenticeships, null);
 
         mappedApprenticeship.Should().NotBeNull();
         mappedApprenticeship.MyApprenticeships.Count().Should().Be(myApprenticeships.Count);

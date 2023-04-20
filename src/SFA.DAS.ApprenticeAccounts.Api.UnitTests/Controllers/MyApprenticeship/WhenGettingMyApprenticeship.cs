@@ -26,7 +26,7 @@ public class WhenGettingMyApprenticeship
          mediatorMock.Setup(m => m.Send(It.IsAny<MyApprenticeshipQuery>(), It.IsAny<CancellationToken>()))
              .ReturnsAsync(response);
     
-         var result = await controller.GetMyApprenticeship(apprenticeId) as OkObjectResult;
+         var result = await controller.GetMyApprenticeship(apprenticeId,null) as OkObjectResult;
     
          result.Should().NotBeNull();
     
@@ -48,7 +48,7 @@ public class WhenGettingMyApprenticeship
          mediator.Setup(m => m.Send(It.IsAny<MyApprenticeshipQuery>(),
              CancellationToken.None)).ReturnsAsync((ApprenticeDto)null);
 
-         var result = await controller.GetMyApprenticeship(Guid.NewGuid());
+         var result = await controller.GetMyApprenticeship(Guid.NewGuid(),null);
          result.Should().BeOfType<NotFoundResult>();
      }
 }

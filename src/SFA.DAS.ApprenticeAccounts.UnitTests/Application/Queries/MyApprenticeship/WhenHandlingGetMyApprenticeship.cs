@@ -27,6 +27,7 @@ public class WhenHandlingGetMyApprenticeship
             Guid apprenticeId
         )
     {
+        query.ApprenticeshipId = null;
         var myApprenticeships = new List<Data.Models.MyApprenticeship>();
         foreach (var apprenticeship in apprenticeDto.MyApprenticeships)
         {
