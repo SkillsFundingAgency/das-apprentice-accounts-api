@@ -79,11 +79,9 @@ public class WhenHandlingGetMyApprenticeship
             int apprenticeshipId
     )
     {
-        
-
         query.ApprenticeshipId = apprenticeshipId;
         var myApprenticeships = new List<Data.Models.MyApprenticeship>();
-        var incrementer = -1;
+        var incrementer = 0;
         foreach (var apprenticeship in apprenticeDto.MyApprenticeships)
         {
             apprenticeship.ApprenticeshipId = apprenticeshipId + incrementer;
@@ -120,12 +118,7 @@ public class WhenHandlingGetMyApprenticeship
 
         var expectedMyApprenticeship = myApprenticeships.First(x => x.ApprenticeshipId == apprenticeshipId);
         
-         expectedMyApprenticeship.Should().BeEquivalentTo(result.MyApprenticeships.First());
-        //      ,
-        //      l
-        //          => l.Excluding(a => a.DomainEvents)
-        //              .Excluding(a => a.ApprenticeId)
-        // );
+        expectedMyApprenticeship.Should().BeEquivalentTo(result.MyApprenticeships.First());
     }
 
     [Test]
