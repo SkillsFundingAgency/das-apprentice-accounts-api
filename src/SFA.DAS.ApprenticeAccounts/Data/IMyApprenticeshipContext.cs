@@ -22,9 +22,9 @@ namespace SFA.DAS.ApprenticeAccounts.Data
 
         public async Task<MyApprenticeship?> FindById(Guid id)
         {
-            return Entities
+            return await Entities
                 .AsNoTracking()
-                .FirstOrDefault(x => x.Id == id);
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<MyApprenticeship?> FindByApprenticeIdMyApprenticeshipId(Guid apprenticeId, Guid myApprenticeshipId)
