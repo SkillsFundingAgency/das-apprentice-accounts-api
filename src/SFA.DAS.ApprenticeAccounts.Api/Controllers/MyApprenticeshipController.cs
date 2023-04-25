@@ -5,6 +5,8 @@ using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using System.Threading.Tasks;
 using System;
 using MediatR;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeCommand;
+using System.Net;
 
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
@@ -45,4 +47,18 @@ public class MyApprenticeshipController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [Route("apprentices/{id}/MyApprenticeship/{myApprenticeshipId}")]
+    public async Task<IActionResult> UpdateMyApprenticeship(Guid id, Guid myApprenticeshipId, [FromBody] UpdateMyApprenticeshipRequest request)
+   {
+        var command = (UpdateMyApprenticeshipCommand)request;
+        command.ApprenticeId = id;
+        command.MyApprenticeshipId = myApprenticeshipId;
+
+        await _mediator.Send(command);
+        return NoContent();
+   }
 }

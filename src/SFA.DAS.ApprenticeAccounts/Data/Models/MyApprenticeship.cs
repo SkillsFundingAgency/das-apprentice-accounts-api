@@ -1,10 +1,22 @@
 ﻿using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeCommand;
 using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models;
 
 public class MyApprenticeship : Entity
 {
+    public MyApprenticeship()
+    {
+    }
+
+    public MyApprenticeship(Guid apprenticeId, long? apprenticeshipId, Guid id)
+    {
+        ApprenticeId = apprenticeId;
+        ApprenticeshipId = apprenticeshipId;
+        Id = id;
+    }
+
     public static implicit operator MyApprenticeship(CreateMyApprenticeshipCommand command)
     {
         return new MyApprenticeship
@@ -22,6 +34,19 @@ public class MyApprenticeship : Entity
             TrainingProviderName = command.TrainingProviderName,
             CreatedOn = command.CreatedOn
         };
+    }
+
+    public void UpdateMyApprenticeship(UpdateMyApprenticeshipCommand command)
+    {
+        Uln = command.Uln;
+        ApprenticeshipId = command.ApprenticeshipId;
+        EmployerName = command.EmployerName;
+        StartDate = command.StartDate;
+        EndDate = command.EndDate;
+        StandardUId = command.StandardUId;
+        TrainingCode = command.TrainingCode;
+        TrainingProviderId = command.TrainingProviderId;
+        TrainingProviderName = command.TrainingProviderName;
     }
 
     public Guid Id { get; set; }

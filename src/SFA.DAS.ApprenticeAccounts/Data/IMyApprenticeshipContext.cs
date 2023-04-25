@@ -18,5 +18,20 @@ namespace SFA.DAS.ApprenticeAccounts.Data
                 .AsNoTracking()
                 .Where(x => x.ApprenticeId == apprenticeId).ToListAsync();
         }
+
+
+        public async Task<MyApprenticeship?> FindById(Guid id)
+        {
+            return Entities
+                .AsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
+        }
+
+        public async Task<MyApprenticeship?> FindByApprenticeIdMyApprenticeshipId(Guid apprenticeId, Guid myApprenticeshipId)
+        {
+            return await Entities
+                .AsNoTracking()
+                .Where(x => x.ApprenticeId == apprenticeId && x.Id == myApprenticeshipId).FirstOrDefaultAsync();
+        }
     }
 }
