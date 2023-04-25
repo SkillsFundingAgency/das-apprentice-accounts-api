@@ -55,11 +55,11 @@ public class WhenMappingApprenticeshipToApprenticeDto
 
     [Test, RecursiveMoqAutoData]
     public void AndApprenticeshipIdIsAParameter_ThenTheFieldsAreCorrectlyMappedAndReturned(
-    Apprentice apprentice,
-    MyApprenticeship myApprenticeshipCreatedFirstNotMatchingApprenticeshipId,
-    MyApprenticeship myApprenticeCreatedSecondMatchingApprenticeshipId,
-    MyApprenticeship myApprenticeshipCreatedMostRecently,
-    int apprenticeshipId)
+        Apprentice apprentice,
+        MyApprenticeship myApprenticeshipCreatedFirstNotMatchingApprenticeshipId,
+        MyApprenticeship myApprenticeCreatedSecondMatchingApprenticeshipId,
+        MyApprenticeship myApprenticeshipCreatedMostRecently,
+        int apprenticeshipId)
     {
         myApprenticeshipCreatedFirstNotMatchingApprenticeshipId.CreatedOn = DateTime.Today.AddDays(-50);
         myApprenticeshipCreatedFirstNotMatchingApprenticeshipId.ApprenticeshipId = apprenticeshipId+1;
