@@ -2,6 +2,7 @@
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.Exceptions;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
