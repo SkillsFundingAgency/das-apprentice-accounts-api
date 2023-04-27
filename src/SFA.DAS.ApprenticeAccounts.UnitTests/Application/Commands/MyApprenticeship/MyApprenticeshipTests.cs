@@ -2,15 +2,14 @@
 using FluentAssertions;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
-using System;
 
 namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.MyApprenticeship;
 
 [TestFixture]
-public class MyApprenticeshipConstructorTests
+public class MyApprenticeshipTests
 {
     [Test, AutoData]
-    public void Constructor_TransformsCommandToEntity(Guid id, CreateMyApprenticeshipCommand command)
+    public void Operator_TransformsCommandToEntity(CreateMyApprenticeshipCommand command)
     {
         var entity = (Data.Models.MyApprenticeship) command;
         entity.Should().BeEquivalentTo(command);
