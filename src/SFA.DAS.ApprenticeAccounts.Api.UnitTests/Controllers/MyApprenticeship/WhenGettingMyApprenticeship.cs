@@ -23,7 +23,6 @@ public class WhenGettingMyApprenticeship
           Guid myApprenticeshipId,
           Guid apprenticeId)
       {
-          response.Id = myApprenticeshipId;
           mediatorMock.Setup(m => m.Send(It.IsAny<MyApprenticeshipQuery>(), It.IsAny<CancellationToken>()))
               .ReturnsAsync(response);
     
@@ -32,7 +31,7 @@ public class WhenGettingMyApprenticeship
           result.Should().NotBeNull();
           var model = result.Value;
     
-          model.Should().BeEquivalentTo(response, l => l.Excluding(e => e.Id));
+          model.Should().BeEquivalentTo(response);
     
           mediatorMock.Verify(m => m.Send(It.Is<MyApprenticeshipQuery>(c =>
               c.ApprenticeId == apprenticeId

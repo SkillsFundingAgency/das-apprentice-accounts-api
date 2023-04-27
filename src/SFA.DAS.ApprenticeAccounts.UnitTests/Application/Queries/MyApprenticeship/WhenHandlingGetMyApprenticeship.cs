@@ -40,7 +40,9 @@ public class WhenHandlingGetMyApprenticeship
         result.Should().BeEquivalentTo(myApprenticeship,
             l 
                 => l.Excluding(a => a.DomainEvents)
-                    .Excluding(a=>a.ApprenticeId)
+                    .Excluding(a => a.ApprenticeId)
+                    .Excluding(a => a.Id)
+                    .Excluding(a => a.CreatedOn)
         );
      }
     
@@ -63,7 +65,7 @@ public class WhenHandlingGetMyApprenticeship
 
     [Test]
     [RecursiveMoqAutoData]
-    public async Task ThenNoMatchingMyApprenticesahipIdReturnsEmptyRecord(
+    public async Task ThenNoMatchingMyApprenticeshipIdReturnsEmptyRecord(
         MyApprenticeshipQuery query,
         Mock<IApprenticeContext> mockApprenticeContext,
         Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext,
@@ -78,7 +80,7 @@ public class WhenHandlingGetMyApprenticeship
         var result = await handler.Handle(query, CancellationToken.None);
 
         result.Should().BeOfType<MyApprenticeshipDto>();
-        result.Id.Should().Be(new Guid());
+        result.IsEmpty().Should().BeTrue();
 
     }
 }
