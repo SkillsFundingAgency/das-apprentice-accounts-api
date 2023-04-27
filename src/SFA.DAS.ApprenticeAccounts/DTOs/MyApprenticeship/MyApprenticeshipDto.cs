@@ -11,7 +11,6 @@ public class MyApprenticeshipDto
 
         return new MyApprenticeshipDto
         {
-            Id = source.Id,
             Uln = source.Uln,
             ApprenticeshipId = source.ApprenticeshipId,
             EmployerName = source.EmployerName,
@@ -20,12 +19,10 @@ public class MyApprenticeshipDto
             TrainingProviderId = source.TrainingProviderId,
             TrainingProviderName = source.TrainingProviderName,
             TrainingCode = source.TrainingCode,
-            StandardUId = source.StandardUId,
-            CreatedOn = source.CreatedOn
+            StandardUId = source.StandardUId
         };
     }
 
-    public Guid Id { get; set; }
     public long? Uln { get; set; }
     public long? ApprenticeshipId { get; set; }
     public string? EmployerName { get; set; }
@@ -35,5 +32,17 @@ public class MyApprenticeshipDto
     public string? TrainingProviderName { get; set; }
     public string? TrainingCode { get; set; }
     public string? StandardUId { get; set; }
-    public DateTime CreatedOn { get; set; }
+
+    public bool IsEmpty()
+    {
+        return Uln is null &&
+               ApprenticeshipId is null &&
+               EmployerName is null &&
+               StartDate is null &&
+               EndDate is null &&
+               TrainingProviderId is null &&
+               TrainingProviderName is null &&
+               TrainingCode is null &&
+               StandardUId is null;
+    }
 }

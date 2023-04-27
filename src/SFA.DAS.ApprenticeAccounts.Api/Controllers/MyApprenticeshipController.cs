@@ -5,6 +5,7 @@ using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using System.Threading.Tasks;
 using System;
 using MediatR;
+using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 using System.Diagnostics.Metrics;
 
 
@@ -44,7 +45,7 @@ public class MyApprenticeshipController : ControllerBase
             return NotFound();
         }
 
-        if (result.Id == Guid.Empty)
+        if (result.IsEmpty())
         {
             return Ok(new EmptyResult());
         }
