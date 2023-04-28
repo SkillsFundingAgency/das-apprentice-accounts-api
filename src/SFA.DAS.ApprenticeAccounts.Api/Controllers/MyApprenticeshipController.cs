@@ -38,11 +38,16 @@ public class MyApprenticeshipController : ControllerBase
     public async Task<IActionResult> GetMyApprenticeship(Guid id)
     {
         var result = await _mediator.Send(new MyApprenticeshipQuery(id));
-        if (result == null)
+        if (result.Apprentice == null)
+        {
+            return BadRequest();
+        }
+
+        if (result.MyApprenticeship==null)
         {
             return NotFound();
         }
 
-        return Ok(result);
+        return Ok(result.MyApprenticeship);
     }
 }

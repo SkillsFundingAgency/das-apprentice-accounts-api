@@ -7,8 +7,6 @@ using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 using SFA.DAS.Testing.AutoFixture;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
@@ -19,56 +17,36 @@ public class WhenHandlingGetMyApprenticeship
 {
     [Test]
     [RecursiveMoqAutoData]
-    public async Task ThenExpectedMyApprenticeshipsAreReturned(
+    public async Task ThenExpectedMyApprenticeshipIsReturned(
             MyApprenticeshipQuery query,
             Mock<IApprenticeContext> mockApprenticeContext,
             Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext,
-            ApprenticeDto apprenticeDto,
+            Data.Models.MyApprenticeship myApprenticeship,
             Guid apprenticeId
         )
     {
-        var myApprenticeships = new List<Data.Models.MyApprenticeship>();
-        foreach (var apprenticeship in apprenticeDto.MyApprenticeships)
-        {
-            myApprenticeships.Add(new Data.Models.MyApprenticeship
-            {
-                Id = apprenticeship.Id,
-                ApprenticeId = apprenticeId, 
-                ApprenticeshipId = apprenticeship.ApprenticeshipId,
-                StandardUId = apprenticeship.StandardUId,
-                StartDate = apprenticeship.StartDate,
-                EndDate = apprenticeship.EndDate,
-                EmployerName = apprenticeship.EmployerName,
-                TrainingCode = apprenticeship.TrainingCode,
-                TrainingProviderId = apprenticeship.TrainingProviderId,
-                TrainingProviderName = apprenticeship.TrainingProviderName,
-                Uln = apprenticeship.Uln
-            });
-            apprenticeship.Id = apprenticeId;
-        }
-
         var apprentice = new Apprentice(apprenticeId, "first name", "last name", new MailAddress("test@test.com"),
             DateTime.Now) { TermsOfUseAccepted = true };
-
-        mockApprenticeContext.Setup(x => x.Find(query.ApprenticeId)).ReturnsAsync(apprentice); 
-        mockMyApprenticeshipContext.Setup(x=>x.FindAll(query.ApprenticeId)).ReturnsAsync(myApprenticeships);
-
-        var handler = new MyApprenticeshipQueryHandler(mockApprenticeContext.Object, mockMyApprenticeshipContext.Object);
-
-        var result = await handler.Handle(query, CancellationToken.None);
-        
-        result.MyApprenticeships.Count().Should().Be(myApprenticeships.Count);
     
-        result.MyApprenticeships.Should().BeEquivalentTo(myApprenticeships.Select(m => m),
+        mockApprenticeContext.Setup(x => x.Find(query.ApprenticeId)).ReturnsAsync(apprentice); 
+        mockMyApprenticeshipContext.Setup(x=>x.FindByApprenticeId(query.ApprenticeId)).ReturnsAsync(myApprenticeship);
+    
+        var handler = new MyApprenticeshipQueryHandler(mockApprenticeContext.Object, mockMyApprenticeshipContext.Object);
+    
+        var result = await handler.Handle(query, CancellationToken.None);
+
+        result.MyApprenticeship.Should().BeEquivalentTo(myApprenticeship,
             l 
                 => l.Excluding(a => a.DomainEvents)
-                    .Excluding(a=>a.ApprenticeId)
+                    .Excluding(a => a.ApprenticeId)
+                    .Excluding(a => a.Id)
+                    .Excluding(a => a.CreatedOn)
         );
      }
     
     [Test]
     [RecursiveMoqAutoData]
-    public async Task ThenNoMatchingApprenticeReturnsNull(
+    public async Task ThenNoMatchingApprenticeReturnsNullApprenticeAndMyApprenticeship(
             MyApprenticeshipQuery query,
             Mock<IApprenticeContext> mockApprenticeContext,
             Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext
@@ -80,6 +58,28 @@ public class WhenHandlingGetMyApprenticeship
             new MyApprenticeshipQueryHandler(mockApprenticeContext.Object, mockMyApprenticeshipContext.Object);
         var result = await handler.Handle(query, CancellationToken.None);
     
-        result.Should().BeNull();
+        result.Apprentice.Should().BeNull();
+        result.MyApprenticeship.Should().BeNull();
+    }
+    
+    [Test]
+    [RecursiveMoqAutoData]
+    public async Task ThenNoMatchingMyApprenticeshipIdReturnsNullMyApprenticeship(
+        MyApprenticeshipQuery query,
+        Mock<IApprenticeContext> mockApprenticeContext,
+        Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext,
+        Apprentice apprentice
+    )
+    {
+        mockApprenticeContext.Setup(x => x.Find(query.ApprenticeId)).ReturnsAsync(apprentice);
+        mockMyApprenticeshipContext.Setup(x => x.FindByApprenticeId(It.IsAny<Guid>())).ReturnsAsync((Data.Models.MyApprenticeship)null);
+    
+        var handler =
+            new MyApprenticeshipQueryHandler(mockApprenticeContext.Object, mockMyApprenticeshipContext.Object);
+        var result = await handler.Handle(query, CancellationToken.None);
+    
+        result.Should().BeOfType<ApprenticeWithMyApprenticeshipDto>();
+       result.Apprentice.Should().Be(apprentice);
+       result.MyApprenticeship.Should().BeNull();
     }
 }

@@ -4,7 +4,20 @@ using System;
 namespace SFA.DAS.ApprenticeAccounts.Data.Models;
 
 public class MyApprenticeship : Entity
-{
+{ 
+    public Guid Id { get; set; }
+    public Guid ApprenticeId { get; set; }
+    public long? Uln { get; set; }
+    public long? ApprenticeshipId { get; set; }
+    public string? EmployerName { get; set; }
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+    public long? TrainingProviderId { get; set; }
+    public string? TrainingProviderName { get; set; }
+    public string? TrainingCode { get; set; }
+    public string? StandardUId { get; set; }
+    public DateTime CreatedOn { get; set; }
+
     public static implicit operator MyApprenticeship(CreateMyApprenticeshipCommand command)
     {
         return new MyApprenticeship
@@ -24,16 +37,4 @@ public class MyApprenticeship : Entity
         };
     }
 
-    public Guid Id { get; set; }
-    public Guid ApprenticeId { get; set; }
-    public long? Uln { get; set; }
-    public long? ApprenticeshipId { get; set; }
-    public string? EmployerName { get; set; }
-    public DateTime? StartDate { get; set; }
-    public DateTime? EndDate { get; set; }
-    public long? TrainingProviderId { get; set; }
-    public string? TrainingProviderName { get; set; }
-    public string? TrainingCode { get; set; }
-    public string? StandardUId { get; set; }
-    public DateTime CreatedOn { get; set; }
 }

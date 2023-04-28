@@ -1,6 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Hellang.Middleware.ProblemDetails;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
 using SFA.DAS.ApprenticeAccounts.Api.Authentication;
+using SFA.DAS.ApprenticeAccounts.Api.Filters;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Exceptions;
 using SFA.DAS.ApprenticeAccounts.Extensions;
@@ -61,6 +63,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api
 
             services.Configure<AzureActiveDirectoryConfiguration>(Configuration.GetSection("AzureAd"));
             services.AddSingleton(cfg => cfg.GetService<IOptions<AzureActiveDirectoryConfiguration>>().Value);
+            services.AddSingleton<ITelemetryInitializer, ResponseCodeTelemetryInitializer>();
 
             if (!Configuration.IsLocalAcceptanceOrDev())
             {
@@ -78,7 +81,6 @@ namespace SFA.DAS.ApprenticeAccounts.Api
             services.AddEntityFrameworkForApprenticeAccounts(Configuration);
 
             services.AddServicesForApprenticeAccounts();
-
             services.AddHealthChecks()
                 .AddCheck<ApprenticeAccountsHealthCheck>(nameof(ApprenticeAccountsHealthCheck));
 

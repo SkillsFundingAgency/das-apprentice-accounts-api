@@ -2,9 +2,8 @@
 
 namespace SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
 
-public class MyApprenticeshipsDto
+public class MyApprenticeshipDto
 {
-    public Guid Id { get; set; }
     public long? Uln { get; set; }
     public long? ApprenticeshipId { get; set; }
     public string? EmployerName { get; set; }
@@ -14,15 +13,14 @@ public class MyApprenticeshipsDto
     public string? TrainingProviderName { get; set; }
     public string? TrainingCode { get; set; }
     public string? StandardUId { get; set; }
-    public DateTime CreatedOn { get; set; }
 
-    public static implicit operator MyApprenticeshipsDto(Data.Models.MyApprenticeship? source)
+    public static implicit operator MyApprenticeshipDto?(Data.Models.MyApprenticeship? source)
     {
-        if (source == null) return null!;
+        if (source == null)
+            return null;
 
-        var myApprenticeshipsDto = new MyApprenticeshipsDto
+        return new MyApprenticeshipDto
         {
-            Id = source.Id,
             Uln = source.Uln,
             ApprenticeshipId = source.ApprenticeshipId,
             EmployerName = source.EmployerName,
@@ -31,10 +29,7 @@ public class MyApprenticeshipsDto
             TrainingProviderId = source.TrainingProviderId,
             TrainingProviderName = source.TrainingProviderName,
             TrainingCode = source.TrainingCode,
-            StandardUId = source.StandardUId,
-            CreatedOn = source.CreatedOn
+            StandardUId = source.StandardUId
         };
-
-        return myApprenticeshipsDto;
     }
 }
