@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
 using SFA.DAS.ApprenticeAccounts.Api.Authentication;
+using SFA.DAS.ApprenticeAccounts.Api.Filters;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Exceptions;
 using SFA.DAS.ApprenticeAccounts.Extensions;
@@ -78,6 +79,9 @@ namespace SFA.DAS.ApprenticeAccounts.Api
             services.AddEntityFrameworkForApprenticeAccounts(Configuration);
 
             services.AddServicesForApprenticeAccounts();
+
+            services.AddApplicationInsightsTelemetry();
+            services.AddApplicationInsightsTelemetryProcessor<SuccessfulDependencyFilter>();
 
             services.AddHealthChecks()
                 .AddCheck<ApprenticeAccountsHealthCheck>(nameof(ApprenticeAccountsHealthCheck));
