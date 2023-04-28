@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery
 {
     public class MyApprenticeshipQueryHandler
-        : IRequestHandler<MyApprenticeshipQuery, MyApprenticeshipDto?>
+        : IRequestHandler<MyApprenticeshipQuery, ApprenticeWithMyApprenticeshipDto>
     {
         private readonly IApprenticeContext _apprentices;
         private readonly IMyApprenticeshipContext _myApprenticeships;
@@ -19,16 +19,24 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery
             _myApprenticeships = myApprenticeships;
         }
 
-        public async Task<MyApprenticeshipDto?> Handle(
+        public async Task<ApprenticeWithMyApprenticeshipDto> Handle(
             Queries.MyApprenticeshipQuery.MyApprenticeshipQuery request,
             CancellationToken cancellationToken)
         {
             var apprentice = await _apprentices.Find(request.ApprenticeId);
-            if (apprentice == null) return null;
+            if (apprentice == null)
+            {
+                return new ApprenticeWithMyApprenticeshipDto();
+
+            }
             var myApprenticeship = await _myApprenticeships.FindByApprenticeId(request.ApprenticeId);
-            if (myApprenticeship == null)
-                return new MyApprenticeshipDto();
-            return (MyApprenticeshipDto)myApprenticeship!;
+
+            return
+                new ApprenticeWithMyApprenticeshipDto
+                {
+                    Apprentice = apprentice,
+                    MyApprenticeship = (MyApprenticeshipDto)myApprenticeship!
+                };
         }
     }
 }

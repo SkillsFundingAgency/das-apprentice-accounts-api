@@ -35,7 +35,7 @@ public class WhenHandlingGetMyApprenticeship
     
         var result = await handler.Handle(query, CancellationToken.None);
 
-        result.Should().BeEquivalentTo(myApprenticeship,
+        result.MyApprenticeship.Should().BeEquivalentTo(myApprenticeship,
             l 
                 => l.Excluding(a => a.DomainEvents)
                     .Excluding(a => a.ApprenticeId)
@@ -46,7 +46,7 @@ public class WhenHandlingGetMyApprenticeship
     
     [Test]
     [RecursiveMoqAutoData]
-    public async Task ThenNoMatchingApprenticeReturnsNull(
+    public async Task ThenNoMatchingApprenticeReturnsNullApprenticeAndMyApprenticeship(
             MyApprenticeshipQuery query,
             Mock<IApprenticeContext> mockApprenticeContext,
             Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext
@@ -58,12 +58,13 @@ public class WhenHandlingGetMyApprenticeship
             new MyApprenticeshipQueryHandler(mockApprenticeContext.Object, mockMyApprenticeshipContext.Object);
         var result = await handler.Handle(query, CancellationToken.None);
     
-        result.Should().BeNull();
+        result.Apprentice.Should().BeNull();
+        result.MyApprenticeship.Should().BeNull();
     }
-
+    
     [Test]
     [RecursiveMoqAutoData]
-    public async Task ThenNoMatchingMyApprenticeshipIdReturnsEmptyRecord(
+    public async Task ThenNoMatchingMyApprenticeshipIdReturnsNullMyApprenticeship(
         MyApprenticeshipQuery query,
         Mock<IApprenticeContext> mockApprenticeContext,
         Mock<IMyApprenticeshipContext> mockMyApprenticeshipContext,
@@ -72,13 +73,13 @@ public class WhenHandlingGetMyApprenticeship
     {
         mockApprenticeContext.Setup(x => x.Find(query.ApprenticeId)).ReturnsAsync(apprentice);
         mockMyApprenticeshipContext.Setup(x => x.FindByApprenticeId(It.IsAny<Guid>())).ReturnsAsync((Data.Models.MyApprenticeship)null);
-
+    
         var handler =
             new MyApprenticeshipQueryHandler(mockApprenticeContext.Object, mockMyApprenticeshipContext.Object);
         var result = await handler.Handle(query, CancellationToken.None);
-
-        result.Should().BeOfType<MyApprenticeshipDto>();
-        result.IsEmpty().Should().BeTrue();
-
+    
+        result.Should().BeOfType<ApprenticeWithMyApprenticeshipDto>();
+       result.Apprentice.Should().Be(apprentice);
+       result.MyApprenticeship.Should().BeNull();
     }
 }

@@ -13,10 +13,10 @@ public class MyApprenticeshipDtoTests
     {
         var dto = (MyApprenticeshipDto)myApprenticeship;
         dto.Should().BeEquivalentTo(myApprenticeship, l => l
-            .Excluding(a=>a.Id)
-            .Excluding(a=>a.ApprenticeId)
-            .Excluding(a=>a.CreatedOn)
-            .Excluding(a=>a.DomainEvents)
+            .Excluding(a => a.Id)
+            .Excluding(a => a.ApprenticeId)
+            .Excluding(a => a.CreatedOn)
+            .Excluding(a => a.DomainEvents)
         );
     }
 
@@ -25,11 +25,5 @@ public class MyApprenticeshipDtoTests
     {
         var dto = (MyApprenticeshipDto)(Data.Models.MyApprenticeship)null;
         dto.Should().BeNull();
-    }
-
-    [Test]
-    public void NewDtoShouldBeIsEmpty()
-    {
-        new MyApprenticeshipDto().IsEmpty().Should().BeTrue();
     }
 }

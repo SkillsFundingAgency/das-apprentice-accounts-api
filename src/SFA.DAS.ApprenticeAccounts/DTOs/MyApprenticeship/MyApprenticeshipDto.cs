@@ -1,6 +1,7 @@
 ﻿using System;
 
 namespace SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
+
 public class MyApprenticeshipDto
 {
 
@@ -32,17 +33,4 @@ public class MyApprenticeshipDto
     public string? TrainingProviderName { get; set; }
     public string? TrainingCode { get; set; }
     public string? StandardUId { get; set; }
-
-    public bool IsEmpty()
-    {
-        return Uln is null &&
-               ApprenticeshipId is null &&
-               EmployerName is null &&
-               StartDate is null &&
-               EndDate is null &&
-               TrainingProviderId is null &&
-               TrainingProviderName is null &&
-               TrainingCode is null &&
-               StandardUId is null;
-    }
 }
