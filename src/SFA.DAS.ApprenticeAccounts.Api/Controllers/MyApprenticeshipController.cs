@@ -5,8 +5,6 @@ using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using System.Threading.Tasks;
 using System;
 using MediatR;
-using SFA.DAS.ApprenticeAccounts.DTOs.MyApprenticeship;
-using System.Diagnostics.Metrics;
 
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
