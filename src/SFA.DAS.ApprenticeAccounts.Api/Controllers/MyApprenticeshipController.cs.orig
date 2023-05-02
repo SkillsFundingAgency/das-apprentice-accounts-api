@@ -1,13 +1,11 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using System.Threading.Tasks;
 using System;
 using MediatR;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.Exceptions;
+using System.Diagnostics.Metrics;
 
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
@@ -29,21 +27,10 @@ public class MyApprenticeshipController : ControllerBase
     {
         var command = (CreateMyApprenticeshipCommand)request;
         command.ApprenticeId = id;
+        var result = await _mediator.Send(command);
+        var uri = new Uri($"apprentices/{id}/MyApprenticeship",UriKind.Relative);
 
-        try
-        {
-            var result = await _mediator.Send(command);
-            var uri = new Uri($"apprentices/{id}/MyApprenticeship", UriKind.Relative);
-            return new CreatedResult(uri, result);
-        }
-        catch (Exception ex)
-        {
-            if (ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent) 
-                || ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid))
-                return NotFound();
-            
-            return BadRequest();
-        }
+        return new CreatedResult(uri,result);
     }
 
     [HttpGet("apprentices/{id}/MyApprenticeship")]
@@ -62,6 +49,15 @@ public class MyApprenticeshipController : ControllerBase
             return NotFound();
         }
 
+<<<<<<< HEAD
         return Ok(result.MyApprenticeship);
+=======
+        if (result.Id == Guid.Empty)
+        {
+            return Ok(new EmptyResult());
+        }
+
+        return Ok(result);
+>>>>>>> CSP-781 code and coverage added for amended GET myApprenticeship endpoint
     }
 }

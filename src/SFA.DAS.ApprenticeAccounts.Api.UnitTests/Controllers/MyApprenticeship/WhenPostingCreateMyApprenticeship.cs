@@ -27,8 +27,7 @@ public class WhenPostingMyApprenticeship
 
         var result = await sut.PostMyApprenticeship(apprenticeId, request) as CreatedResult;
 
-        result.Should().NotBeNull();
-        result.Location.Should().Be($"apprentices/{apprenticeId}/MyApprenticeship");
+        result.Should().NotBeNull(); result.Location.Should().Be($"apprentices/{apprenticeId}/MyApprenticeship");
 
         mediatorMock.Verify(m => m.Send(It.Is<CreateMyApprenticeshipCommand>(c =>
                 c.ApprenticeshipId == request.ApprenticeshipId
@@ -42,5 +41,67 @@ public class WhenPostingMyApprenticeship
                 && c.Uln == request.Uln
                 && c.ApprenticeId == apprenticeId
             ), It.IsAny<CancellationToken>()));
+    }
+
+    [Test, MoqAutoData]
+    public async Task CreateMyApprenticeshipApprenticeIdNotPresent_ReturnsBadRequest(
+        [Frozen] Mock<IMediator> mediatorMock,
+        [Greedy] MyApprenticeshipController sut,
+        CreateMyApprenticeshipRequest request,
+        Guid apprenticeId)
+    {
+        var exception = new Exception(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent);
+        mediatorMock.Setup(m => m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Returns(Unit.Task);
+
+        mediatorMock.Setup(m =>
+                m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Throws(exception);
+
+        var result = await sut.PostMyApprenticeship(apprenticeId, request) as ActionResult;
+
+        result.Should().NotBeNull();
+        result.Should().BeOfType<NotFoundResult>();
+    }
+
+    [Test, MoqAutoData]
+    public async Task CreateMyApprenticeshipApprenticeIdNotValid_ReturnsBadRequest(
+        [Frozen] Mock<IMediator> mediatorMock,
+        [Greedy] MyApprenticeshipController sut,
+        CreateMyApprenticeshipRequest request,
+        Guid apprenticeId)
+    {
+        var exception = new Exception(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid);
+        mediatorMock.Setup(m => m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Returns(Unit.Task);
+
+        mediatorMock.Setup(m =>
+                m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Throws(exception);
+
+        var result = await sut.PostMyApprenticeship(apprenticeId, request) as ActionResult;
+
+        result.Should().NotBeNull();
+        result.Should().BeOfType<NotFoundResult>();
+    }
+
+    [Test, MoqAutoData]
+    public async Task CreateMyApprenticeshipMyApprenticeshipIdAlreadyExists_ReturnsBadRequest(
+        [Frozen] Mock<IMediator> mediatorMock,
+        [Greedy] MyApprenticeshipController sut,
+        CreateMyApprenticeshipRequest request,
+        Guid apprenticeId)
+    {
+        mediatorMock.Setup(m => m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Returns(Unit.Task);
+
+        mediatorMock.Setup(m =>
+                m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Throws(new Exception());
+
+        var result = await sut.PostMyApprenticeship(apprenticeId, request) as ActionResult;
+
+        result.Should().NotBeNull();
+        result.Should().BeOfType<BadRequestResult>();
     }
 }

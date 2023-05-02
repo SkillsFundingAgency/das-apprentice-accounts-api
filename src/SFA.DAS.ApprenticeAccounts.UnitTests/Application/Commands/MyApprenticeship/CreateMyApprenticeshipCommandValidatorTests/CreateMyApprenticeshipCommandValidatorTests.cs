@@ -144,17 +144,15 @@ public class CreateMyApprenticeshipCommandValidatorTests
         _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
         _mockApprenticeContext.Setup(x => x.Find(It.IsAny<Guid>())).ReturnsAsync(new Apprentice(apprenticeId, "first name", "last name", new MailAddress("test@test.com"), DateTime.Now));
 
-        _mockMyApprenticeshipContext.Setup(x => x.FindAll(It.IsAny<Guid>())).ReturnsAsync(new List<Data.Models.MyApprenticeship>
-        {
-            new CreateMyApprenticeshipCommand {ApprenticeshipId = apprenticeshipId, ApprenticeId = apprenticeId}
-        });
+        _mockMyApprenticeshipContext.Setup(x => x.FindByApprenticeId(It.IsAny<Guid>()))
+            .ReturnsAsync(new CreateMyApprenticeshipCommand {ApprenticeshipId = apprenticeshipId, ApprenticeId = apprenticeId});
 
         var validator = new CreateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
         var command = new CreateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = apprenticeshipId};
         var result = await validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(c => c.ApprenticeshipId)
-            .WithErrorMessage(CreateMyApprenticeshipCommandValidator.ApprenticeshipIdAlreadyExists);
+            .WithErrorMessage(CreateMyApprenticeshipCommandValidator.MyApprenticeshipAlreadyPresent);
     }
 
     [Test]

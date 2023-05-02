@@ -13,7 +13,7 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
     public const string StandardUIdTooLong = "StandardUId must be 20 characters or fewer";
     public const string ApprenticeIdNotValid = "Apprentice Id is not valid";
     public const string ApprenticeIdNotPresent = "Apprentice Id is not present in the Apprentice table";
-    public const string ApprenticeshipIdAlreadyExists = "This Apprenticeship is already recorded for this apprentice";
+    public const string MyApprenticeshipAlreadyPresent = "This Apprentice already has a MyApprenticeship record";
 
     public CreateMyApprenticeshipCommandValidator(IApprenticeContext apprenticeContext, IMyApprenticeshipContext myApprenticeshipContext)
     {
@@ -32,13 +32,11 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
             }).WithMessage(ApprenticeIdNotPresent);
 
         RuleFor(model => model.ApprenticeshipId)
-            .Must((model,apprenticeshipId, cancellation) =>
-            { 
-                if (model.ApprenticeshipId == null) return true;
+            .Must((model,apprenticeId, cancellation) =>
+            {
+                var myApprenticeship =  myApprenticeshipContext.FindByApprenticeId(model.ApprenticeId).Result;
+                return myApprenticeship == null;
         
-                var myApprenticeships =  myApprenticeshipContext.FindAll(model.ApprenticeId).Result;
-                return myApprenticeships.All(x => x.ApprenticeshipId != apprenticeshipId);
-        
-            }).WithMessage(ApprenticeshipIdAlreadyExists);
+            }).WithMessage(MyApprenticeshipAlreadyPresent);
     }
 }
