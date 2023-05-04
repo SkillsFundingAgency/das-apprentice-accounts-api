@@ -154,7 +154,7 @@ public class CreateMyApprenticeshipCommandValidatorTests
     }
 
     [Test]
-    public async Task ApprenticeshipIdNull_ApprenticeshipIdNullAlreadyPresent_Validation()
+    public async Task ApprenticeshipIdNull_ApprenticeshipIdNullAlreadyPresent_ValidationPasses()
     {
         var apprenticeId = Guid.NewGuid();
         _mockApprenticeContext = new Mock<IApprenticeContext>();

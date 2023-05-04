@@ -45,11 +45,7 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
                     return true;
                 var myApprenticeship =
                     myApprenticeshipContext.FindByApprenticeshipId((long)model.ApprenticeshipId).Result;
-                if (myApprenticeship != null && myApprenticeship.ApprenticeId == model.ApprenticeId)
-                {
-                    return true;
-                }
-
+                
                 return myApprenticeship == null;
 
             }).WithMessage(ApprenticeshipIdAlreadyPresent);
