@@ -102,6 +102,6 @@ public class WhenPostingMyApprenticeship
         var result = await sut.PostMyApprenticeship(apprenticeId, request) as ActionResult;
 
         result.Should().NotBeNull();
-        result.Should().BeOfType<BadRequestResult>();
+        result.Should().BeOfType<BadRequestObjectResult>();
     }
 }

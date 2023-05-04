@@ -12,18 +12,27 @@ namespace SFA.DAS.ApprenticeAccounts.Data
     public interface IMyApprenticeshipContext : IEntityContext<MyApprenticeship>
     {
         [ExcludeFromCodeCoverage]
-        public async Task<IEnumerable<MyApprenticeship>> FindAll(Guid apprenticeId)
-        {
-            return await Entities
-                .AsNoTracking()
-                .Where(x => x.ApprenticeId == apprenticeId).ToListAsync();
-        }
-
+        
         public async Task<MyApprenticeship?> FindByApprenticeId(Guid apprenticeId)
         {
             return await Entities
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.ApprenticeId == apprenticeId);
         }
+
+        public async Task<MyApprenticeship?> FindByApprenticeshipId(long apprenticeshipId)
+        {
+            return await Entities
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.ApprenticeshipId == apprenticeshipId);
+        }
+
+        public async Task<MyApprenticeship?> FindById(Guid id)
+        {
+            return await Entities
+                .AsNoTracking()
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
     }
 }

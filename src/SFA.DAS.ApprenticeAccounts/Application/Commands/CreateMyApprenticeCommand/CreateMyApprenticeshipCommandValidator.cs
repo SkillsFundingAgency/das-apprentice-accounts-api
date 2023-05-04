@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using SFA.DAS.ApprenticeAccounts.Data;
 using System;
-using System.Linq;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 
@@ -14,7 +13,7 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
     public const string ApprenticeIdNotValid = "Apprentice Id is not valid";
     public const string ApprenticeIdNotPresent = "Apprentice Id is not present in the Apprentice table";
     public const string MyApprenticeshipAlreadyPresent = "This Apprentice already has a MyApprenticeship record";
-
+    public const string ApprenticeshipIdAlreadyPresent = "ApprenticeshipId is already used";
     public CreateMyApprenticeshipCommandValidator(IApprenticeContext apprenticeContext, IMyApprenticeshipContext myApprenticeshipContext)
     {
         
@@ -31,12 +30,28 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
                 return result != null;
             }).WithMessage(ApprenticeIdNotPresent);
 
-        RuleFor(model => model.ApprenticeshipId)
-            .Must((model,apprenticeId, cancellation) =>
+        RuleFor(model => model.ApprenticeId)
+            .Must((model, cancellation) =>
             {
                 var myApprenticeship =  myApprenticeshipContext.FindByApprenticeId(model.ApprenticeId).Result;
                 return myApprenticeship == null;
         
             }).WithMessage(MyApprenticeshipAlreadyPresent);
+
+        RuleFor(model => model.ApprenticeshipId)
+            .Must((model, cancellation) =>
+            {
+                if (model.ApprenticeshipId == null)
+                    return true;
+                var myApprenticeship =
+                    myApprenticeshipContext.FindByApprenticeshipId((long)model.ApprenticeshipId).Result;
+                if (myApprenticeship != null && myApprenticeship.ApprenticeId == model.ApprenticeId)
+                {
+                    return true;
+                }
+
+                return myApprenticeship == null;
+
+            }).WithMessage(ApprenticeshipIdAlreadyPresent);
     }
 }

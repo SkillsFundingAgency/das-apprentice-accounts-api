@@ -1,13 +1,12 @@
-﻿using FluentValidation;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
 using System.Threading.Tasks;
 using System;
 using MediatR;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.Exceptions;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeshipCommand;
+using System.Net;
 
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
@@ -38,11 +37,11 @@ public class MyApprenticeshipController : ControllerBase
         }
         catch (Exception ex)
         {
-            if (ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent) 
+            if (ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent)
                 || ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid))
                 return NotFound();
-            
-            return BadRequest();
+
+            return BadRequest(ex.Message);
         }
     }
 
@@ -57,11 +56,26 @@ public class MyApprenticeshipController : ControllerBase
             return BadRequest();
         }
 
-        if (result.MyApprenticeship==null)
+        if (result.MyApprenticeship == null)
         {
             return NotFound();
         }
 
         return Ok(result.MyApprenticeship);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [Route("apprentices/{id}/MyApprenticeship")]
+    public async Task<IActionResult> UpdateMyApprenticeship(Guid id, 
+        [FromBody] UpdateMyApprenticeshipRequest request)
+    {
+        var command = (UpdateMyApprenticeshipCommand)request;
+        command.ApprenticeId = id;
+      
+
+        await _mediator.Send(command);
+        return NoContent();
     }
 }
