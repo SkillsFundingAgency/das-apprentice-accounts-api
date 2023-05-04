@@ -9,7 +9,6 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeComm
     {
         private readonly IMyApprenticeshipContext _myApprenticeships;
 
-
         public CreateMyApprenticeshipCommandHandler(IMyApprenticeshipContext myApprenticeships)
         {
             _myApprenticeships = myApprenticeships;

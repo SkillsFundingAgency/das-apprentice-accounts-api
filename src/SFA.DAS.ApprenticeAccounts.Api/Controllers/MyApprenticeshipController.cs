@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeshipCommand;
 using System.Threading.Tasks;
 using System;
 using MediatR;
-using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeshipCommand;
 using System.Net;
 
 
@@ -73,7 +73,6 @@ public class MyApprenticeshipController : ControllerBase
     {
         var command = (UpdateMyApprenticeshipCommand)request;
         command.ApprenticeId = id;
-      
 
         await _mediator.Send(command);
         return NoContent();
