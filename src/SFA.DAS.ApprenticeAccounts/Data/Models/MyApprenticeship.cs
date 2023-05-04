@@ -10,12 +10,12 @@ public class MyApprenticeship : Entity
     {
     }
 
-    public MyApprenticeship(Guid apprenticeId, long? apprenticeshipId, Guid id)
-    {
-        ApprenticeId = apprenticeId;
-        ApprenticeshipId = apprenticeshipId;
-        Id = id;
-    }
+    // public MyApprenticeship(Guid apprenticeId, long? apprenticeshipId, Guid id)
+    // {
+    //     ApprenticeId = apprenticeId;
+    //     ApprenticeshipId = apprenticeshipId;
+    //     Id = id;
+    // }
 
     public Guid Id { get; set; }
     public Guid ApprenticeId { get; set; }

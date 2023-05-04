@@ -16,7 +16,6 @@ public class MyApprenticeshipTests
         entity.Should().BeEquivalentTo(command);
     }
 
-
     [Test, AutoData]
     public void UpdateMyApprenticeship_UpdatesMyApprenticeship(Data.Models.MyApprenticeship myApprenticeship, UpdateMyApprenticeshipCommand command)
     {
@@ -40,6 +39,5 @@ public class MyApprenticeshipTests
         myApprenticeship.TrainingCode.Should().Be(command.TrainingCode);
         myApprenticeship.TrainingProviderId.Should().Be(command.TrainingProviderId);
         myApprenticeship.TrainingProviderName.Should().Be(command.TrainingProviderName);
-
     }
 }
