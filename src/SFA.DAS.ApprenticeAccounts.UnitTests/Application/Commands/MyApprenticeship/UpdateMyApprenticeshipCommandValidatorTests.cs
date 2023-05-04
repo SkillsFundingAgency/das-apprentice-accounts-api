@@ -2,8 +2,8 @@
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeshipCommand;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.Data;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -67,5 +67,37 @@ public class UpdateMyApprenticeshipCommandValidatorTests
 
         result.ShouldHaveValidationErrorFor(c => c.ApprenticeId)
             .WithErrorMessage(UpdateMyApprenticeshipCommandValidator.MyApprenticeshipIdNotPresentForApprenticeId);
+    }
+
+    [Test]
+    public async Task MyApprenticeshipIdExistsAgainstDifferentApprenticeId_DoesNotRaiseErrorMessageIfNoMatchingApprentice()
+    {
+        var apprenticeId = Guid.NewGuid();
+        const int apprenticeshipId = 1234;
+        var otherApprenticeId = Guid.NewGuid();
+        _mockApprenticeContext = new Mock<IApprenticeContext>();
+        _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
+        _mockApprenticeContext.Setup(x => x.Find(It.IsAny<Guid>())).ReturnsAsync((Apprentice)null);
+
+        var validator = new UpdateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
+        var command = new UpdateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = apprenticeshipId };
+        var result = await validator.TestValidateAsync(command);
+
+        result.ShouldHaveAnyValidationError();
+    }
+
+    [Test]
+    public async Task MyApprenticeshipIdIsNullAndOtherApprenticeshipIdIsAlsoNull_DoesNotRaiseErrorMessage()
+    {
+        var apprenticeId = Guid.NewGuid();
+        var otherApprenticeId = Guid.NewGuid();
+        _mockApprenticeContext = new Mock<IApprenticeContext>();
+        _mockMyApprenticeshipContext = new Mock<IMyApprenticeshipContext>();
+   
+        var validator = new UpdateMyApprenticeshipCommandValidator(_mockApprenticeContext.Object, _mockMyApprenticeshipContext.Object);
+        var command = new UpdateMyApprenticeshipCommand { ApprenticeId = apprenticeId, ApprenticeshipId = null };
+        var result = await validator.TestValidateAsync(command);
+
+         result.ShouldHaveAnyValidationError();
     }
 }
