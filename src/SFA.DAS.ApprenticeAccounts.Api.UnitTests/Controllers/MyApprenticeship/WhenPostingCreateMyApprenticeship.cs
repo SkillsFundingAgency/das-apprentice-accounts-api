@@ -1,5 +1,6 @@
 ﻿using AutoFixture.NUnit3;
 using FluentAssertions;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -50,7 +51,7 @@ public class WhenPostingMyApprenticeship
         CreateMyApprenticeshipRequest request,
         Guid apprenticeId)
     {
-        var exception = new Exception(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent);
+        var exception = new ValidationException(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent);
         mediatorMock.Setup(m => m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
             .Returns(Unit.Task);
 
@@ -71,7 +72,7 @@ public class WhenPostingMyApprenticeship
         CreateMyApprenticeshipRequest request,
         Guid apprenticeId)
     {
-        var exception = new Exception(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid);
+        var exception = new ValidationException(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid);
         mediatorMock.Setup(m => m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
             .Returns(Unit.Task);
 
@@ -97,7 +98,7 @@ public class WhenPostingMyApprenticeship
 
         mediatorMock.Setup(m =>
                 m.Send(It.IsAny<CreateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
-            .Throws(new Exception());
+            .Throws(new ValidationException(CreateMyApprenticeshipCommandValidator.ApprenticeshipIdAlreadyPresent));
 
         var result = await sut.PostMyApprenticeship(apprenticeId, request) as ActionResult;
 

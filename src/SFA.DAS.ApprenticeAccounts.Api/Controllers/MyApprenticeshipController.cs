@@ -36,7 +36,7 @@ public class MyApprenticeshipController : ControllerBase
             var uri = new Uri($"apprentices/{id}/MyApprenticeship", UriKind.Relative);
             return new CreatedResult(uri, result);
         }
-        catch (Exception ex)
+        catch (ValidationException ex)
         {
             if (ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent)
                 || ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid))
