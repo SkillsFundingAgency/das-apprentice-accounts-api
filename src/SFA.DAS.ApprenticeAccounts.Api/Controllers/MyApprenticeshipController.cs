@@ -77,7 +77,7 @@ public class MyApprenticeshipController : ControllerBase
 
         try
         {
-            var result = await _mediator.Send(command);
+            await _mediator.Send(command);
             return NoContent();
         }
         catch (ValidationException ex)
