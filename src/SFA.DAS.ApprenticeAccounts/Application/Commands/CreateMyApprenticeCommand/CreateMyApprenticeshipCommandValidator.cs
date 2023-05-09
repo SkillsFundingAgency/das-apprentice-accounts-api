@@ -24,13 +24,12 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
         RuleFor(model => model.ApprenticeId).Must(id => id != Guid.Empty).WithMessage(ApprenticeIdNotValid);
         
         RuleFor(model => model.ApprenticeId)
+            .Cascade(CascadeMode.Stop)
             .Must((model, apprenticeId,cancellation) =>
             {
                 var result =  apprenticeContext.Find(apprenticeId).Result;
                 return result != null;
-            }).WithMessage(ApprenticeIdNotPresent);
-
-        RuleFor(model => model.ApprenticeId)
+            }).WithMessage(ApprenticeIdNotPresent)
             .Must((model, cancellation) =>
             {
                 var myApprenticeship =  myApprenticeshipContext.FindByApprenticeId(model.ApprenticeId).Result;
