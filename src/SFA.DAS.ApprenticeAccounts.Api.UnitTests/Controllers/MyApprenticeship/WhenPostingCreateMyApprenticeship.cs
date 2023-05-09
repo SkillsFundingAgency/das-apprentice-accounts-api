@@ -45,7 +45,7 @@ public class WhenPostingMyApprenticeship
     }
 
     [Test, MoqAutoData]
-    public async Task CreateMyApprenticeshipApprenticeIdNotPresent_ReturnsBadRequest(
+    public async Task CreateMyApprenticeshipApprenticeIdNotPresent_ReturnsNotFound(
         [Frozen] Mock<IMediator> mediatorMock,
         [Greedy] MyApprenticeshipController sut,
         CreateMyApprenticeshipRequest request,
@@ -66,7 +66,7 @@ public class WhenPostingMyApprenticeship
     }
 
     [Test, MoqAutoData]
-    public async Task CreateMyApprenticeshipApprenticeIdNotValid_ReturnsBadRequest(
+    public async Task CreateMyApprenticeshipApprenticeIdNotValid_ReturnsNotFound(
         [Frozen] Mock<IMediator> mediatorMock,
         [Greedy] MyApprenticeshipController sut,
         CreateMyApprenticeshipRequest request,

@@ -14,10 +14,10 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeComm
             _myApprenticeships = myApprenticeships;
         }
 
-        public async Task<Unit> Handle(CreateMyApprenticeshipCommand command, CancellationToken cancellationToken)
+        public  Task<Unit> Handle(CreateMyApprenticeshipCommand command, CancellationToken cancellationToken)
         {
             _myApprenticeships.Add( command);
-            return await Unit.Task;
+            return Unit.Task;
         }
     }
 }
