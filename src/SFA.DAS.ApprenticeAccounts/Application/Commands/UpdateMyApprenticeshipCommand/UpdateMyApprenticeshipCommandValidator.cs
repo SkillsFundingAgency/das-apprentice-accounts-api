@@ -20,7 +20,6 @@ public class UpdateMyApprenticeshipCommandValidator : AbstractValidator<UpdateMy
             .Must((model,  cancellation) =>
             {
                 var result = apprenticeContext.Find(model.ApprenticeId).Result;
-                if (result == null) return true;
                 var myApprenticeship = myApprenticeshipContext.FindByApprenticeId(result.Id).Result;
                 return myApprenticeship != null;
             }).WithMessage(MyApprenticeshipNotPresentForApprenticeId);
