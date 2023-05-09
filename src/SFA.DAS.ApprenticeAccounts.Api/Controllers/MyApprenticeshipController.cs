@@ -75,7 +75,19 @@ public class MyApprenticeshipController : ControllerBase
         var command = (UpdateMyApprenticeshipCommand)request;
         command.ApprenticeId = id;
 
-        await _mediator.Send(command);
-        return NoContent();
+        try
+        {
+            var result = await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (ValidationException ex)
+        {
+            if (ex.Message.Contains(UpdateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent))
+                return NotFound();
+
+            return BadRequest(ex.Message);
+        }
+
+      
     }
 }

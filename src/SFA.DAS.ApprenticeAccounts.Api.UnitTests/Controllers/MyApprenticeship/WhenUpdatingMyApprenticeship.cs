@@ -1,4 +1,6 @@
-﻿using FluentAssertions;
+﻿using AutoFixture.NUnit3;
+using FluentAssertions;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -41,5 +43,46 @@ public class WhenUpdatingMyApprenticeship
             && c.Uln == request.Uln
             && c.ApprenticeId == apprenticeId
         ), It.IsAny<CancellationToken>()));
+    }
+
+    [Test, MoqAutoData]
+    public async Task UpdateMyApprenticeshipApprenticeIdNotPresent_ReturnsNotFound(
+        [Frozen] Mock<IMediator> mediatorMock,
+        [Greedy] MyApprenticeshipController sut,
+        UpdateMyApprenticeshipRequest request,
+        Guid apprenticeId)
+    {
+        var exception = new ValidationException(UpdateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent);
+        mediatorMock.Setup(m => m.Send(It.IsAny<UpdateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Returns(Unit.Task);
+
+        mediatorMock.Setup(m =>
+                m.Send(It.IsAny<UpdateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Throws(exception);
+
+        var result = await sut.UpdateMyApprenticeship(apprenticeId, request) as ActionResult;
+
+        result.Should().NotBeNull();
+        result.Should().BeOfType<NotFoundResult>();
+    }
+
+    [Test, MoqAutoData]
+    public async Task UpdateMyApprenticeshipMyApprenticeshipIdAlreadyExists_ReturnsBadRequest(
+        [Frozen] Mock<IMediator> mediatorMock,
+        [Greedy] MyApprenticeshipController sut,
+        UpdateMyApprenticeshipRequest request,
+        Guid apprenticeId)
+    {
+        mediatorMock.Setup(m => m.Send(It.IsAny<UpdateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Returns(Unit.Task);
+
+        mediatorMock.Setup(m =>
+                m.Send(It.IsAny<UpdateMyApprenticeshipCommand>(), It.IsAny<CancellationToken>()))
+            .Throws(new ValidationException(UpdateMyApprenticeshipCommandValidator.ApprenticeshipIdAlreadyExists));
+
+        var result = await sut.UpdateMyApprenticeship(apprenticeId, request) as ActionResult;
+
+        result.Should().NotBeNull();
+        result.Should().BeOfType<BadRequestObjectResult>();
     }
 }

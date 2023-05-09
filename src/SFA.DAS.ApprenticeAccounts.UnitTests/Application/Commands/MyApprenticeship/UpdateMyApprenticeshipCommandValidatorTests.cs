@@ -46,7 +46,7 @@ public class UpdateMyApprenticeshipCommandValidatorTests
         var result = await validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(c => c.ApprenticeId)
-            .WithErrorMessage(UpdateMyApprenticeshipCommandValidator.MyApprenticeshipIdNotPresentForApprenticeId);
+            .WithErrorMessage(UpdateMyApprenticeshipCommandValidator.MyApprenticeshipNotPresentForApprenticeId);
     }
 
     [Test]
@@ -66,7 +66,7 @@ public class UpdateMyApprenticeshipCommandValidatorTests
         var result = await validator.TestValidateAsync(command);
 
         result.ShouldHaveValidationErrorFor(c => c.ApprenticeId)
-            .WithErrorMessage(UpdateMyApprenticeshipCommandValidator.MyApprenticeshipIdNotPresentForApprenticeId);
+            .WithErrorMessage(UpdateMyApprenticeshipCommandValidator.MyApprenticeshipNotPresentForApprenticeId);
     }
 
     [Test]
