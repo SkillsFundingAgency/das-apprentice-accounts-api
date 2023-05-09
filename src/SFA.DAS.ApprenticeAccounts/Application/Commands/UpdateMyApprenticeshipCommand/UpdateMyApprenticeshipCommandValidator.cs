@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using SFA.DAS.ApprenticeAccounts.Data;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeshipCommand;
 public class UpdateMyApprenticeshipCommandValidator : AbstractValidator<UpdateMyApprenticeshipCommand>
@@ -20,6 +21,7 @@ public class UpdateMyApprenticeshipCommandValidator : AbstractValidator<UpdateMy
             .Must((model,  cancellation) =>
             {
                 var result = apprenticeContext.Find(model.ApprenticeId).Result;
+                if (result == null) return true;
                 var myApprenticeship = myApprenticeshipContext.FindByApprenticeId(result.Id).Result;
                 return myApprenticeship != null;
             }).WithMessage(MyApprenticeshipNotPresentForApprenticeId);
