@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,6 +19,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data
                 .FirstOrDefaultAsync(x => x.ApprenticeId == apprenticeId);
         }
 
+        [ExcludeFromCodeCoverage]
         public async Task<MyApprenticeship?> FindByApprenticeshipId(long apprenticeshipId)
         {
             return await Entities
@@ -27,6 +27,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data
                 .FirstOrDefaultAsync(x => x.ApprenticeshipId == apprenticeshipId);
         }
 
+        [ExcludeFromCodeCoverage]
         public async Task<MyApprenticeship?> FindById(Guid id)
         {
             return await Entities

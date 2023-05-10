@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data
         ValueTask<EntityEntry<T>> AddAsync(T entity, CancellationToken cancellationToken = default)
             => Entities.AddAsync(entity, cancellationToken);
 
+        [ExcludeFromCodeCoverage]
         EntityEntry<T> Update(T entity) => Entities.Update(entity);
     }
 }
