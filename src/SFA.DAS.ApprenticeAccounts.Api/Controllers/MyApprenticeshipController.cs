@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.MyApprenticeshipQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeshipCommand;
 using System.Threading.Tasks;
 using System;
 using MediatR;
+using System.Net;
 
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
@@ -26,10 +29,21 @@ public class MyApprenticeshipController : ControllerBase
     {
         var command = (CreateMyApprenticeshipCommand)request;
         command.ApprenticeId = id;
-        var result = await _mediator.Send(command);
-        var uri = new Uri($"apprentices/{id}/MyApprenticeship",UriKind.Relative);
 
-        return new CreatedResult(uri,result);
+        try
+        {
+            var result = await _mediator.Send(command);
+            var uri = new Uri($"apprentices/{id}/MyApprenticeship", UriKind.Relative);
+            return new CreatedResult(uri, result);
+        }
+        catch (ValidationException ex)
+        {
+            if (ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent)
+                || ex.Message.Contains(CreateMyApprenticeshipCommandValidator.ApprenticeIdNotValid))
+                return NotFound();
+
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpGet("apprentices/{id}/MyApprenticeship")]
@@ -43,11 +57,37 @@ public class MyApprenticeshipController : ControllerBase
             return BadRequest();
         }
 
-        if (result.MyApprenticeship==null)
+        if (result.MyApprenticeship == null)
         {
             return NotFound();
         }
 
         return Ok(result.MyApprenticeship);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+    [Route("apprentices/{id}/MyApprenticeship")]
+    public async Task<IActionResult> UpdateMyApprenticeship(Guid id, 
+        [FromBody] UpdateMyApprenticeshipRequest request)
+    {
+        var command = (UpdateMyApprenticeshipCommand)request;
+        command.ApprenticeId = id;
+
+        try
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
+        catch (ValidationException ex)
+        {
+            if (ex.Message.Contains(UpdateMyApprenticeshipCommandValidator.ApprenticeIdNotPresent))
+                return NotFound();
+
+            return BadRequest(ex.Message);
+        }
+
+      
     }
 }

@@ -1,10 +1,15 @@
 ﻿using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeshipCommand;
 using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Data.Models;
 
 public class MyApprenticeship : Entity
-{ 
+{
+    public MyApprenticeship()
+    {
+    }
+
     public Guid Id { get; set; }
     public Guid ApprenticeId { get; set; }
     public long? Uln { get; set; }
@@ -37,4 +42,16 @@ public class MyApprenticeship : Entity
         };
     }
 
+    public void UpdateMyApprenticeship(UpdateMyApprenticeshipCommand command)
+    {
+        Uln = command.Uln;
+        ApprenticeshipId = command.ApprenticeshipId;
+        EmployerName = command.EmployerName;
+        StartDate = command.StartDate;
+        EndDate = command.EndDate;
+        StandardUId = command.StandardUId;
+        TrainingCode = command.TrainingCode;
+        TrainingProviderId = command.TrainingProviderId;
+        TrainingProviderName = command.TrainingProviderName;
+    }
 }

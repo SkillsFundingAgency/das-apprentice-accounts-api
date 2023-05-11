@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using SFA.DAS.ApprenticeAccounts.Data;
 using System;
-using System.Linq;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand;
 
@@ -13,8 +12,8 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
     public const string StandardUIdTooLong = "StandardUId must be 20 characters or fewer";
     public const string ApprenticeIdNotValid = "Apprentice Id is not valid";
     public const string ApprenticeIdNotPresent = "Apprentice Id is not present in the Apprentice table";
-    public const string ApprenticeshipIdAlreadyExists = "This Apprenticeship is already recorded for this apprentice";
-
+    public const string MyApprenticeshipAlreadyPresent = "This Apprentice already has a MyApprenticeship record";
+    public const string ApprenticeshipIdAlreadyPresent = "ApprenticeshipId is already used";
     public CreateMyApprenticeshipCommandValidator(IApprenticeContext apprenticeContext, IMyApprenticeshipContext myApprenticeshipContext)
     {
         
@@ -25,20 +24,29 @@ public class CreateMyApprenticeshipCommandValidator : AbstractValidator<CreateMy
         RuleFor(model => model.ApprenticeId).Must(id => id != Guid.Empty).WithMessage(ApprenticeIdNotValid);
         
         RuleFor(model => model.ApprenticeId)
+            .Cascade(CascadeMode.Stop)
             .Must((model, apprenticeId,cancellation) =>
             {
                 var result =  apprenticeContext.Find(apprenticeId).Result;
                 return result != null;
-            }).WithMessage(ApprenticeIdNotPresent);
+            }).WithMessage(ApprenticeIdNotPresent)
+            .Must((model, cancellation) =>
+            {
+                var myApprenticeship =  myApprenticeshipContext.FindByApprenticeId(model.ApprenticeId).Result;
+                return myApprenticeship == null;
+        
+            }).WithMessage(MyApprenticeshipAlreadyPresent);
 
         RuleFor(model => model.ApprenticeshipId)
-            .Must((model,apprenticeshipId, cancellation) =>
-            { 
-                if (model.ApprenticeshipId == null) return true;
-        
-                var myApprenticeships =  myApprenticeshipContext.FindAll(model.ApprenticeId).Result;
-                return myApprenticeships.All(x => x.ApprenticeshipId != apprenticeshipId);
-        
-            }).WithMessage(ApprenticeshipIdAlreadyExists);
+            .Must((model, cancellation) =>
+            {
+                if (model.ApprenticeshipId == null)
+                    return true;
+                var myApprenticeship =
+                    myApprenticeshipContext.FindByApprenticeshipId((long)model.ApprenticeshipId).Result;
+                
+                return myApprenticeship == null;
+
+            }).WithMessage(ApprenticeshipIdAlreadyPresent);
     }
 }
