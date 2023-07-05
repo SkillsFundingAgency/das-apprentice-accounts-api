@@ -1,15 +1,9 @@
-﻿using System.Net.Mail;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
+using SFA.DAS.ApprenticeAccounts.Data;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using NServiceBus;
-using SFA.DAS.ApprenticeAccounts.Data;
-using SFA.DAS.ApprenticeAccounts.Data.Models;
-using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand
 {
