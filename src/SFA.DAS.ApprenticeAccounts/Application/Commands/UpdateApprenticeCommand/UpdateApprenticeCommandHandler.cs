@@ -1,10 +1,13 @@
-﻿using System.Threading;
+﻿using System.Net.Mail;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NServiceBus;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand
 {
@@ -22,10 +25,19 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
         public async Task<Unit> Handle(UpdateApprenticeCommand request, CancellationToken cancellationToken)
         {
             _logger.LogInformation($"Updating {request.ApprenticeId} - {JsonConvert.SerializeObject(request.Updates)}");
-            var app = await _apprentices.GetById(request.ApprenticeId);
-            request.Updates.ApplyTo(new ApprenticePatchDto(app, _logger));
-            var validation = await new UpdateApprenticeValidator().ValidateAsync(app, cancellationToken);
-            if (!validation.IsValid) throw new FluentValidation.ValidationException(validation.Errors);
+            var apprentice = await _apprentices.GetById(request.ApprenticeId);
+
+            if (apprentice != null) {
+                request.Updates.ApplyTo(new ApprenticePatchDto(apprentice, _logger));
+                var validation = await new UpdateApprenticeValidator().ValidateAsync(apprentice, cancellationToken);
+                if (!validation.IsValid) throw new FluentValidation.ValidationException(validation.Errors);
+            }
+            else
+            {
+                _logger.LogInformation("UpdateApprenticeCommandHandler Apprentice Id {apprentice} does not exist",
+                    request.ApprenticeId);
+            }
+
             return Unit.Value;
         }
     }
