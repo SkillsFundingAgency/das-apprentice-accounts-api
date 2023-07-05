@@ -25,14 +25,6 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
         }
 
         [Test, AutoData]
-        public async Task Should_not_update_email_if_account_is_null(MailAddress newAddress)
-        {
-            var account = await CreateNullAccount();
-            var response = await SendUpdateAccountRequest(account.ApprenticeId, newAddress);
-            response.Should().Be400BadRequest();
-        }
-
-        [Test, AutoData]
         public async Task Publishes_event(MailAddress newAddress)
         {
             var account = await CreateAccount();

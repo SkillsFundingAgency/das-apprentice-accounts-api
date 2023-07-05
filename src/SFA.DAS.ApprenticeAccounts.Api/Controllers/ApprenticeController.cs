@@ -33,7 +33,11 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             => await _mediator.Send(command);
 
         [HttpPatch("apprentices/{id}")]
-        public async Task UpdateApprentice(Guid id, JsonPatchDocument<ApprenticePatchDto> changes)
-            => await _mediator.Send(new UpdateApprenticeCommand(id, changes));
+        public async Task<IActionResult> UpdateApprentice(Guid id, JsonPatchDocument<ApprenticePatchDto> changes)
+        {
+            var result = await _mediator.Send(new UpdateApprenticeCommand(id, changes));
+            if (result == false) return NotFound();
+            return Ok(result);
+        }
     }
 }
