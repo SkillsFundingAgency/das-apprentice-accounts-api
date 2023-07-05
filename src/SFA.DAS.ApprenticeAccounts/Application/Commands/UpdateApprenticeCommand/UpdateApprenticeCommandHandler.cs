@@ -34,11 +34,11 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
                 var validation = await new UpdateApprenticeValidator().ValidateAsync(apprentice, cancellationToken);
                 if (!validation.IsValid) throw new FluentValidation.ValidationException(validation.Errors);
 
-                _logger.LogInformation($"UpdateApprenticeCommandHandler Apprentice Id {request.ApprenticeId}");
+                _logger.LogInformation("UpdateApprenticeCommandHandler Apprentice Id {ApprenticeId}", request.ApprenticeId);
             }
             else
             {
-                _logger.LogInformation($"UpdateApprenticeCommandHandler Apprentice Id does not exist {request.ApprenticeId}");
+                _logger.LogInformation("UpdateApprenticeCommandHandler Apprentice Id does not exist {ApprenticeId}", request.ApprenticeId);
             }
 
             return Unit.Value;
