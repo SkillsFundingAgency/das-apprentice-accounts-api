@@ -59,6 +59,11 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
             return create;
         }
 
+        protected static Task<CreateApprenticeAccountCommand> CreateNullAccount()
+        {
+            return Task.FromResult(new CreateApprenticeAccountCommand());
+        }
+
         protected async Task UpdateAccount(Guid apprenticeId, string firstName, string lastName, DateTime dateOfBirth)
         {
             var response = await SendUpdateAccountRequest(apprenticeId, firstName, lastName, dateOfBirth);
