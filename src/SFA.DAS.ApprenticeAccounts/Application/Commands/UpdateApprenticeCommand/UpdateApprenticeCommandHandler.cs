@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NServiceBus;
 using SFA.DAS.ApprenticeAccounts.Data;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
@@ -24,18 +25,20 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
 
         public async Task<Unit> Handle(UpdateApprenticeCommand request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Updating {request.ApprenticeId} - {JsonConvert.SerializeObject(request.Updates)}");
             var apprentice = await _apprentices.GetById(request.ApprenticeId);
 
-            if (apprentice != null) {
+            if (apprentice != null)
+            {
                 request.Updates.ApplyTo(new ApprenticePatchDto(apprentice, _logger));
+            
                 var validation = await new UpdateApprenticeValidator().ValidateAsync(apprentice, cancellationToken);
                 if (!validation.IsValid) throw new FluentValidation.ValidationException(validation.Errors);
+
+                _logger.LogInformation($"UpdateApprenticeCommandHandler Apprentice Id {request.ApprenticeId}");
             }
             else
             {
-                _logger.LogInformation("UpdateApprenticeCommandHandler Apprentice Id {apprentice} does not exist",
-                    request.ApprenticeId);
+                _logger.LogInformation($"UpdateApprenticeCommandHandler Apprentice Id does not exist {request.ApprenticeId}");
             }
 
             return Unit.Value;
