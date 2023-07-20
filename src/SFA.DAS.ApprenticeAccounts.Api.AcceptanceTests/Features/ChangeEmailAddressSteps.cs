@@ -33,7 +33,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
                 .Create();
 
             _context.DbContext.Apprentices.Add(_apprentice);
-            //_context.DbContext.SaveChanges();
+            _context.DbContext.SaveChanges();
         }
 
         [Given(@"a ChangeEmailCommand with a valid email address")]
