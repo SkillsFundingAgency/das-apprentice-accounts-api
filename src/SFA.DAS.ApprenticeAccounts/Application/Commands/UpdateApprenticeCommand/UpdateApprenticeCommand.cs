@@ -6,7 +6,7 @@ using System;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand
 {
-    public class UpdateApprenticeCommand : IRequest<Unit>, IUnitOfWorkCommand
+    public class UpdateApprenticeCommand : IRequest<bool>, IUnitOfWorkCommand
     {
         public UpdateApprenticeCommand(Guid apprenticeId, JsonPatchDocument<ApprenticePatchDto> updates)
         {

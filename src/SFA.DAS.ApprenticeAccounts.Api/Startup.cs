@@ -47,7 +47,11 @@ namespace SFA.DAS.ApprenticeAccounts.Api
                     options.PreFixConfigurationKeys = false;
                 });
             }
-            config.AddJsonFile($"appsettings.Development.json", optional: true);
+
+            if (!Configuration.IsAcceptanceTest())
+            {
+                config.AddJsonFile($"appsettings.Development.json", optional: true);
+            }
 
             Configuration = config.Build();
         }

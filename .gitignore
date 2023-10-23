@@ -370,3 +370,4 @@ SonarQube.Analysis.xml
 **/.learningtransport/**
 
 *.feature.cs
+*.ncrunchsolution
