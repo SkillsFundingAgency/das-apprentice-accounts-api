@@ -7,7 +7,7 @@
 
 INSERT INTO #TempPreference VALUES 
 (1, 'Giving feedback on your training provider', 'Emails will be sent every 3 months.'),
-(2, 'Getting help and advice about your apprenticeship', 'You''ll receive regular emails during your apprenticeship')
+(2, 'Receiving regular emails about your apprenticeship', 'Helpful emails will be sent to support you during your apprenticeship')
 
 MERGE [Preference] AS TARGET
 USING #TempPreference AS SOURCE
