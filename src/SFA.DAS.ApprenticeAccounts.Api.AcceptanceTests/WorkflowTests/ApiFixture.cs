@@ -45,7 +45,10 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
         }
 
         protected async Task<CreateApprenticeAccountCommand> CreateAccount(
-            Guid? apprenticeId = default, MailAddress? email = default, DateTime? dateOfBirth = default)
+            Guid? apprenticeId = default, 
+            MailAddress? email = default, 
+            DateTime? dateOfBirth = default
+        )
         {
             var create = fixture.Build<CreateApprenticeAccountCommand>()
                 .With(p => p.ApprenticeId, (Guid id) => apprenticeId ?? id)

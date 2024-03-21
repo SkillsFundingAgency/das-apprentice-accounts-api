@@ -1,8 +1,11 @@
 ﻿using AutoFixture;
 using FluentAssertions;
+using FluentAssertions.Equivalency;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
+using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Mail;
@@ -72,13 +75,19 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
 
             await UpdateAccount(account.ApprenticeId, account.FirstName, account.LastName, account.DateOfBirth);
 
-            Database.Apprentices.Should().ContainEquivalentOf(new
+            var expectedApprentice = new
             {
                 account.FirstName,
                 account.LastName,
                 account.DateOfBirth,
                 Email = new MailAddress(account.Email),
-            });
+                UpdatedOn = DateTime.UtcNow
+            };
+
+            Database.Apprentices.Should().ContainEquivalentOf(
+                expectedApprentice, 
+                options => options.Using<DateTime>(x => x.Subject.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromMinutes(2)))
+            .When(info => info.Path.EndsWith("UpdatedOn")));
         }
 
         [Test]
@@ -102,7 +111,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
                 account.FirstName,
                 account.LastName,
                 account.DateOfBirth,
-                Email = new MailAddress(account.Email),
+                Email = new MailAddress(account.Email)
             });
         }
 

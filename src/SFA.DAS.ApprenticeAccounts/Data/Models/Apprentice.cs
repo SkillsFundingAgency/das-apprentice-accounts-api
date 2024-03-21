@@ -29,6 +29,9 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public MailAddress Email { get; private set; } = null!;
+
+        public DateTime UpdatedOn { get; set; }
+
         public ICollection<ApprenticeEmailAddressHistory> PreviousEmailAddresses { get; private set; } = null!;
         public ICollection<ApprenticePreferences> Preferences { get; private set; } = null!;
 

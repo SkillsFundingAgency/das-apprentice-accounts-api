@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
+using System;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
         {
             _apprentice = _fixture.Build<Apprentice>()
                 .Without(a => a.TermsOfUseAccepted)
+                .With(a => a.UpdatedOn, DateTime.UtcNow.AddDays(-1))
                 .Create();
 
             _context.DbContext.Apprentices.Add(_apprentice);
@@ -78,6 +80,16 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
             _context.DbContext.Apprentices.Should().ContainEquivalentOf(_apprentice);
         }
 
+        [Then(@"the apprentice record is not updated excluding updated on date")]
+        public void ThenTheApprenticeRecordIsNotUpdatedExcludingUpdatedOnDate()
+        {
+            _context.DbContext.Apprentices.Should()
+                .ContainEquivalentOf(
+                    _apprentice,
+                    options => options.Excluding(x => x.UpdatedOn)
+                );
+        }
+
         [Then(@"the change history is recorded")]
         public void ThenTheChangeHistoryIsRecorded()
         {
@@ -89,6 +101,18 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
             {
                 EmailAddress = new MailAddress(_mailAddress),
             });
+        }
+
+        [Then(@"the UpdatedOn property is updated to today")]
+        public void ThenTheUpdatedOnPropertyIsUpdatedToToday()
+        {
+            var modified = _context.DbContext
+                .Apprentices
+                .Single(x => x.Id == _apprentice.Id);
+
+            var today = DateTime.UtcNow.Date;
+
+            modified.UpdatedOn.Date.Should().Be(today.Date);
         }
     }
 }
