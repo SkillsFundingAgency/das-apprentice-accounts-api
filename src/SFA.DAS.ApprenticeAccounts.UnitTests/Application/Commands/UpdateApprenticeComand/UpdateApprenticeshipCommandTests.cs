@@ -47,7 +47,7 @@ public class UpdateApprenticeshipCommandTests
         var handler = new UpdateApprenticeCommandHandler(_mockApprenticeContext.Object, _logger.Object);
         var result = await handler.Handle(_mockCommand, CancellationToken.None);
         result.GetType().Should().Be(typeof(bool));
-        result.Should().Be(false);
+        result.Should().BeTrue();
     }
 
     [Test]
