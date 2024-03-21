@@ -23,4 +23,5 @@ Scenario: Ignore change to an existing email address
 	Given we have an existing apprentice
 	And a ChangeEmailCommand with the current email address
 	When we change the apprentice's email address
-	Then the apprentice record is not updated
+	Then the apprentice record is not updated excluding updated on date
+	But the UpdatedOn property is updated to today

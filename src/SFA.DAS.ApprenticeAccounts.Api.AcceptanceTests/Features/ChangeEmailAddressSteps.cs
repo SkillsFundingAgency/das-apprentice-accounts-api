@@ -80,6 +80,16 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.Steps
             _context.DbContext.Apprentices.Should().ContainEquivalentOf(_apprentice);
         }
 
+        [Then(@"the apprentice record is not updated excluding updated on date")]
+        public void ThenTheApprenticeRecordIsNotUpdatedExcludingUpdatedOnDate()
+        {
+            _context.DbContext.Apprentices.Should()
+                .ContainEquivalentOf(
+                    _apprentice,
+                    options => options.Excluding(x => x.UpdatedOn)
+                );
+        }
+
         [Then(@"the change history is recorded")]
         public void ThenTheChangeHistoryIsRecorded()
         {

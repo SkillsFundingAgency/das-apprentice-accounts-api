@@ -27,10 +27,6 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
 
             if (apprentice != null)
             {
-                string prePatchEmail = apprentice.Email.Address;
-                string prePatchFirstName = apprentice.FirstName;
-                string prePatchLastName = apprentice.LastName;
-
                 ApprenticePatchDto patch = new ApprenticePatchDto(apprentice, _logger);
 
                 request.Updates.ApplyTo(patch);
@@ -42,12 +38,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
                     throw new FluentValidation.ValidationException(validation.Errors);
                 }
 
-                if(!string.Equals(prePatchEmail, new MailAddress(patch.Email).Address, StringComparison.Ordinal) ||
-                   !string.Equals(prePatchFirstName, patch.FirstName, StringComparison.Ordinal) ||
-                   !string.Equals(prePatchLastName, patch.LastName, StringComparison.Ordinal))
-                {
-                    apprentice.UpdatedOn = DateTime.UtcNow;
-                }
+                apprentice.UpdatedOn = DateTime.UtcNow;
 
                 _logger.LogInformation("{HandlerName} Apprentice Id {ApprenticeId}",
                     nameof(UpdateApprenticeCommandHandler),
