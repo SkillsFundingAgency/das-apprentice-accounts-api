@@ -42,9 +42,7 @@ public class SyncApprenticeAccountHandler : IRequestHandler<SyncApprenticeAccoun
                 return new ApprenticeSyncResponseDto();
             }
 
-            var apprentices = _apprentices.Entities.AsNoTracking()
-                .Where(a => request.ApprenticeIDs.Contains(a.Id) && 
-                            (!request.UpdatedSince.HasValue || a.UpdatedOn.Date > request.UpdatedSince.Value.Date));
+            var apprentices = await _apprentices.GetForSync(request.ApprenticeIDs, request.UpdatedSince);
 
             if(!apprentices.Any())
             {
