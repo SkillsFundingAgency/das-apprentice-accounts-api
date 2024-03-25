@@ -7,11 +7,6 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.SyncApprenticeAccountsQ
 
 public class SyncApprenticeAccountQuery : IRequest<ApprenticeSyncResponseDto>
 {
-    public SyncApprenticeAccountQuery()
-    {
-
-    }
-
     public SyncApprenticeAccountQuery(DateTime? updatedSince, Guid[] apprenticeIDs)
     {
         UpdatedSince = updatedSince;
