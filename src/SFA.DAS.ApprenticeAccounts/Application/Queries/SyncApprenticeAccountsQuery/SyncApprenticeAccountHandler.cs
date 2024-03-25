@@ -39,7 +39,7 @@ public class SyncApprenticeAccountHandler : IRequestHandler<SyncApprenticeAccoun
 
             if (!request.ApprenticeIDs.Any())
             {
-                new ApprenticeSyncResponseDto();
+                return new ApprenticeSyncResponseDto();
             }
 
             var apprentices = _apprentices.Entities.AsNoTracking()
