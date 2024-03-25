@@ -47,8 +47,8 @@ public class WhenHandlingSyncApprentices
         var mockDbSet = MockDbSetSetup.CreateQueryableMockDbSet(new List<Apprentice> { apprentice });
 
         mockApprenticeContext
-            .Setup(x => x.Entities)
-            .Returns(mockDbSet.Object);
+            .Setup(x => x.GetForSync(It.IsAny<Guid[]>(), It.IsAny<DateTime?>()))
+            .ReturnsAsync(mockDbSet.Object.ToArray());
 
         var handler = new SyncApprenticeAccountHandler(logger.Object, mockApprenticeContext.Object);
 
@@ -74,7 +74,7 @@ public class WhenHandlingSyncApprentices
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext
         )
     {
-        SyncApprenticeAccountQuery query = new SyncApprenticeAccountQuery(null, new Guid[] {  });
+        SyncApprenticeAccountQuery query = new SyncApprenticeAccountQuery(null, Array.Empty<Guid>());
 
         var handler = new SyncApprenticeAccountHandler(logger.Object, mockApprenticeContext.Object);
 
@@ -94,7 +94,6 @@ public class WhenHandlingSyncApprentices
             [Frozen] MailAddress email,
             [Frozen] DateTime dateOfBirth,
             [Frozen] DateTime updatedSinceDate
-
         )
     {
         SyncApprenticeAccountQuery query = new SyncApprenticeAccountQuery(updatedSinceDate, new Guid[] { apprenticeId });
@@ -113,8 +112,8 @@ public class WhenHandlingSyncApprentices
         var mockDbSet = MockDbSetSetup.CreateQueryableMockDbSet(new List<Apprentice> { apprentice });
 
         mockApprenticeContext
-            .Setup(x => x.Entities)
-            .Returns(mockDbSet.Object);
+            .Setup(x => x.GetForSync(It.IsAny<Guid[]>(), It.IsAny<DateTime?>()))
+            .ReturnsAsync(mockDbSet.Object.ToArray());
 
         var handler = new SyncApprenticeAccountHandler(logger.Object, mockApprenticeContext.Object);
 
