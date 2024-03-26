@@ -1,6 +1,5 @@
 ﻿using AutoFixture.NUnit3;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
@@ -20,7 +19,6 @@ public class WhenHandlingSyncApprentices
     [Test]
     [RecursiveMoqAutoData]
     public async Task AndNullDate_ThenExpectedArrayOfApprenticeSyncDtoReturned(
-            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
             [Frozen] Guid apprenticeId,
             [Frozen] string firstName,
@@ -47,7 +45,7 @@ public class WhenHandlingSyncApprentices
             .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
             .ReturnsAsync(new Apprentice[] { apprentice });
 
-        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -67,11 +65,10 @@ public class WhenHandlingSyncApprentices
     [Test]
     [RecursiveMoqAutoData]
     public async Task AndEmptyApprenticeIdArray_ThenReturnsEmptyArray(
-            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext
         )
     {
-        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
 
         GetApprenticesQuery query = new GetApprenticesQuery(null, Array.Empty<Guid>());
 
@@ -83,7 +80,6 @@ public class WhenHandlingSyncApprentices
     [Test]
     [RecursiveMoqAutoData]
     public async Task AndFutureDate_ThenExpectedArrayOfApprenticeSyncDtoReturned(
-            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
             [Frozen] Guid apprenticeId,
             [Frozen] string firstName,
@@ -110,7 +106,7 @@ public class WhenHandlingSyncApprentices
             .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
             .ReturnsAsync(new Apprentice[] { apprentice });
 
-        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -131,7 +127,6 @@ public class WhenHandlingSyncApprentices
     [Test]
     [RecursiveMoqAutoData]
     public async Task AndFutureDate_ThenEmptyArrayReturned(
-            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
             [Frozen] Guid apprenticeId,
             [Frozen] string firstName,
@@ -158,7 +153,7 @@ public class WhenHandlingSyncApprentices
             .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
             .ReturnsAsync(Array.Empty<Apprentice>());
 
-        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -168,11 +163,10 @@ public class WhenHandlingSyncApprentices
     [Test]
     [RecursiveMoqAutoData]
     public void AndNullRequest_ThenThrowsArgumentNullException(
-            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext
         )
     {
-        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
 
         var exception = Assert.ThrowsAsync<ArgumentNullException>(() => handler.Handle(null, CancellationToken.None));
     }
