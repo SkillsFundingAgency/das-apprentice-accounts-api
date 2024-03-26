@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using Microsoft.Extensions.Logging;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
@@ -11,13 +10,10 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
 
 public class GetApprenticesHandler : IRequestHandler<GetApprenticesQuery, ApprenticeSyncResponseDto>
 {
-    private readonly ILogger<GetApprenticesHandler> _logger;
-
     private readonly IApprenticeContext _apprentices;
 
-    public GetApprenticesHandler(ILogger<GetApprenticesHandler> logger, IApprenticeContext apprenticeshipRepository)
+    public GetApprenticesHandler(IApprenticeContext apprenticeshipRepository)
     {
-        _logger = logger;
         _apprentices = apprenticeshipRepository;
     }
 
