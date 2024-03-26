@@ -3,25 +3,24 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.SyncApprenticeAccountsQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using SFA.DAS.Testing.AutoFixture;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticeSync;
+namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.GetApprentices;
 public class WhenHandlingSyncApprentices
 {
     [Test]
     [RecursiveMoqAutoData]
-    public async Task WithNullDateThenExpectedArrayOfApprenticeSyncDtoReturned(
-            [Frozen] Mock<ILogger<SyncApprenticeAccountHandler>> logger,
+    public async Task AndNullDate_ThenExpectedArrayOfApprenticeSyncDtoReturned(
+            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
             [Frozen] Guid apprenticeId,
             [Frozen] string firstName,
@@ -31,7 +30,7 @@ public class WhenHandlingSyncApprentices
             [Frozen] DateTime updatedOn
         )
     {
-        SyncApprenticeAccountQuery query = new SyncApprenticeAccountQuery(null, new Guid[] { apprenticeId });
+        GetApprenticesQuery query = new GetApprenticesQuery(null, new Guid[] { apprenticeId });
 
         var apprentice = new Apprentice(
             apprenticeId,
@@ -44,13 +43,11 @@ public class WhenHandlingSyncApprentices
             UpdatedOn = updatedOn
         };
 
-        var mockDbSet = MockDbSetSetup.CreateQueryableMockDbSet(new List<Apprentice> { apprentice });
-
         mockApprenticeContext
-            .Setup(x => x.GetForSync(It.IsAny<Guid[]>(), It.IsAny<DateTime?>()))
-            .ReturnsAsync(mockDbSet.Object.ToArray());
+            .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
+            .ReturnsAsync(new Apprentice[] { apprentice });
 
-        var handler = new SyncApprenticeAccountHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -69,14 +66,14 @@ public class WhenHandlingSyncApprentices
 
     [Test]
     [RecursiveMoqAutoData]
-    public async Task WithEmptyApprenticeIdArrayEmptyArrayReturned(
-            [Frozen] Mock<ILogger<SyncApprenticeAccountHandler>> logger,
+    public async Task AndEmptyApprenticeIdArray_ThenReturnsEmptyArray(
+            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext
         )
     {
-        SyncApprenticeAccountQuery query = new SyncApprenticeAccountQuery(null, Array.Empty<Guid>());
+        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
 
-        var handler = new SyncApprenticeAccountHandler(logger.Object, mockApprenticeContext.Object);
+        GetApprenticesQuery query = new GetApprenticesQuery(null, Array.Empty<Guid>());
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -85,8 +82,8 @@ public class WhenHandlingSyncApprentices
 
     [Test]
     [RecursiveMoqAutoData]
-    public async Task WithFutureDateThenExpectedArrayOfApprenticeSyncDtoReturned(
-            [Frozen] Mock<ILogger<SyncApprenticeAccountHandler>> logger,
+    public async Task AndFutureDate_ThenExpectedArrayOfApprenticeSyncDtoReturned(
+            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
             [Frozen] Guid apprenticeId,
             [Frozen] string firstName,
@@ -96,7 +93,7 @@ public class WhenHandlingSyncApprentices
             [Frozen] DateTime updatedSinceDate
         )
     {
-        SyncApprenticeAccountQuery query = new SyncApprenticeAccountQuery(updatedSinceDate, new Guid[] { apprenticeId });
+        GetApprenticesQuery query = new GetApprenticesQuery(updatedSinceDate, new Guid[] { apprenticeId });
 
         var apprentice = new Apprentice(
             apprenticeId,
@@ -109,13 +106,11 @@ public class WhenHandlingSyncApprentices
             UpdatedOn = updatedSinceDate.Date.AddDays(1)
         };
 
-        var mockDbSet = MockDbSetSetup.CreateQueryableMockDbSet(new List<Apprentice> { apprentice });
-
         mockApprenticeContext
-            .Setup(x => x.GetForSync(It.IsAny<Guid[]>(), It.IsAny<DateTime?>()))
-            .ReturnsAsync(mockDbSet.Object.ToArray());
+            .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
+            .ReturnsAsync(new Apprentice[] { apprentice });
 
-        var handler = new SyncApprenticeAccountHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -135,8 +130,8 @@ public class WhenHandlingSyncApprentices
 
     [Test]
     [RecursiveMoqAutoData]
-    public async Task WithFutureDateThenEmptyArrayReturned(
-            [Frozen] Mock<ILogger<SyncApprenticeAccountHandler>> logger,
+    public async Task AndFutureDate_ThenEmptyArrayReturned(
+            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
             [Frozen] Guid apprenticeId,
             [Frozen] string firstName,
@@ -144,10 +139,9 @@ public class WhenHandlingSyncApprentices
             [Frozen] MailAddress email,
             [Frozen] DateTime dateOfBirth,
             [Frozen] DateTime updatedSinceDate
-
         )
     {
-        SyncApprenticeAccountQuery query = new SyncApprenticeAccountQuery(updatedSinceDate, new Guid[] { apprenticeId });
+        GetApprenticesQuery query = new GetApprenticesQuery(updatedSinceDate, new Guid[] { apprenticeId });
 
         var apprentice = new Apprentice(
             apprenticeId,
@@ -160,13 +154,11 @@ public class WhenHandlingSyncApprentices
             UpdatedOn = updatedSinceDate.Date.AddDays(-1)
         };
 
-        var mockDbSet = MockDbSetSetup.CreateQueryableMockDbSet(new List<Apprentice> { apprentice });
-
         mockApprenticeContext
-            .Setup(x => x.Entities)
-            .Returns(mockDbSet.Object);
+            .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
+            .ReturnsAsync(Array.Empty<Apprentice>());
 
-        var handler = new SyncApprenticeAccountHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -175,15 +167,13 @@ public class WhenHandlingSyncApprentices
 
     [Test]
     [RecursiveMoqAutoData]
-    public async Task WhenNullRequestEmptyArrayReturned(
-            [Frozen] Mock<ILogger<SyncApprenticeAccountHandler>> logger,
+    public void AndNullRequest_ThenThrowsArgumentNullException(
+            [Frozen] Mock<ILogger<GetApprenticesHandler>> logger,
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext
         )
     {
-        var handler = new SyncApprenticeAccountHandler(logger.Object, mockApprenticeContext.Object);
+        var handler = new GetApprenticesHandler(logger.Object, mockApprenticeContext.Object);
 
-        var result = await handler.Handle(null, CancellationToken.None);
-
-        result.Apprentices.Should().BeEmpty();
+        var exception = Assert.ThrowsAsync<ArgumentNullException>(() => handler.Handle(null, CancellationToken.None));
     }
 }
