@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
-using SFA.DAS.ApprenticeAccounts.Application.Queries.SyncApprenticeAccountsQuery;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
 using System.Threading.Tasks;
@@ -24,7 +23,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         [HttpGet("apprentices/{id}")]
         public async Task<IActionResult> GetApprentice(Guid id)
         {
-            var result = await _mediator.Send(new ApprenticesQuery(id));
+            var result = await _mediator.Send(new GetApprenticeQuery(id));
             if (result == null) return NotFound();
             return Ok(result);
         }
@@ -44,7 +43,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         [HttpPost("apprentices/sync")]
         public async Task<IActionResult> SyncApprentices(Guid[] apprenticeIds, DateTime? updatedSinceDate)
         {
-            var result = await _mediator.Send(new SyncApprenticeAccountQuery(updatedSinceDate, apprenticeIds));
+            var result = await _mediator.Send(new GetApprenticesQuery(updatedSinceDate, apprenticeIds));
             return Ok(result);
         }
     }
