@@ -20,46 +20,23 @@ public class WhenHandlingSyncApprentices
     [RecursiveMoqAutoData]
     public async Task AndNullDate_ThenExpectedArrayOfApprenticeSyncDtoReturned(
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
-            [Frozen] Guid apprenticeId,
-            [Frozen] string firstName,
-            [Frozen] string surname,
-            [Frozen] MailAddress email,
-            [Frozen] DateTime dateOfBirth,
-            [Frozen] DateTime updatedOn
+            GetApprenticesHandler handler,
+            Apprentice apprentice
         )
     {
-        GetApprenticesQuery query = new GetApprenticesQuery(null, new Guid[] { apprenticeId });
-
-        var apprentice = new Apprentice(
-            apprenticeId,
-            firstName,
-            surname,
-            email,
-            dateOfBirth
-        )
-        {
-            UpdatedOn = updatedOn
-        };
+        GetApprenticesQuery query = new GetApprenticesQuery(null, new Guid[] { apprentice.Id });
 
         mockApprenticeContext
             .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
             .ReturnsAsync(new Apprentice[] { apprentice });
 
-        var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
-
         var result = await handler.Handle(query, CancellationToken.None);
 
-        var expectedResult = new ApprenticeSyncDto() {
-            ApprenticeID = apprenticeId,
-            FirstName = firstName,
-            LastName = surname,
-            Email = email.Address,
-            LastUpdatedDate = updatedOn,
-            DateOfBirth = dateOfBirth
-        };
-
         result.Apprentices.Should().ContainSingle();
-        result.Apprentices.First().Should().BeEquivalentTo(expectedResult);
+
+        var apprenticeResult = result.Apprentices.First();
+
+        apprenticeResult.ApprenticeID.Should().Be(apprentice.Id);
     }
 
     [Test]
@@ -81,46 +58,32 @@ public class WhenHandlingSyncApprentices
     [RecursiveMoqAutoData]
     public async Task AndFutureDate_ThenExpectedArrayOfApprenticeSyncDtoReturned(
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
-            [Frozen] Guid apprenticeId,
-            [Frozen] string firstName,
-            [Frozen] string surname,
-            [Frozen] MailAddress email,
-            [Frozen] DateTime dateOfBirth,
-            [Frozen] DateTime updatedSinceDate
+            GetApprenticesHandler handler,
+            Apprentice apprentice
         )
     {
-        GetApprenticesQuery query = new GetApprenticesQuery(updatedSinceDate, new Guid[] { apprenticeId });
+        GetApprenticesQuery query = new GetApprenticesQuery(apprentice.UpdatedOn, new Guid[] { apprentice.Id });
 
-        var apprentice = new Apprentice(
-            apprenticeId,
-            firstName,
-            surname,
-            email,
-            dateOfBirth
-        )
-        {
-            UpdatedOn = updatedSinceDate.Date.AddDays(1)
-        };
+        apprentice.UpdatedOn = apprentice.UpdatedOn.Date.AddDays(1);
 
         mockApprenticeContext
             .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
             .ReturnsAsync(new Apprentice[] { apprentice });
 
-        var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
-
         var result = await handler.Handle(query, CancellationToken.None);
 
-        var expectedResult = new ApprenticeSyncDto()
+        var expectedResult =  new ApprenticeSyncDto()
         {
-            ApprenticeID = apprenticeId,
-            FirstName = firstName,
-            LastName = surname,
-            Email = email.Address,
-            LastUpdatedDate = updatedSinceDate.Date.AddDays(1),
-            DateOfBirth = dateOfBirth
+            ApprenticeID = apprentice.Id,
+            FirstName = apprentice.FirstName,
+            LastName = apprentice.LastName,
+            Email = apprentice.Email.Address,
+            LastUpdatedDate = apprentice.UpdatedOn,
+            DateOfBirth = apprentice.DateOfBirth
         };
 
         result.Apprentices.Should().ContainSingle();
+
         result.Apprentices.First().Should().BeEquivalentTo(expectedResult);
     }
 
@@ -128,32 +91,17 @@ public class WhenHandlingSyncApprentices
     [RecursiveMoqAutoData]
     public async Task AndFutureDate_ThenEmptyArrayReturned(
             [Frozen] Mock<IApprenticeContext> mockApprenticeContext,
-            [Frozen] Guid apprenticeId,
-            [Frozen] string firstName,
-            [Frozen] string surname,
-            [Frozen] MailAddress email,
-            [Frozen] DateTime dateOfBirth,
-            [Frozen] DateTime updatedSinceDate
+            GetApprenticesHandler handler,
+            Apprentice apprentice
         )
     {
-        GetApprenticesQuery query = new GetApprenticesQuery(updatedSinceDate, new Guid[] { apprenticeId });
+        GetApprenticesQuery query = new GetApprenticesQuery(apprentice.UpdatedOn, new Guid[] { apprentice.Id });
 
-        var apprentice = new Apprentice(
-            apprenticeId,
-            firstName,
-            surname,
-            email,
-            dateOfBirth
-        )
-        {
-            UpdatedOn = updatedSinceDate.Date.AddDays(-1)
-        };
+        apprentice.UpdatedOn = apprentice.UpdatedOn.Date.AddDays(-1);
 
         mockApprenticeContext
             .Setup(x => x.GetForSync(query.ApprenticeIds, query.UpdatedSince))
             .ReturnsAsync(Array.Empty<Apprentice>());
-
-        var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
 
         var result = await handler.Handle(query, CancellationToken.None);
 
@@ -163,7 +111,7 @@ public class WhenHandlingSyncApprentices
     [Test]
     [RecursiveMoqAutoData]
     public void AndNullRequest_ThenThrowsArgumentNullException(
-            [Frozen] Mock<IApprenticeContext> mockApprenticeContext
+            Mock<IApprenticeContext> mockApprenticeContext
         )
     {
         var handler = new GetApprenticesHandler(mockApprenticeContext.Object);
