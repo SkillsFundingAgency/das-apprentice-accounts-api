@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Moq;
+using System;
 
 namespace SFA.DAS.ApprenticeAccounts.UnitTests
 {

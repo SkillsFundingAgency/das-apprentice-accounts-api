@@ -5,22 +5,23 @@ using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System.Threading;
 using System.Threading.Tasks;
+
 namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
 {
-    public class ApprenticesQueryHandler
-        : IRequestHandler<ApprenticesQuery, ApprenticeDto?>
+    public class GetApprenticeQueryHandler
+        : IRequestHandler<GetApprenticeQuery, ApprenticeDto?>
     {
         private readonly IApprenticeContext _apprentices;
         private readonly ApplicationSettings _settings;
 
-        public ApprenticesQueryHandler(IApprenticeContext apprenticeshipRepository, ApplicationSettings settings)
+        public GetApprenticeQueryHandler(IApprenticeContext apprenticeshipRepository, ApplicationSettings settings)
         {
             _apprentices = apprenticeshipRepository;
             _settings = settings;
         }
 
         public async Task<ApprenticeDto?> Handle(
-            ApprenticesQuery request,
+            GetApprenticeQuery request,
             CancellationToken cancellationToken)
         {
             var apprentice = await _apprentices.Find(request.ApprenticeId);
