@@ -3,7 +3,7 @@
 
 Feature: GetApprentices
 	As an application user
-	I want to retrieve apprenices from the database
+	I want to retrieve apprentices from the database
 
 Scenario: Get apprentices for sync by ids only
 	Given there are apprentices with updates
