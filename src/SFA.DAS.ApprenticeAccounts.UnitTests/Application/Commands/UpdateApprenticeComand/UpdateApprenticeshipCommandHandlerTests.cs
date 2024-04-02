@@ -14,7 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Commands.UpdateApprenticeComand;
-public class UpdateApprenticeshipCommandTests
+public class UpdateApprenticeshipCommandHandlerTests
 {
     private Mock<IApprenticeContext> _mockApprenticeContext;
     private UpdateApprenticeCommand _mockCommand;
@@ -44,8 +44,8 @@ public class UpdateApprenticeshipCommandTests
                 )
             );
 
-        var handler = new UpdateApprenticeCommandHandler(_mockApprenticeContext.Object, _logger.Object);
-        var result = await handler.Handle(_mockCommand, CancellationToken.None);
+        var sut = new UpdateApprenticeCommandHandler(_mockApprenticeContext.Object, _logger.Object);
+        var result = await sut.Handle(_mockCommand, CancellationToken.None);
         result.GetType().Should().Be(typeof(bool));
         result.Should().BeTrue();
     }
@@ -57,9 +57,9 @@ public class UpdateApprenticeshipCommandTests
             .Setup(x => x.Find(It.IsAny<Guid>()))
             .ReturnsAsync((Apprentice)null);
 
-        var handler = new UpdateApprenticeCommandHandler(_mockApprenticeContext.Object, _logger.Object);
+        var sut = new UpdateApprenticeCommandHandler(_mockApprenticeContext.Object, _logger.Object);
 
-        var result = await handler.Handle(_mockCommand, CancellationToken.None);
+        var result = await sut.Handle(_mockCommand, CancellationToken.None);
 
         result.Should().BeFalse();
     }
