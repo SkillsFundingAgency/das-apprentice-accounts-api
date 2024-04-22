@@ -23,7 +23,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         [HttpGet("apprentices/{id}")]
         public async Task<IActionResult> GetApprentice(Guid id)
         {
-            var result = await _mediator.Send(new ApprenticesQuery(id));
+            var result = await _mediator.Send(new GetApprenticeQuery(id));
             if (result == null) return NotFound();
             return Ok(result);
         }
@@ -37,6 +37,13 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         {
             var result = await _mediator.Send(new UpdateApprenticeCommand(id, changes));
             if (result == false) return NotFound();
+            return Ok(result);
+        }
+
+        [HttpPost("apprentices/sync")]
+        public async Task<IActionResult> SyncApprentices(Guid[] apprenticeIds, DateTime? updatedSinceDate)
+        {
+            var result = await _mediator.Send(new GetApprenticesQuery(updatedSinceDate, apprenticeIds));
             return Ok(result);
         }
     }
