@@ -29,4 +29,18 @@
     <ProjectReference Include="..\SFA.DAS.ApprenticeAccounts.Messages\SFA.DAS.ApprenticeAccounts.Messages.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="DTOs\ApprenticeArticle\" />
+    <None Remove="DTOs\ApprenticeArticle\GetAllApprenticeArticlesForApprentice\" />
+    <None Remove="Application\Queries\GetAllApprenticeArticlesForApprenticeQuery\" />
+    <None Remove="Application\Queries\GetAllApprenticeArticlesByIdentifierQuery\" />
+    <None Remove="Application\Commands\AddUpdateApprenticeArticleCommand\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTOs\ApprenticeArticle\" />
+    <Folder Include="DTOs\ApprenticeArticle\GetAllApprenticeArticlesForApprentice\" />
+    <Folder Include="Application\Queries\GetAllApprenticeArticlesForApprenticeQuery\" />
+    <Folder Include="Application\Queries\GetAllApprenticeArticlesByIdentifierQuery\" />
+    <Folder Include="Application\Commands\AddUpdateApprenticeArticleCommand\" />
+  </ItemGroup>
 </Project>

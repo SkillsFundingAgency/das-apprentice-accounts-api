@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SFA.DAS.ApprenticeAccounts.Data.Models
 {
     public class ApprenticeAccountsDbContext
-        : DbContext, IApprenticeContext, IPreferencesContext, IApprenticePreferencesContext, IMyApprenticeshipContext
+        : DbContext, IApprenticeContext, IPreferencesContext, IApprenticePreferencesContext, IMyApprenticeshipContext, IApprenticeArticleContext
     {
         protected IEventDispatcher _dispatcher;
 
@@ -29,11 +29,16 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public virtual DbSet<Preference> Preference { get; set; } = null!;
         public virtual DbSet<ApprenticePreferences> ApprenticePreferences { get; set; } = null!;
         public virtual DbSet<MyApprenticeship> MyApprenticeships { get; set; } = null!;
+        public virtual DbSet<ApprenticeArticle> ApprenticeArticle { get; set; } = null!;
+
 
         DbSet<Apprentice> IEntityContext<Apprentice>.Entities => Apprentices;
 
         DbSet<Preference> IEntityContext<Preference>.Entities => Preference;
+
         DbSet<ApprenticePreferences> IEntityContext<ApprenticePreferences>.Entities => ApprenticePreferences;
+
+        DbSet<ApprenticeArticle> IEntityContext<ApprenticeArticle>.Entities => ApprenticeArticle;
 
         DbSet<MyApprenticeship> IEntityContext<MyApprenticeship>.Entities => MyApprenticeships;
 
@@ -70,6 +75,14 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 p.ToTable("Preference")
                  .HasKey(p => p.PreferenceId);                
             });
+
+            modelBuilder.Entity<ApprenticeArticle>(p =>
+            {
+                p.ToTable("ApprenticeArticle")
+                .HasKey(m => new { m.Id, m.EntryId });
+            });
+
+
 
             modelBuilder.Entity<ApprenticePreferences>( ap =>
             {

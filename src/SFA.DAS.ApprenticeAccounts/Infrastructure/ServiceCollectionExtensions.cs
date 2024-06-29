@@ -37,6 +37,7 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
             services.AddSingleton<IManagedIdentityTokenProvider, ManagedIdentityTokenProvider>();
             services.AddTransient<IConnectionFactory, SqlServerConnectionFactory>();
             services.AddScoped<IApprenticeContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
+            services.AddScoped<IApprenticeArticleContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
             services.AddScoped<IPreferencesContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
             services.AddScoped<IApprenticePreferencesContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
             services.AddScoped<IMyApprenticeshipContext>(s => s.GetRequiredService<ApprenticeAccountsDbContext>());
