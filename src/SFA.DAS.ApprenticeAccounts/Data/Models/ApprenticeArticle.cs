@@ -22,4 +22,3 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public bool? LikeStatus { get; set; }
     }
 }
-

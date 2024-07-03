@@ -40,5 +40,4 @@ public class WhenGettingApprenticeSupportAndGuidance
         result.Should().NotBeNull();
         result.Should().BeOfType(typeof(OkObjectResult));
     }
-
 }
