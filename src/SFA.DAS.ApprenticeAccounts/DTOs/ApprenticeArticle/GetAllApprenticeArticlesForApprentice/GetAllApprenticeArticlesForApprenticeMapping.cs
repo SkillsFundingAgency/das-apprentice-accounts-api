@@ -15,7 +15,8 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticeArticle.GetAllApprenticeArti
                     {
                         LikeStatus = ap.LikeStatus,
                         EntryId = ap.EntryId,
-                        IsSaved = ap.IsSaved
+                        IsSaved = ap.IsSaved,
+                        SaveTime = ap.SaveTime
                     }))
             };
 

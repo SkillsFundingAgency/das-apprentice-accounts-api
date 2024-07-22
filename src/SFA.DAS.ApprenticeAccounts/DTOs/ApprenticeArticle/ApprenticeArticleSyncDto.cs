@@ -18,6 +18,9 @@ public class ApprenticeArticleSyncDto
     [JsonProperty("likestatus")]
     public bool? LikeStatus { get; set; }
 
+    [JsonProperty("savetime")]
+    public DateTime? SaveTime { get; set; }
+
 
     public static ApprenticeArticleSyncDto MapToSyncResponse(Data.Models.ApprenticeArticle apprenticeArticle)
     {
@@ -27,6 +30,7 @@ public class ApprenticeArticleSyncDto
             EntryId = apprenticeArticle.EntryId,
             IsSaved = apprenticeArticle.IsSaved,
             LikeStatus = apprenticeArticle.LikeStatus,
+            SaveTime = apprenticeArticle.SaveTime
         };
     }
 }

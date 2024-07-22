@@ -44,7 +44,8 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
                 Id = id,
                 EntryId = articleIdentifier,
                 IsSaved = request.IsSaved,
-                LikeStatus = request.LikeStatus
+                LikeStatus = request.LikeStatus,
+                
             });
             return Ok(result);
         }
@@ -53,6 +54,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         {
             public bool? IsSaved { get; set; }
             public bool? LikeStatus { get; set; }
+            public DateTime? SaveTime { get; set; }
         }
     }
 }

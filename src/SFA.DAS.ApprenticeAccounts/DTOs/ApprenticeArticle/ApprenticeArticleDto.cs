@@ -11,6 +11,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticeArticle
         public string? EntryId { get; set; }
         public bool? IsSaved { get; set; }
         public bool? LikeStatus { get; set; }
+        public DateTime? SaveTime { get; set; }
 
         [return: NotNullIfNotNull("source")]
         public static ApprenticeArticleDto? Create(Data.Models.ApprenticeArticle source)
@@ -23,6 +24,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticeArticle
                 EntryId = source.EntryId,
                 IsSaved = source.IsSaved,
                 LikeStatus = source.LikeStatus,
+                SaveTime = source.SaveTime
             };
 
             return apprenticeArticleDto;

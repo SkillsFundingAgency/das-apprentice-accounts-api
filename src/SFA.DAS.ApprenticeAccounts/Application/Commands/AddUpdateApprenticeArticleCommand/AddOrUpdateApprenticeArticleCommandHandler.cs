@@ -42,7 +42,8 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.AddUpdateApprenticeArt
                     request.Id,
                     request.EntryId,
                    request.IsSaved,
-                   request.LikeStatus
+                   request.LikeStatus,
+                   request.SaveTime
                 ));
             }
 
