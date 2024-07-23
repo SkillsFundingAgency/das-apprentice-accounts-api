@@ -23,8 +23,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticeArticle
                 Id = source.Id,
                 EntryId = source.EntryId,
                 IsSaved = source.IsSaved,
-                LikeStatus = source.LikeStatus,
-                SaveTime = source.SaveTime
+                LikeStatus = source.LikeStatus
             };
 
             return apprenticeArticleDto;

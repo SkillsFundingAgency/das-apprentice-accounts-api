@@ -29,8 +29,7 @@ public class ApprenticeArticleSyncDto
             Id = apprenticeArticle.Id,
             EntryId = apprenticeArticle.EntryId,
             IsSaved = apprenticeArticle.IsSaved,
-            LikeStatus = apprenticeArticle.LikeStatus,
-            SaveTime = apprenticeArticle.SaveTime
+            LikeStatus = apprenticeArticle.LikeStatus
         };
     }
 }
