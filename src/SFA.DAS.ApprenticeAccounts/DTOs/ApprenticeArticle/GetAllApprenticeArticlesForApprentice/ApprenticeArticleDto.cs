@@ -7,5 +7,6 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.ApprenticeArticle.GetAllApprenticeArti
         public string? EntryId { get; set; }
         public bool? IsSaved { get; set; }
         public bool? LikeStatus { get; set; }
+        public DateTime? SaveTime { get; set; }
     }
 }

@@ -15,6 +15,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.AddUpdateApprenticeArt
                 EntryId = request.EntryId,
                 LikeStatus = request.LikeStatus,
                 IsSaved = request.IsSaved,
+                SaveTime = request.SaveTime
             };
         }
 
@@ -22,5 +23,6 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.AddUpdateApprenticeArt
         public string? EntryId { get; set; }
         public bool? IsSaved { get; set; }
         public bool? LikeStatus { get; set; }
+        public DateTime? SaveTime { get; set; }
     }
 }
