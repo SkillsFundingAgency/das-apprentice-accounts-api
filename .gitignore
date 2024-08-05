@@ -371,3 +371,5 @@ SonarQube.Analysis.xml
 
 *.feature.cs
 *.ncrunchsolution
+
+src/.idea/.idea.SFA.DAS.ApprenticeAccounts/.idea/
