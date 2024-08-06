@@ -1,4 +1,4 @@
-using MediatR;
+﻿using MediatR;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System.Net.Mail;
@@ -21,7 +21,8 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccoun
                 request.FirstName,
                 request.LastName,
                 new MailAddress(request.Email),
-                request.DateOfBirth
+                request.DateOfBirth,
+                request.GovUkIdentifier
                 ));
 
             return Unit.Task;
