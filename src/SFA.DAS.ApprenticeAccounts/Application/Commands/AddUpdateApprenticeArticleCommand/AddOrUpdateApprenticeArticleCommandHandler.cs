@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.AddUpdateApprenticeArticle
 {
-    public class AddOrUpdateApprenticeArticleCommandHandler : IRequestHandler<AddOrUpdateApprenticeArticleCommand>
+    public class AddOrUpdateApprenticeArticleCommandHandler : IRequestHandler<AddOrUpdateApprenticeArticleCommand, Unit>
     {
         private readonly IApprenticeArticleContext _apprenticeArticleContext;
         private readonly ILogger<AddOrUpdateApprenticeArticleCommandHandler> _logger;

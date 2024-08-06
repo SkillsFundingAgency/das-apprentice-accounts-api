@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using System.Net.Mail;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand
 {
-    public class CreateApprenticeAccountCommandHandler : IRequestHandler<CreateApprenticeAccountCommand>
+    public class CreateApprenticeAccountCommandHandler : IRequestHandler<CreateApprenticeAccountCommand, Unit>
     {
         private readonly IApprenticeContext _apprentices;
 

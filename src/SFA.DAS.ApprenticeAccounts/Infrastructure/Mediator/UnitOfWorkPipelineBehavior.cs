@@ -14,7 +14,7 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure.Mediator
             _context = context;
         }
 
-        public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
             if (!(request is IUnitOfWorkCommand))
             {

@@ -26,7 +26,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
         [Test, AutoData]
         public async Task Then_we_call_delegator_and_return_response(SimpleRequest request, SimpleResponse expectedResponse)
         {
-            var response = await _sut.Handle(request, CancellationToken.None, () => Task.FromResult(expectedResponse));
+            var response = await _sut.Handle(request,  () => Task.FromResult(expectedResponse), CancellationToken.None);
 
             response.Should().Be(expectedResponse);
         }
@@ -34,7 +34,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
         [Test, AutoData]
         public async Task Then_we_log_the_handler_is_starting(SimpleRequest request, SimpleResponse expectedResponse)
         {
-            await _sut.Handle(request, CancellationToken.None, () => Task.FromResult(expectedResponse));
+            await _sut.Handle(request, () => Task.FromResult(expectedResponse), CancellationToken.None);
 
             _loggerMock.VerifyLog(LogLevel.Information, Times.Once(), $"Start handling '{typeof(SimpleRequest)}'");
         }
@@ -42,7 +42,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
         [Test, AutoData]
         public async Task Then_we_log_the_handler_has_finished(SimpleRequest request, SimpleResponse expectedResponse)
         {
-            await _sut.Handle(request, CancellationToken.None, () => Task.FromResult(expectedResponse));
+            await _sut.Handle(request,  () => Task.FromResult(expectedResponse),CancellationToken.None);
 
             _loggerMock.VerifyLog(LogLevel.Information, Times.Once(), $"End handling '{typeof(SimpleRequest)}'");
         }
@@ -50,7 +50,7 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Infrastructure.MediatorTests
         [Test, AutoData]
         public void Then_we_log_the_handler_has_errored(SimpleRequest request, SimpleResponse expectedResponse)
         {
-            Func<Task> action = () => _sut.Handle(request, CancellationToken.None, () => throw new Exception("failed"));
+            Func<Task> action = () => _sut.Handle(request, () => throw new Exception("failed"), CancellationToken.None);
 
             action.Should().ThrowAsync<Exception>().WithMessage("failed");
 

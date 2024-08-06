@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticePreferenceCommand
 {
-    public class UpdateApprenticePreferenceCommandHandler : IRequestHandler<UpdateApprenticePreferenceCommand>
+    public class UpdateApprenticePreferenceCommandHandler : IRequestHandler<UpdateApprenticePreferenceCommand, Unit>
     {
         private readonly IApprenticePreferencesContext _apprenticePreferencesContext;
         private readonly IApprenticeContext _apprenticeContext;

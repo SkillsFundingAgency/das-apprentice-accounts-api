@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
+using SFA.DAS.Api.Common.AppStart;
+using SFA.DAS.Api.Common.Configuration;
+using SFA.DAS.Api.Common.Infrastructure;
 using SFA.DAS.ApprenticeAccounts.Api.Authentication;
 using SFA.DAS.ApprenticeAccounts.Api.Filters;
 using SFA.DAS.ApprenticeAccounts.Configuration;
@@ -20,9 +23,11 @@ using SFA.DAS.ApprenticeAccounts.Extensions;
 using SFA.DAS.ApprenticeAccounts.Infrastructure;
 using SFA.DAS.Configuration.AzureTableStorage;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using ProblemDetailsOptions = Hellang.Middleware.ProblemDetails.ProblemDetailsOptions;
 
 namespace SFA.DAS.ApprenticeAccounts.Api
 {
@@ -75,7 +80,11 @@ namespace SFA.DAS.ApprenticeAccounts.Api
                     .GetSection("AzureAd")
                     .Get<AzureActiveDirectoryConfiguration>();
 
-                services.AddApiAuthentication(azureAdConfiguration);
+                var policies = new Dictionary<string, string>
+                {
+                    {PolicyNames.Default, RoleNames.Default},
+                };
+                services.AddAuthentication(azureAdConfiguration, policies);
             }
 
             services.AddOptions();
