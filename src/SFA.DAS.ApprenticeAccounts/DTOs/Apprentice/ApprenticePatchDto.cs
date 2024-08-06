@@ -66,5 +66,15 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
                 _apprentice.TermsOfUseAccepted = value;
             }
         }
+
+        public string? GovUkIdentifier
+        {
+            get => _apprentice.GovUkIdentifier;
+            set
+            {
+                _logger.LogInformation("Patching GovUkIdentifier for Apprentice {id}", _apprentice.Id);
+                _apprentice.GovUkIdentifier = value;
+            }
+        }
     }
 }

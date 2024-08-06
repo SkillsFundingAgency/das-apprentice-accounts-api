@@ -15,6 +15,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
         public DateTime DateOfBirth { get; set; }
         public bool TermsOfUseAccepted { get; set; }
         public bool ReacceptTermsOfUseRequired { get; set; }
+        public string? GovUkIdentifier { get; set; }
 
         [return: NotNullIfNotNull("source")]
         public static ApprenticeDto? Create(Data.Models.Apprentice source, DateTime termsOfServiceUpdatedOn)
@@ -31,7 +32,8 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
                 Email = source.Email.ToString(),
                 DateOfBirth = source.DateOfBirth,
                 TermsOfUseAccepted = source.TermsOfUseAccepted && !termsOfUseNeedsReaccepting,
-                ReacceptTermsOfUseRequired = termsOfUseNeedsReaccepting
+                ReacceptTermsOfUseRequired = termsOfUseNeedsReaccepting,
+                GovUkIdentifier = source.GovUkIdentifier
             };
 
             return apprenticeDto;
