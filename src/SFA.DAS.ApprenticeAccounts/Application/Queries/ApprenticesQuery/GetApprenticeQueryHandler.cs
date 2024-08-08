@@ -3,6 +3,7 @@ using MediatR;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,7 +25,10 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
             GetApprenticeQuery request,
             CancellationToken cancellationToken)
         {
-            var apprentice = await _apprentices.Find(request.ApprenticeId);
+            var isApprenticeGuid = Guid.TryParse(request.ApprenticeId, out var apprenticeGuid); 
+            var apprentice = isApprenticeGuid 
+                ? await _apprentices.Find(apprenticeGuid) 
+                : await _apprentices.FindByGovIdentifier(request.ApprenticeId);
             
             return ApprenticeDto.Create(apprentice, _settings.TermsOfServiceUpdatedOn);
         }

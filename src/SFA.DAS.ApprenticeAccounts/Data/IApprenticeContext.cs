@@ -29,5 +29,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data
             => await Entities
                 .Where(x => ids.Contains(x.Id) && (!UpdatedSince.HasValue || x.UpdatedOn.Date > UpdatedSince.Value.Date))
                 .ToArrayAsync();
+
+        public async Task<Apprentice?> FindByGovIdentifier(string govUkIdentifier) 
+            => await Entities.SingleOrDefaultAsync(c=>c.GovUkIdentifier == govUkIdentifier);
     }
 }

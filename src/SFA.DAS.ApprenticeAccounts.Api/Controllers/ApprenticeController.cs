@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class ApprenticesController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,19 +21,19 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("apprentices/{id}")]
-        public async Task<IActionResult> GetApprentice(Guid id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetApprentice(string id)
         {
             var result = await _mediator.Send(new GetApprenticeQuery(id));
             if (result == null) return NotFound();
             return Ok(result);
         }
 
-        [HttpPost("apprentices")]
+        [HttpPost("")]
         public async Task PostApprentice(CreateApprenticeAccountCommand command)
             => await _mediator.Send(command);
 
-        [HttpPatch("apprentices/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateApprentice(Guid id, JsonPatchDocument<ApprenticePatchDto> changes)
         {
             var result = await _mediator.Send(new UpdateApprenticeCommand(id, changes));
@@ -40,7 +41,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("apprentices/sync")]
+        [HttpPost("sync")]
         public async Task<IActionResult> SyncApprentices(Guid[] apprenticeIds, DateTime? updatedSinceDate)
         {
             var result = await _mediator.Send(new GetApprenticesQuery(updatedSinceDate, apprenticeIds));

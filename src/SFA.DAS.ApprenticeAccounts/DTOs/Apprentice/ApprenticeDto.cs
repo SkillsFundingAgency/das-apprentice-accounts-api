@@ -18,9 +18,12 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
         public string? GovUkIdentifier { get; set; }
 
         [return: NotNullIfNotNull("source")]
-        public static ApprenticeDto? Create(Data.Models.Apprentice source, DateTime termsOfServiceUpdatedOn)
+        public static ApprenticeDto? Create(Data.Models.Apprentice? source, DateTime termsOfServiceUpdatedOn)
         {
-            if (source == null) return null;
+            if (source == null)
+            {
+                return null;
+            }
 
             var termsOfUseNeedsReaccepting = source.TermsOfUseNeedsReaccepting(termsOfServiceUpdatedOn);
 
