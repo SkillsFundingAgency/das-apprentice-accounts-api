@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateMyApprenticeshipCommand;
-public class UpdateMyApprenticeshipCommandHandler : IRequestHandler<UpdateMyApprenticeshipCommand>
+public class UpdateMyApprenticeshipCommandHandler : IRequestHandler<UpdateMyApprenticeshipCommand, Unit>
 {
     private readonly IMyApprenticeshipContext _myApprenticeships;
 

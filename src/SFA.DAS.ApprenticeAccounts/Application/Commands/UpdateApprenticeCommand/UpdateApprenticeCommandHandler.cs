@@ -39,7 +39,6 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
                 }
 
                 apprentice.UpdatedOn = DateTime.UtcNow;
-
                 _logger.LogInformation("{HandlerName} Apprentice Id {ApprenticeId}",
                     nameof(UpdateApprenticeCommandHandler),
                     request.ApprenticeId

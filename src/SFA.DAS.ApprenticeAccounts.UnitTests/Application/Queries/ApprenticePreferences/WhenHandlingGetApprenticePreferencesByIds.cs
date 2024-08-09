@@ -27,9 +27,10 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
             string mockPreferenceHint,
             MailAddress mockApprenticeMailAddress,
             string mockFirstName,
-            string mockLastName)
+            string mockLastName, 
+            string govUkIdentifier)
         {
-            var apprentice = new Apprentice(Guid.NewGuid(), mockFirstName, mockLastName, mockApprenticeMailAddress, mockDateOfBirth);
+            var apprentice = new Apprentice(Guid.NewGuid(), mockFirstName, mockLastName, mockApprenticeMailAddress, mockDateOfBirth, govUkIdentifier);
             var preference = new Preference(query.PreferenceId, mockPreferenceMeaning, mockPreferenceHint);
             var response =
                 new Data.Models.ApprenticePreferences(query.ApprenticeId, query.PreferenceId, mockStatus, mockCreatedOn,
@@ -42,11 +43,11 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
             var handler = new GetApprenticePreferenceForApprenticeAndPreferenceQueryHandler(mockContext.Object);
             var result = await handler.Handle(query, CancellationToken.None);
 
-            Assert.NotNull(result);
-            Assert.AreEqual(response.PreferenceId, result.PreferenceId);
-            Assert.AreEqual(response.Preference.PreferenceMeaning, result.PreferenceMeaning);
-            Assert.AreEqual(response.Status, result.Status);
-            Assert.AreEqual(response.UpdatedOn, result.UpdatedOn);
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.PreferenceId, Is.EqualTo(response.PreferenceId));
+            Assert.That(result.PreferenceMeaning, Is.EqualTo(response.Preference.PreferenceMeaning));
+            Assert.That(response.Status, Is.EqualTo(result.Status));
+            Assert.That(response.UpdatedOn, Is.EqualTo(result.UpdatedOn));
         }
 
         [Test]
@@ -63,10 +64,10 @@ namespace SFA.DAS.ApprenticeAccounts.UnitTests.Application.Queries.ApprenticePre
             var handler = new GetApprenticePreferenceForApprenticeAndPreferenceQueryHandler(mockContext.Object);
             var result = await handler.Handle(query, CancellationToken.None);
 
-            Assert.AreEqual(result.PreferenceId, response.Result.PreferenceId);
-            Assert.AreEqual(result.PreferenceMeaning, response.Result.PreferenceMeaning);
-            Assert.AreEqual(result.Status, response.Result.Status);
-            Assert.AreEqual(result.UpdatedOn, response.Result.UpdatedOn);
+            Assert.That(response.Result.PreferenceId, Is.EqualTo(result.PreferenceId));
+            Assert.That(response.Result.PreferenceMeaning, Is.EqualTo(result.PreferenceMeaning) );
+            Assert.That(response.Result.Status, Is.EqualTo(result.Status));
+            Assert.That(response.Result.UpdatedOn, Is.EqualTo(result.UpdatedOn));
         }
     }
 }

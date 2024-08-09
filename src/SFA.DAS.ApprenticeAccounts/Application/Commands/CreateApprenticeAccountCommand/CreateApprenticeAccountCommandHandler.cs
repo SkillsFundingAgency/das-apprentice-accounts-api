@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand
 {
-    public class CreateApprenticeAccountCommandHandler : IRequestHandler<CreateApprenticeAccountCommand>
+    public class CreateApprenticeAccountCommandHandler : IRequestHandler<CreateApprenticeAccountCommand, Unit>
     {
         private readonly IApprenticeContext _apprentices;
 
@@ -21,7 +21,8 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccoun
                 request.FirstName,
                 request.LastName,
                 new MailAddress(request.Email),
-                request.DateOfBirth
+                request.DateOfBirth,
+                request.GovUkIdentifier
                 ));
 
             return Unit.Task;
