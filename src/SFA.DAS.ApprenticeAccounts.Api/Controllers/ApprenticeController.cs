@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateOrUpdateApprenticeAccount;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
@@ -33,6 +34,13 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         public async Task PostApprentice(CreateApprenticeAccountCommand command)
             => await _mediator.Send(command);
 
+        [HttpPut("")]
+        public async Task<IActionResult> PutApprentice(CreateOrUpdateApprenticeAccountCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        
         [HttpPatch("{id}")]
         public async Task<IActionResult> UpdateApprentice(Guid id, JsonPatchDocument<ApprenticePatchDto> changes)
         {

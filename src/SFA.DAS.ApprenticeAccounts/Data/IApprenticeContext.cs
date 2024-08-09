@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 
 #nullable enable
 
@@ -20,6 +21,9 @@ namespace SFA.DAS.ApprenticeAccounts.Data
         public async Task<Apprentice?> Find(Guid apprenticeId)
             => await Entities.SingleOrDefaultAsync(a => a.Id == apprenticeId);
 
+        public async Task<Apprentice?> FindByEmail(MailAddress email)
+            => await Entities.FirstOrDefaultAsync(a => a.Email == email);
+        
         internal async Task<Apprentice[]> GetByEmail(MailAddress email)
             => await Entities
                 .Where(x => x.Email == email)
