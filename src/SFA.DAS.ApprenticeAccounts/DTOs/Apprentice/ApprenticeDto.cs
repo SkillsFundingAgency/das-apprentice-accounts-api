@@ -8,11 +8,11 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
     public class ApprenticeDto
     {
         public Guid ApprenticeId { get; set; }
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
+        public string? FirstName { get; set; } = null!;
+        public string? LastName { get; set; } = null!;
         public Guid UserIdentityId { get; set; }
         public string Email { get; set; } = null!;
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public bool TermsOfUseAccepted { get; set; }
         public bool ReacceptTermsOfUseRequired { get; set; }
         public string? GovUkIdentifier { get; set; }

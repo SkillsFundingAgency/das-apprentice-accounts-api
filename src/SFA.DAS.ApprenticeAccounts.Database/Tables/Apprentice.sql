@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [dbo].[Apprentice]
 (
 	[Id] UNIQUEIDENTIFIER NOT NULL,
-	[FirstName] NVARCHAR(100) NOT NULL,
-	[LastName] NVARCHAR(100) NOT NULL,
+	[FirstName] NVARCHAR(100) NULL,
+	[LastName] NVARCHAR(100) NULL,
 	[Email] NVARCHAR(200) NOT NULL, 
-    [DateOfBirth] DATETIME2 NOT NULL,
+    [DateOfBirth] DATETIME2 NULL,
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT current_timestamp, 
     [TermsOfUseAcceptedOn] DATETIME2 NULL,
     [UpdatedOn] DATETIME2 NOT NULL DEFAULT GETUTCDATE(), 

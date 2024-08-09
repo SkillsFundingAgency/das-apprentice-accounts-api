@@ -14,21 +14,21 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             // for Entity Framework
         }
 
-        public Apprentice(Guid Id, string firstName, string lastName, MailAddress email, DateTime dateOfBirth, string? govUkIdentifier = null)
+        public Apprentice(Guid Id, string? firstName, string? lastName, MailAddress email, DateTime? dateOfBirth, string? govUkIdentifier = null)
         {
             this.Id = Id;
             FirstName = firstName;
             LastName = lastName;
             Email = email;
             DateOfBirth = dateOfBirth;
-            PreviousEmailAddresses = new[] { new ApprenticeEmailAddressHistory(email) };
+            PreviousEmailAddresses = new List<ApprenticeEmailAddressHistory> { new ApprenticeEmailAddressHistory(email) };
             GovUkIdentifier = govUkIdentifier;
         }
 
         public Guid Id { get; private set; }
         public string? GovUkIdentifier { get; set; }
-        public string FirstName { get; set; } = null!;
-        public string LastName { get; set; } = null!;
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
         public MailAddress Email { get; private set; } = null!;
 
         public DateTime UpdatedOn { get; set; }
@@ -37,9 +37,9 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public ICollection<ApprenticePreferences> Preferences { get; private set; } = null!;
 
 
-        private DateTime _dateOfBirth;
+        private DateTime? _dateOfBirth;
 
-        public DateTime DateOfBirth
+        public DateTime? DateOfBirth
         {
             get => _dateOfBirth;
             set

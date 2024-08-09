@@ -47,7 +47,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
             }
         }
 
-        public DateTime DateOfBirth
+        public DateTime? DateOfBirth
         {
             get => _apprentice.DateOfBirth;
             set
