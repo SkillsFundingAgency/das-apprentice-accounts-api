@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using MediatR;
+﻿using MediatR;
 using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NServiceBus;
 using NServiceBus.ObjectBuilder.MSDependencyInjection;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.AddUpdateApprenticeArticle;
 using SFA.DAS.ApprenticeAccounts.Configuration;
 using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
@@ -26,7 +26,7 @@ namespace SFA.DAS.ApprenticeAccounts.Infrastructure
     {
         public static IServiceCollection AddServicesForApprenticeAccounts(this IServiceCollection services)
         {
-            services.AddMediatR(typeof(UnitOfWorkPipelineBehavior<,>).Assembly);
+            services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(AddOrUpdateApprenticeArticleCommand).Assembly));
             
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
             services.AddFluentValidation(new[] { typeof(UnitOfWorkPipelineBehavior<,>).Assembly });

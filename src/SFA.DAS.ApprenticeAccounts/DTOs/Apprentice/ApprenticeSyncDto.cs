@@ -16,7 +16,7 @@ public class ApprenticeSyncDto
     public string LastName { get; set; } = null!;
 
     [JsonProperty("dateOfBirth")]
-    public DateTime DateOfBirth { get; set; }
+    public DateTime? DateOfBirth { get; set; }
 
     [JsonProperty("email")]
     public string Email { get; set; } = null!;

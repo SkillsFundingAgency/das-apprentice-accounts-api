@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateMyApprenticeCommand
 {
-    public class CreateMyApprenticeshipCommandHandler : IRequestHandler<CreateMyApprenticeshipCommand>
+    public class CreateMyApprenticeshipCommandHandler : IRequestHandler<CreateMyApprenticeshipCommand, Unit>
     {
         private readonly IMyApprenticeshipContext _myApprenticeships;
 

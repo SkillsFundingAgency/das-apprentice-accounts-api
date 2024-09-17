@@ -47,7 +47,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
             }
         }
 
-        public DateTime DateOfBirth
+        public DateTime? DateOfBirth
         {
             get => _apprentice.DateOfBirth;
             set
@@ -64,6 +64,16 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
             {
                 _logger.LogInformation("Patching TermsOfUse for Apprentice {id}", _apprentice.Id);
                 _apprentice.TermsOfUseAccepted = value;
+            }
+        }
+
+        public string? GovUkIdentifier
+        {
+            get => _apprentice.GovUkIdentifier;
+            set
+            {
+                _logger.LogInformation("Patching GovUkIdentifier for Apprentice {id}", _apprentice.Id);
+                _apprentice.GovUkIdentifier = value;
             }
         }
     }
