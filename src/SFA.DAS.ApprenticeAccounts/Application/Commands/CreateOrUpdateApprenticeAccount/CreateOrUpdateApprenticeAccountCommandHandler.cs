@@ -4,6 +4,7 @@ using SFA.DAS.ApprenticeAccounts.Data;
 using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
+using System.Data;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,10 +27,27 @@ public class CreateOrUpdateApprenticeAccountCommandHandler(IApprenticeContext ap
                 apprentice.UpdatedOn = DateTime.UtcNow;
             }
 
-            if (!apprentice.Email.Address.Equals(request.Email))
+            if (!apprentice.Email.Address.Equals(request.Email) && !string.IsNullOrEmpty(apprentice.GovUkIdentifier))
             {
-                apprentice.UpdateEmail(new MailAddress(request.Email));
-                apprentice.UpdatedOn = DateTime.UtcNow;
+                var apprenticeByEmail = await apprenticeContext.FindByEmail(new MailAddress(request.Email));
+                if (apprenticeByEmail != null)
+                {
+                    if (!string.IsNullOrEmpty(apprenticeByEmail.GovUkIdentifier))
+                    {
+                        throw new ConstraintException("Unable to upsert apprentice");
+                    }
+                    //In this scenario a gov uk user has changed email to one that is already registered
+                    apprentice.GovUkIdentifier = null;
+                    apprentice.UpdatedOn = DateTime.UtcNow;    
+                    apprenticeByEmail.GovUkIdentifier = request.GovUkIdentifier;
+                    apprenticeByEmail.UpdatedOn = DateTime.UtcNow;    
+                    return ApprenticeDto.Create(apprenticeByEmail, applicationSettings.TermsOfServiceUpdatedOn);
+                }
+                else
+                {
+                    apprentice.UpdateEmail(new MailAddress(request.Email));
+                    apprentice.UpdatedOn = DateTime.UtcNow;    
+                }
             }
             
             return ApprenticeDto.Create(apprentice, applicationSettings.TermsOfServiceUpdatedOn);

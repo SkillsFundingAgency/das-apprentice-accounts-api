@@ -10,6 +10,7 @@ using SFA.DAS.ApprenticeAccounts.Data.Models;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using SFA.DAS.Testing.AutoFixture;
 using System;
+using System.Data;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,6 +51,7 @@ public class WhenHandlingCreateOrUpdateApprenticeAccountCommand
         var termsOfServiceDate = DateTime.UtcNow;
         settings.Setup(x => x.TermsOfServiceUpdatedOn).Returns(termsOfServiceDate);
         apprenticeContext.Setup(x => x.FindByGovIdentifier(command.GovUkIdentifier)).ReturnsAsync(apprentice);
+        apprenticeContext.Setup(x => x.FindByEmail(It.Is<MailAddress>(c=>c.Address == command.Email))).ReturnsAsync((Apprentice)null);
 
         var actual = await handler.Handle(command, CancellationToken.None);
 
@@ -74,6 +76,55 @@ public class WhenHandlingCreateOrUpdateApprenticeAccountCommand
         var actual = await handler.Handle(command, CancellationToken.None);
 
         actual.GovUkIdentifier.Should().Be(command.GovUkIdentifier);
+    }
+    
+    [Test, MoqAutoData]
+    public async Task Then_If_The_Apprentice_Exists_By_Email_And_By_Gov_Identifier_And_The_Email_Is_Different_Then_Email_Matching_Command_Is_Updated_With_Gov_Login(
+        CreateOrUpdateApprenticeAccountCommand command,
+        [Frozen] Mock<ApplicationSettings> settings,
+        [Frozen] Mock<IApprenticeContext> apprenticeContext,
+        CreateOrUpdateApprenticeAccountCommandHandler handler)
+    {
+        var idEmail = Guid.NewGuid();
+        var idGovIdentifier = Guid.NewGuid();
+        var email = "test@example.com";
+        var email2 = "test2@example.com";
+        command.Email = email;
+        var apprenticeEmail = new Apprentice(idEmail, null!, null!, new MailAddress(email),new DateTime() );
+        var apprenticeGov = new Apprentice(idGovIdentifier, null!, null!, new MailAddress(email2),new DateTime(), command.GovUkIdentifier );
+        var termsOfServiceDate = DateTime.UtcNow;
+        settings.Setup(x => x.TermsOfServiceUpdatedOn).Returns(termsOfServiceDate);
+        apprenticeContext.Setup(x => x.FindByGovIdentifier(command.GovUkIdentifier)).ReturnsAsync(apprenticeGov);
+        apprenticeContext.Setup(x => x.FindByEmail(It.Is<MailAddress>(c=>c.Address == command.Email))).ReturnsAsync(apprenticeEmail);
+
+        var actual = await handler.Handle(command, CancellationToken.None);
+
+        actual.GovUkIdentifier.Should().Be(command.GovUkIdentifier);
+        actual.Email.Should().Be(email);
+        actual.ApprenticeId.Should().Be(idEmail);
+    }
+    
+    
+    [Test, MoqAutoData]
+    public async Task Then_If_The_Apprentice_Exists_By_Email_And_By_Gov_Identifier_And_The_Email_Is_Different_Then_Email_Matching_Command_But_Has_GovIdentifier_Then_Exception_Thrown(
+        CreateOrUpdateApprenticeAccountCommand command,
+        [Frozen] Mock<ApplicationSettings> settings,
+        [Frozen] Mock<IApprenticeContext> apprenticeContext,
+        CreateOrUpdateApprenticeAccountCommandHandler handler)
+    {
+        var idEmail = Guid.NewGuid();
+        var idGovIdentifier = Guid.NewGuid();
+        var email = "test@example.com";
+        var email2 = "test2@example.com";
+        command.Email = email;
+        var apprenticeEmail = new Apprentice(idEmail, null!, null!, new MailAddress(email),new DateTime(),  idGovIdentifier.ToString());
+        var apprenticeGov = new Apprentice(idGovIdentifier, null!, null!, new MailAddress(email2),new DateTime(), command.GovUkIdentifier );
+        var termsOfServiceDate = DateTime.UtcNow;
+        settings.Setup(x => x.TermsOfServiceUpdatedOn).Returns(termsOfServiceDate);
+        apprenticeContext.Setup(x => x.FindByGovIdentifier(command.GovUkIdentifier)).ReturnsAsync(apprenticeGov);
+        apprenticeContext.Setup(x => x.FindByEmail(It.Is<MailAddress>(c=>c.Address == command.Email))).ReturnsAsync(apprenticeEmail);
+
+        Assert.ThrowsAsync<ConstraintException>(() => handler.Handle(command, CancellationToken.None));
     }
     
     [Test, MoqAutoData]
