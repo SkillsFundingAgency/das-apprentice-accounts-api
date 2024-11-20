@@ -16,6 +16,7 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
         public bool TermsOfUseAccepted { get; set; }
         public bool ReacceptTermsOfUseRequired { get; set; }
         public string? GovUkIdentifier { get; set; }
+        public DateTime? AppLastLoggedIn { get; set; }
 
         [return: NotNullIfNotNull("source")]
         public static ApprenticeDto? Create(Data.Models.Apprentice? source, DateTime termsOfServiceUpdatedOn)
@@ -36,7 +37,8 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
                 DateOfBirth = source.DateOfBirth,
                 TermsOfUseAccepted = source.TermsOfUseAccepted && !termsOfUseNeedsReaccepting,
                 ReacceptTermsOfUseRequired = termsOfUseNeedsReaccepting,
-                GovUkIdentifier = source.GovUkIdentifier
+                GovUkIdentifier = source.GovUkIdentifier,
+                AppLastLoggedIn = source.AppLastLoggedIn
             };
 
             return apprenticeDto;

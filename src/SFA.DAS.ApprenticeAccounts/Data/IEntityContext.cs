@@ -19,5 +19,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data
 
         [ExcludeFromCodeCoverage]
         EntityEntry<T> Update(T entity) => Entities.Update(entity);
+
+        [ExcludeFromCodeCoverage]
+        EntityEntry<T> Remove(T entity) => Entities.Remove(entity);
     }
 }

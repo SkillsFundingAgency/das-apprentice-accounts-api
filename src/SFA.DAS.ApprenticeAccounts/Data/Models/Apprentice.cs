@@ -14,7 +14,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             // for Entity Framework
         }
 
-        public Apprentice(Guid Id, string? firstName, string? lastName, MailAddress email, DateTime? dateOfBirth, string? govUkIdentifier = null)
+        public Apprentice(Guid Id, string? firstName, string? lastName, MailAddress email, DateTime? dateOfBirth, string? govUkIdentifier = null, DateTime? appLastLoggedIn = null)
         {
             this.Id = Id;
             FirstName = firstName;
@@ -23,6 +23,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             DateOfBirth = dateOfBirth;
             PreviousEmailAddresses = new List<ApprenticeEmailAddressHistory> { new ApprenticeEmailAddressHistory(email) };
             GovUkIdentifier = govUkIdentifier;
+            AppLastLoggedIn = appLastLoggedIn;
         }
 
         public Guid Id { get; private set; }
@@ -32,6 +33,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
         public MailAddress Email { get; private set; } = null!;
 
         public DateTime UpdatedOn { get; set; }
+        public DateTime? AppLastLoggedIn { get; set; }
 
         public ICollection<ApprenticeEmailAddressHistory> PreviousEmailAddresses { get; private set; } = null!;
         public ICollection<ApprenticePreferences> Preferences { get; private set; } = null!;

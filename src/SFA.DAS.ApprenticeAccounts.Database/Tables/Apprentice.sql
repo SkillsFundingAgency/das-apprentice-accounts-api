@@ -8,7 +8,8 @@
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT current_timestamp, 
     [TermsOfUseAcceptedOn] DATETIME2 NULL,
     [UpdatedOn] DATETIME2 NOT NULL DEFAULT GETUTCDATE(), 
-	[GovUkIdentifier] NVARCHAR(150) NULL
+	[GovUkIdentifier] NVARCHAR(150) NULL,
+    [AppLastLoggedIn] DATETIME2 NULL,	
     CONSTRAINT PK_Apprentice_Id PRIMARY KEY ([Id])
 )
 

@@ -50,6 +50,20 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost("apprentices/{id}/removearticle/{articleIdentifier}")]
+        public async Task<IActionResult> RemoveApprenticeArticle(Guid id, string articleIdentifier, [FromBody] ApprenticeArticleRequest request)
+        {
+            var result = await _mediator.Send(new RemoveApprenticeArticleCommand
+            {
+                Id = id,
+                EntryId = articleIdentifier,
+                IsSaved = request.IsSaved,
+                LikeStatus = request.LikeStatus,
+
+            });
+            return Ok(result);
+        }
+
         public class ApprenticeArticleRequest
         {
             public bool? IsSaved { get; set; }
