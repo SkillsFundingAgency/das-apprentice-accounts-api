@@ -32,6 +32,7 @@
     <None Remove="Application\Queries\GetAllApprenticeArticlesForApprenticeQuery\" />
     <None Remove="Application\Queries\GetAllApprenticeArticlesByIdentifierQuery\" />
     <None Remove="Application\Commands\AddUpdateApprenticeArticleCommand\" />
+    <None Remove="Application\Commands\RemoveApprenticeArticleCommand\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOs\ApprenticeArticle\" />
@@ -39,5 +40,6 @@
     <Folder Include="Application\Queries\GetAllApprenticeArticlesForApprenticeQuery\" />
     <Folder Include="Application\Queries\GetAllApprenticeArticlesByIdentifierQuery\" />
     <Folder Include="Application\Commands\AddUpdateApprenticeArticleCommand\" />
+    <Folder Include="Application\Commands\RemoveApprenticeArticleCommand\" />
   </ItemGroup>
 </Project>

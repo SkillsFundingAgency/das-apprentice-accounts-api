@@ -76,5 +76,15 @@ namespace SFA.DAS.ApprenticeAccounts.DTOs.Apprentice
                 _apprentice.GovUkIdentifier = value;
             }
         }
+
+        public DateTime? AppLastLoggedIn
+        {
+            get => _apprentice.AppLastLoggedIn;
+            set
+            {
+                _logger.LogInformation("Patching AppLastLoggedIn for Apprentice {id}", _apprentice.Id);
+                _apprentice.AppLastLoggedIn = value;
+            }
+        }
     }
 }

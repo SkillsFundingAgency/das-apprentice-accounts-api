@@ -12,5 +12,6 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccoun
         public string? Email { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string? GovUkIdentifier { get; set; }
+        public DateTime? AppLastLoggedIn { get; set; }
     }
 }

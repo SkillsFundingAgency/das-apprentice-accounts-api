@@ -22,7 +22,8 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccoun
                 request.LastName,
                 new MailAddress(request.Email),
                 request.DateOfBirth,
-                request.GovUkIdentifier
+                request.GovUkIdentifier,
+                request.AppLastLoggedIn
                 ));
 
             return Unit.Task;
