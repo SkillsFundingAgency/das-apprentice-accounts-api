@@ -151,4 +151,26 @@ public class WhenHandlingCreateOrUpdateApprenticeAccountCommand
                     c.GovUkIdentifier == command.GovUkIdentifier && c.Email.Address == command.Email),
                 It.IsAny<CancellationToken>()), Times.Once);
     }
+    
+    
+    [Test, MoqAutoData]
+    public async Task Then_If_The_Apprentice_Is_Found_By_Email_And_GovIdentifierEmptyInDatabase_Then_Updates(
+        CreateOrUpdateApprenticeAccountCommand command,
+        [Frozen] Mock<ApplicationSettings> settings)
+    {
+        var apprenticeContext = new Mock<IApprenticeContext>();
+        var termsOfServiceDate = DateTime.UtcNow;
+        var apprentice = new Apprentice(Guid.NewGuid(), null!, null!, new MailAddress("TEST@example.com"),new DateTime(), null );
+        command.Email = "test@example.com";
+        settings.Setup(x => x.TermsOfServiceUpdatedOn).Returns(termsOfServiceDate);
+        apprenticeContext.Setup(x => x.FindByGovIdentifier(It.IsAny<string>())).ReturnsAsync((Apprentice)null);
+        apprenticeContext.Setup(x => x.FindByEmail(It.IsAny<MailAddress>())).ReturnsAsync(apprentice);
+        var handler = new CreateOrUpdateApprenticeAccountCommandHandler(apprenticeContext.Object, settings.Object);
+        
+        var actual = await handler.Handle(command, CancellationToken.None);
+
+        actual.GovUkIdentifier.Should().Be(command.GovUkIdentifier);
+        actual.Email.ToLower().Should().Be(command.Email.ToLower());
+        actual.ApprenticeId.Should().NotBe(Guid.Empty);
+    }
 }
