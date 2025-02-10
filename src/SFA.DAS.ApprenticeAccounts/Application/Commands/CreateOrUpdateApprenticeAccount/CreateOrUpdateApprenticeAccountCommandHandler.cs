@@ -27,7 +27,10 @@ public class CreateOrUpdateApprenticeAccountCommandHandler(IApprenticeContext ap
                 apprentice.UpdatedOn = DateTime.UtcNow;
             }
 
-            if (!apprentice.Email.Address.Equals(request.Email) && !string.IsNullOrEmpty(apprentice.GovUkIdentifier))
+            //This should cover the case where we have searched by gov identifier and have a different email returned
+            //in this instance, we check it doesnt match an already existing user that has a gov login account
+            //If they do exist with not gov identifier, we switch the identifier to that account 
+            if (!apprentice.Email.Address.Equals(request.Email, StringComparison.CurrentCultureIgnoreCase))
             {
                 var apprenticeByEmail = await apprenticeContext.FindByEmail(new MailAddress(request.Email));
                 if (apprenticeByEmail != null)
