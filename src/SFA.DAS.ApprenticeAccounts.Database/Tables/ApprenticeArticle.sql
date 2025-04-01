@@ -5,6 +5,7 @@ GO
 CREATE TABLE [dbo].[ApprenticeArticle](
     [Id] [uniqueidentifier] NOT NULL,
     [EntryId] [nvarchar](200) NOT NULL,
+    [EntryTitle] [nvarchar](1000) NOT NULL,
     [IsSaved] [bit] NULL,
     [LikeStatus] [bit] NULL,
     [SaveTime] DATETIME2 NOT NULL DEFAULT current_timestamp, 
