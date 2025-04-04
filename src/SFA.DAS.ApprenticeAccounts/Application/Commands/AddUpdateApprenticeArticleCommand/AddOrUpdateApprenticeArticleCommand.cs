@@ -13,6 +13,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.AddUpdateApprenticeArt
             {
                 Id = request.Id,
                 EntryId = request.EntryId,
+                EntryTitle = request.EntryTitle,
                 LikeStatus = request.LikeStatus,
                 IsSaved = request.IsSaved,
                 SaveTime = request.SaveTime
@@ -21,6 +22,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.AddUpdateApprenticeArt
 
         public Guid Id { get; set; }
         public string? EntryId { get; set; }
+        public string? EntryTitle { get; set; }
         public bool? IsSaved { get; set; }
         public bool? LikeStatus { get; set; }
         public DateTime? SaveTime { get; set; }

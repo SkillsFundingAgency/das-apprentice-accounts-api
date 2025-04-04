@@ -33,10 +33,10 @@ public class WhenGettingApprenticeSupportAndGuidance
     [Test, MoqAutoData]
     public async Task AddOrUpdateApprenticeArticle_returns(
         [Greedy] ApprenticeSupportAndGuidance controller,
-        Guid apprenticeId, string articleIdentifier,
+        Guid apprenticeId, string articleIdentifier, string artitleTitle,
         [Greedy] ApprenticeSupportAndGuidance.ApprenticeArticleRequest request)
     {
-        var result = await controller.AddOrUpdateApprenticeArticle(apprenticeId, articleIdentifier, request) as OkObjectResult;
+        var result = await controller.AddOrUpdateApprenticeArticle(apprenticeId, articleIdentifier, artitleTitle, request) as OkObjectResult;
         result.Should().NotBeNull();
         result.Should().BeOfType(typeof(OkObjectResult));
     }
