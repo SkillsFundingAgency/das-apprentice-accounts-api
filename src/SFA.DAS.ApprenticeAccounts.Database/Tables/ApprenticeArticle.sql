@@ -12,8 +12,6 @@ CREATE TABLE [dbo].[ApprenticeArticle](
     [LastSaveStatusTime] DATETIME2 NOT NULL DEFAULT GETUTCDATE()
 ) ON [PRIMARY]
 GO
-SET ANSI_PADDING ON
-GO
 ALTER TABLE [dbo].[ApprenticeArticle] ADD  CONSTRAINT [PK_key] PRIMARY KEY CLUSTERED 
 (
     [Id] ASC,
