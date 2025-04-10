@@ -36,14 +36,15 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPost("apprentices/{id}/articles/{articleIdentifier}")]
-        public async Task<IActionResult> AddOrUpdateApprenticeArticle(Guid id, string articleIdentifier, [FromBody] ApprenticeArticleRequest request)
+        [HttpPost("apprentices/{id}/articles/{articleIdentifier}/title/{entryTitle}")]
+        public async Task<IActionResult> AddOrUpdateApprenticeArticle(Guid id, string articleIdentifier, string entryTitle, [FromBody] ApprenticeArticleRequest request)
         {
             var result = await _mediator.Send(new AddOrUpdateApprenticeArticleCommand
             {
                 Id = id,
                 EntryId = articleIdentifier,
                 IsSaved = request.IsSaved,
+                EntryTitle = entryTitle,
                 LikeStatus = request.LikeStatus,
                 
             });

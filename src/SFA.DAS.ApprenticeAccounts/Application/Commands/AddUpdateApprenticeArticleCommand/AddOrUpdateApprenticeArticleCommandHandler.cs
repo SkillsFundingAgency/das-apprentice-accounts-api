@@ -41,8 +41,10 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.AddUpdateApprenticeArt
                _apprenticeArticleContext.Add(new ApprenticeArticle(
                     request.Id,
                     request.EntryId,
+                    request.EntryTitle,
                    request.IsSaved,
                    request.LikeStatus
+                    
                 ));
             }
 

@@ -1,17 +1,12 @@
-﻿SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[ApprenticeArticle](
+﻿CREATE TABLE [dbo].[ApprenticeArticle](
     [Id] [uniqueidentifier] NOT NULL,
     [EntryId] [nvarchar](200) NOT NULL,
+    [EntryTitle] [nvarchar](1000) NULL,
     [IsSaved] [bit] NULL,
     [LikeStatus] [bit] NULL,
     [SaveTime] DATETIME2 NOT NULL DEFAULT current_timestamp, 
     [LastSaveStatusTime] DATETIME2 NOT NULL DEFAULT GETUTCDATE()
 ) ON [PRIMARY]
-GO
-SET ANSI_PADDING ON
 GO
 ALTER TABLE [dbo].[ApprenticeArticle] ADD  CONSTRAINT [PK_key] PRIMARY KEY CLUSTERED 
 (

@@ -73,6 +73,7 @@
     <Build Include="Tables\Preference.sql" />
     <None Include="PostDeployment\AddDefaultNotificationsPreferences.sql" />
     <Build Include="Tables\MyApprenticeship.sql" />
+    <Build Include="Tables\ApprenticeArticle.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeployment\PostDeployment.sql" />
