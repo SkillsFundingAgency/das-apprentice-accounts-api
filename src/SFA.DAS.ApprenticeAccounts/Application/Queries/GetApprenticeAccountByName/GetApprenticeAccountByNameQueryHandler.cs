@@ -18,8 +18,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
 
         public GetApprenticeAccountByNameQueryHandler(IApprenticeContext apprenticeshipRepository, ApplicationSettings settings)
         {
-            _apprentices = apprenticeshipRepository;
-            _settings = settings;
+            _apprentices = apprenticeshipRepository;            
         }
 
         public async Task<List<Apprentice?>> Handle(
