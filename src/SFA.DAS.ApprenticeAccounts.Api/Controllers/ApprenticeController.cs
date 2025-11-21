@@ -5,6 +5,7 @@ using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCom
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateOrUpdateApprenticeAccount;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.GetApprenticeAccountByName;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 using System;
 using System.Threading.Tasks;
@@ -26,6 +27,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         public async Task<IActionResult> GetApprentice(string id)
         {
             var result = await _mediator.Send(new GetApprenticeQuery(id));
+            if (result == null) return NotFound();
+            return Ok(result);
+        }
+
+        [HttpGet("")]
+        public async Task<IActionResult> GetApprenticeAccountByName([FromQuery] string firstName, [FromQuery] string lastName)
+        {
+            var result = await _mediator.Send(new GetApprenticeAccountByNameQuery(firstName, lastName));
             if (result == null) return NotFound();
             return Ok(result);
         }

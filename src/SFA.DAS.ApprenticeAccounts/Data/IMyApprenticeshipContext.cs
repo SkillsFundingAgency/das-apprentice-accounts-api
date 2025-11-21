@@ -35,5 +35,13 @@ namespace SFA.DAS.ApprenticeAccounts.Data
                 .Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
+        [ExcludeFromCodeCoverage]
+        public async Task<MyApprenticeship?> FindByUln(int uln)
+        {
+            return await Entities
+                .AsNoTracking()
+                .Where(x => x.Uln == uln).FirstOrDefaultAsync();
+        }
+
     }
 }
