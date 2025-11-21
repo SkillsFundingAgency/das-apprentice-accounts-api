@@ -14,8 +14,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
 {
     public class GetApprenticeAccountByNameQueryHandler : IRequestHandler<GetApprenticeAccountByNameQuery, List<Apprentice>?>
     {
-        private readonly IApprenticeContext _apprentices;
-        private readonly ApplicationSettings _settings;
+        private readonly IApprenticeContext _apprentices;        
 
         public GetApprenticeAccountByNameQueryHandler(IApprenticeContext apprenticeshipRepository, ApplicationSettings settings)
         {

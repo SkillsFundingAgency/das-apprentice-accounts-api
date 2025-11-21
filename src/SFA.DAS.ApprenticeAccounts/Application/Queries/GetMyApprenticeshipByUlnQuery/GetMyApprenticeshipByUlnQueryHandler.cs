@@ -10,14 +10,12 @@ using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Queries.GetMyApprenticeshipByUlnQuery;
 public class GetMyApprenticeshipByUlnQueryHandler : IRequestHandler<GetMyApprenticeshipByUlnQuery, ApprenticeWithMyApprenticeshipDto>
-{
-    private readonly IApprenticeContext _apprentices;
+{    
     private readonly IMyApprenticeshipContext _myApprenticeships;
 
     public GetMyApprenticeshipByUlnQueryHandler
-        (IApprenticeContext apprenticeshipRepository, IMyApprenticeshipContext myApprenticeships)
-    {
-        _apprentices = apprenticeshipRepository;
+        (IMyApprenticeshipContext myApprenticeships)
+    {        
         _myApprenticeships = myApprenticeships;
     }
 
