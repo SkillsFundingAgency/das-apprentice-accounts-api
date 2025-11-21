@@ -21,7 +21,7 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery
             _apprentices = apprenticeshipRepository;            
         }
 
-        public async Task<List<Apprentice?>> Handle(
+        public async Task<List<Apprentice>?> Handle(
             GetApprenticeAccountByNameQuery request,
             CancellationToken cancellationToken)
         {
