@@ -38,7 +38,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data
         public async Task<Apprentice?> FindByGovIdentifier(string govUkIdentifier) 
             => await Entities.SingleOrDefaultAsync(c=>c.GovUkIdentifier == govUkIdentifier);
 
-        public async Task<List<Apprentice>> FindByName(string firstName, string lastName) 
-            => await Entities.Where(x => x.FirstName == firstName && x.LastName == lastName).ToListAsync();
+        public async Task<List<Apprentice>> FindByPersonalDetails(string firstName, string lastName, DateTime dateOfBirth) 
+            => await Entities.Where(x => x.FirstName == firstName && x.LastName == lastName && x.DateOfBirth == dateOfBirth).ToListAsync();
     }
 }
