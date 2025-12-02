@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateApprenticeAccountCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.CreateOrUpdateApprenticeAccount;
+using SFA.DAS.ApprenticeAccounts.Application.Commands.DeleteApprenticeAccountCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeCommand;
 using SFA.DAS.ApprenticeAccounts.Application.Queries.ApprenticesQuery;
 using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
@@ -53,6 +54,14 @@ namespace SFA.DAS.ApprenticeAccounts.Api.Controllers
         public async Task<IActionResult> SyncApprentices(Guid[] apprenticeIds, DateTime? updatedSinceDate)
         {
             var result = await _mediator.Send(new GetApprenticesQuery(updatedSinceDate, apprenticeIds));
+            return Ok(result);
+        }
+
+        [HttpDelete("{apprenticeId}")]
+        public async Task<IActionResult> DeleteApprenticeById(Guid apprenticeId)
+        {
+            var result = await _mediator.Send(new DeleteApprenticeAccountCommand{ ApprenticeId = apprenticeId });
+
             return Ok(result);
         }
     }

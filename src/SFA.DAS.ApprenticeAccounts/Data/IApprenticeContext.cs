@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SFA.DAS.ApprenticeAccounts.DTOs.Apprentice;
 
 #nullable enable
 
@@ -35,6 +34,9 @@ namespace SFA.DAS.ApprenticeAccounts.Data
                 .ToArrayAsync();
 
         public async Task<Apprentice?> FindByGovIdentifier(string govUkIdentifier) 
-            => await Entities.SingleOrDefaultAsync(c=>c.GovUkIdentifier == govUkIdentifier);
+            => await Entities.SingleOrDefaultAsync(c=>c.GovUkIdentifier == govUkIdentifier);        
+
+        public async Task DeleteById(Guid apprenticeId)
+            => Entities.Remove(await Entities.SingleOrDefaultAsync(x => x.Id == apprenticeId));                    
     }
 }
