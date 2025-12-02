@@ -37,6 +37,12 @@ namespace SFA.DAS.ApprenticeAccounts.Data
             => await Entities.SingleOrDefaultAsync(c=>c.GovUkIdentifier == govUkIdentifier);        
 
         public async Task DeleteById(Guid apprenticeId)
-            => Entities.Remove(await Entities.SingleOrDefaultAsync(x => x.Id == apprenticeId));                    
+        {
+            var entity = await Entities.SingleOrDefaultAsync(x => x.Id == apprenticeId);
+            if (entity is null)
+                return;
+
+            Entities.Remove(entity);
+        }             
     }
 }
