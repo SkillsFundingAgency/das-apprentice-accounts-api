@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System;
 using MediatR;
 using System.Net;
+using SFA.DAS.ApprenticeAccounts.Application.Queries.GetMyApprenticeshipByUlnQuery;
 
 
 namespace SFA.DAS.ApprenticeAccounts.Api.Controllers;
@@ -61,6 +62,15 @@ public class MyApprenticeshipController : ControllerBase
         {
             return NotFound();
         }
+
+        return Ok(result.MyApprenticeship);
+    }
+
+    [HttpGet("apprentice/{uln}")]
+    public async Task<IActionResult> GetMyApprenticeshipByUln(int uln)
+    {
+        var result = await _mediator.Send(new GetMyApprenticeshipByUlnQuery(uln));
+        if (result.MyApprenticeship == null) return NotFound();
 
         return Ok(result.MyApprenticeship);
     }
