@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SFA.DAS.ApprenticeAccounts.Application.Commands.DeleteApprenticeAccountCommand;
-public class DeleteApprenticeAccountCommand : IRequest<Unit>, IUnitOfWorkCommand
+public class DeleteApprenticeAccountCommand : IRequest<DeleteApprenticeAccountResponse>, IUnitOfWorkCommand
 {
     public Guid ApprenticeId { get; set; }
 }
