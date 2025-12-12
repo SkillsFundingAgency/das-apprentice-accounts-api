@@ -38,7 +38,16 @@ namespace SFA.DAS.ApprenticeAccounts.Data
         public async Task<Apprentice?> FindByGovIdentifier(string govUkIdentifier) 
             => await Entities.SingleOrDefaultAsync(c=>c.GovUkIdentifier == govUkIdentifier);
 
-        public async Task<List<Apprentice>> FindByPersonalDetails(string firstName, string lastName, DateTime dateOfBirth) 
+        public async Task<List<Apprentice>> FindByPersonalDetails(string firstName, string lastName, DateTime dateOfBirth)
             => await Entities.Where(x => x.FirstName == firstName && x.LastName == lastName && x.DateOfBirth == dateOfBirth).ToListAsync();
+
+        public async Task DeleteById(Guid apprenticeId)
+        {
+            var entity = await Entities.SingleOrDefaultAsync(x => x.Id == apprenticeId);
+            if (entity is null)
+                return;
+
+            Entities.Remove(entity);
+        }                     
     }
 }
