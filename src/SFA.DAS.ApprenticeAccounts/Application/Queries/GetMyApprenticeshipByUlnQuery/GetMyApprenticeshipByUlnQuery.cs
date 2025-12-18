@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SFA.DAS.ApprenticeAccounts.Application.Queries.GetMyApprenticeshipByUlnQuery;
 public class GetMyApprenticeshipByUlnQuery : IRequest<ApprenticeWithMyApprenticeshipDto>
 {
-    public GetMyApprenticeshipByUlnQuery(int uln) => Uln = uln;
+    public GetMyApprenticeshipByUlnQuery(long uln) => Uln = uln;
 
-    public int Uln { get; set; }
+    public long Uln { get; set; }
 }

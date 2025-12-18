@@ -67,7 +67,7 @@ public class MyApprenticeshipController : ControllerBase
     }
 
     [HttpGet("apprentice/{uln}")]
-    public async Task<IActionResult> GetMyApprenticeshipByUln(int uln)
+    public async Task<IActionResult> GetMyApprenticeshipByUln(long uln)
     {
         var result = await _mediator.Send(new GetMyApprenticeshipByUlnQuery(uln));
         if (result.MyApprenticeship == null) return NotFound();

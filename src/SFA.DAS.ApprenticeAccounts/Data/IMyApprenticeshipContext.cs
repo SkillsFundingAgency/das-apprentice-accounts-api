@@ -36,7 +36,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data
         }
 
         [ExcludeFromCodeCoverage]
-        public async Task<MyApprenticeship?> FindByUln(int uln)
+        public async Task<MyApprenticeship?> FindByUln(long uln)
         {
             return await Entities
                 .AsNoTracking()
