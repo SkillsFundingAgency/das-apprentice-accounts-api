@@ -6,6 +6,7 @@ public class MyApprenticeshipDto
 {
     public long? Uln { get; set; }
     public long? ApprenticeshipId { get; set; }
+    public Guid ApprenticeId { get; set; }
     public string? EmployerName { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
@@ -23,6 +24,7 @@ public class MyApprenticeshipDto
         {
             Uln = source.Uln,
             ApprenticeshipId = source.ApprenticeshipId,
+            ApprenticeId = source.ApprenticeId,
             EmployerName = source.EmployerName,
             StartDate = source.StartDate,
             EndDate = source.EndDate,
