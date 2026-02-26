@@ -8,9 +8,21 @@ namespace SFA.DAS.ApprenticeAccounts.Application.Commands.UpdateApprenticeComman
     {
         public UpdateApprenticeValidator()
         {
-            RuleFor(model => model.FirstName).NotEmpty().WithMessage("Enter your first name");
-            RuleFor(model => model.LastName).NotEmpty().WithMessage("Enter your last name");
-            RuleFor(model => model.DateOfBirth).Must(dob => dob != default).WithMessage("Enter your date of birth");
+            RuleFor(model => model.FirstName)
+                .NotEmpty()
+                .WithMessage("Enter your first name")
+                .When(x => x.FirstName != null);
+
+            RuleFor(model => model.LastName)
+                .NotEmpty()
+                .WithMessage("Enter your last name")
+                .When(x => x.LastName != null);
+
+            RuleFor(model => model.DateOfBirth)
+                .Must(dob => dob != default)
+                .WithMessage("Enter your date of birth")
+                .When(x => x.DateOfBirth.HasValue);
+
             RuleFor(model => model.DateOfBirth).Must(dob => dob != DateTime.MinValue).WithMessage("Enter your date of birth");
             RuleFor(model => model.Email.Address).EmailAddress();
         }
