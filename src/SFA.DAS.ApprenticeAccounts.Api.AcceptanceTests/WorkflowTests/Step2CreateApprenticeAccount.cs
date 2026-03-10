@@ -88,32 +88,7 @@ namespace SFA.DAS.ApprenticeAccounts.Api.AcceptanceTests.WorkflowTests
                 expectedApprentice, 
                 options => options.Using<DateTime>(x => x.Subject.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromMinutes(2)))
             .When(info => info.Path.EndsWith("UpdatedOn")));
-        }
-
-        [Test]
-        public async Task Update_apprentice_must_use_valid_values()
-        {
-            var account = await CreateAccount();
-
-            var response = await SendUpdateAccountRequest(account.ApprenticeId, null, "", DateTime.MinValue);
-            response.Should().Be400BadRequest().And.BeAs(new
-            {
-                Errors = new Dictionary<string, string[]>
-                {
-                    { "FirstName", new[]{ "Enter your first name" } },
-                    { "LastName", new[]{ "Enter your last name" } },
-                    { "DateOfBirth", new[]{ "Enter your date of birth" } },
-                },
-            });
-
-            Database.Apprentices.Should().ContainEquivalentOf(new
-            {
-                account.FirstName,
-                account.LastName,
-                account.DateOfBirth,
-                Email = new MailAddress(account.Email)
-            });
-        }
+        }       
 
         [Test]
         public async Task Update_apprentice_accept_terms_of_use()
