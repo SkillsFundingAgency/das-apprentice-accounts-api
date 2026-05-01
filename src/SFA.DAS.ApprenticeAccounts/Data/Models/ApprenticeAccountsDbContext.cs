@@ -47,6 +47,8 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             modelBuilder.Entity<Apprentice>(a =>
             {
                 a.ToTable("Apprentice");
+                a.ToTable(tb => tb.UseSqlOutputClause(false));
+
                 a.HasKey(e => e.Id);
                 a.Property(e => e.Email)
                  .HasConversion(
@@ -73,7 +75,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
             modelBuilder.Entity<Preference>(p =>
             {
                 p.ToTable("Preference")
-                 .HasKey(p => p.PreferenceId);                
+                 .HasKey(p => p.PreferenceId);
             });
 
             modelBuilder.Entity<ApprenticeArticle>(p =>
@@ -81,9 +83,7 @@ namespace SFA.DAS.ApprenticeAccounts.Data.Models
                 p.ToTable("ApprenticeArticle")
                 .HasKey(m => new { m.Id, m.EntryId });
             });
-
-
-
+            
             modelBuilder.Entity<ApprenticePreferences>( ap =>
             {
                 ap.ToTable("ApprenticePreferences")

@@ -61,6 +61,7 @@
     <Folder Include="Views" />
     <Folder Include="Schemas" />
     <Folder Include="PostDeployment" />
+    <Folder Include="Triggers" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Apprentice.sql" />
@@ -74,6 +75,8 @@
     <None Include="PostDeployment\AddDefaultNotificationsPreferences.sql" />
     <Build Include="Tables\MyApprenticeship.sql" />
     <Build Include="Tables\ApprenticeArticle.sql" />
+    <Build Include="Tables\ApprenticeAppLogins.sql" />
+    <Build Include="Triggers\trg_Apprentice_LogAppLastLoggedIn.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="PostDeployment\PostDeployment.sql" />
